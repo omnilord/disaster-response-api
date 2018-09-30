@@ -1,0 +1,22 @@
+<%= render 'application/navbars/dropdown',
+           dropdown_id: 'serversmenu',
+           icon: 'home',
+           text: t(:shelters).titleize,
+           items: [
+             { icon: 'list', text: t(:list_all) },
+             { icon: 'exclamation-triangle', text: t(:outdated, ) },
+             { separator?: true },
+             { icon: 'plus', text: t(:new_shelter) },
+           ]
+%>
+<%= render 'application/navbars/dropdown',
+           dropdown_id: 'podsmenu',
+           icon: 'shopping-basket',
+           text: t(:pods).titleize,
+           items: [
+             { icon: 'list', text: t(:list_all) },
+             { icon: 'exclamation-triangle', text: t(:outdated, ) },
+             { separator?: true },
+             { icon: 'plus', text: t(:new_pod) },
+           ]
+%>

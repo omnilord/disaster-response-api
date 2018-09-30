@@ -1,0 +1,27 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="navbar-header">
+    <button class="navbar-toggler collapsed"
+            type="button"
+            data-toggle="collapse"
+            data-target="#top-nav-bar-content"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <%= link_to root_path, title: t(:home), class: 'navbar-brand', id: 'navlogo' do %>
+      <span>D(RM)2 API</span>
+    <% end %>
+  </div>
+  <div class="collapse navbar-collapse" id="top-nav-bar-content">
+    <ul class="navbar-nav mr-auto">
+      <li>
+        <a href="#" id="howcanihelp" class="nav-link">
+          <%= fa_icon('star', text: t(:invite_to_help)) %>
+        </a>
+      </li>
+<%= render partial: left_navbar_partial %>
+    </ul>
+<%= render partial: 'application/navbars/user_dropdown' %>
+  </div>
+</nav>

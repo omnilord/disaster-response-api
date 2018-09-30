@@ -1,0 +1,33 @@
+    <ul class="navbar-nav navbar-right">
+      <li class="dropdown nav-item collapse-open">
+        <a href="#" id="usermenu" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+          <%= t(:navbar_welcome, username: @username) %><span class="caret"></span>
+        </a>
+<% if user_signed_in? %>
+        <ul class="dropdown-menu">
+          <li class="dropdown-item">
+            <%= link_to t(:my_settings), edit_user_registration_path, class: 'dropdown-item' %>
+          </li>
+          <li class="dropdown-item">
+            <%= link_to t(:sign_out), destroy_user_session_path, class: 'dropdown-item',
+                                                                 method: :delete %>
+          </li>
+        </ul>
+<% else %>
+        <ul class="dropdown-menu">
+          <li class="dropdown-item">
+            <%= link_to t(:sign_in), new_user_session_path, class: 'dropdown-item' %>
+          </li>
+          <li class="dropdown-item">
+            <%= link_to t(:sign_up), new_user_registration_path, class: 'dropdown-item' %>
+          </li>
+        </ul>
+<% end %>
+      </li>
+      <li style="vertical-align:middle;">
+        <a class="nav-link" href="#">
+          <i class="fa fa-lg fa-question-circle-o d-none d-lg-inline" style="color: white;" alt="<%= t(:help) %>"></i>
+          <span class="d-block d-lg-none"><%= t(:help) %></span>
+        </a>
+      </li>
+    </ul>

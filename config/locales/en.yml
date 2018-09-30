@@ -30,4 +30,27 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  admin: 'Admin'
+  archived: 'Archived'
+  disaster: 'disaster'
+  help: 'help'
+  home: 'home'
+  invite_to_help: 'How can I help?'
+  list_all: 'List All'
+  my_settings: 'My Settings'
+  navbar_welcome: 'Welcome, %{username}!'
+  new_pod: 'New Distribution Point'
+  new_shelter: 'New Shelter'
+  outdated: 'Outdated'
+  pod: 'distribution point'
+  pods: 'distribution points'
+  relief: 'relief'
+  shelter: 'shelter'
+  shelters: 'shelters'
+  sign_in: 'Sign In'
+  sign_out: 'Sign Out'
+  sign_up: 'Sign Up'
+  site_title: 'Disaster Resources API'
+  update_queue: 'Updates Queue'
+  user: 'User'
+  users: 'Users'

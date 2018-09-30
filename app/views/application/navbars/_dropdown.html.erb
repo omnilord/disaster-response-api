@@ -1,0 +1,22 @@
+      <li class="dropdown nav-item collapse-open">
+        <a href="#" id="<%= dropdown_id %>" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+          <%= fa_icon(icon, text: text) %> <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+        <% items.each do |item| %>
+          <% if item[:separator?] %>
+          <li role="separator" class="dropdown-divider"></li>
+          <% else %>
+          <li class="dropdown-item">
+            <%= link_to item[:url] || '#', class: 'dropdown-item' do %>
+              <% if item[:icon] %>
+              <%= fa_icon(item[:icon], text: item[:text]) %>
+              <% else %>
+              <%= item[:text] %>
+              <% end %>
+            <% end %>
+          </li>
+          <% end %>
+        <% end %>
+        </ul>
+      </li>

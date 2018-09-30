@@ -63,6 +63,11 @@ Rails.application.configure do
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "disaster-response-api_#{Rails.env}"
 
+  config.action_mailer.default_url_options = {
+    host: ENV.fetch('ACTION_MAILER_HOST') { 'localhost' },
+    port: ENV.fetch('ACTION_MAILER_PORT') { 3000 }
+  }
+
   config.action_mailer.perform_caching = false
 
   # Ignore bad email addresses and do not raise email delivery errors.
