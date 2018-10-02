@@ -10,10 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_28_160452) do
+ActiveRecord::Schema.define(version: 2018_09_30_075741) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "pages", force: :cascade do |t|
+    t.text "i18n", default: "en"
+    t.text "page"
+    t.text "title"
+    t.text "content"
+    t.integer "editor_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["editor_id"], name: "index_pages_on_editor_id"
+    t.index ["i18n"], name: "index_pages_on_i18n"
+    t.index ["page"], name: "index_pages_on_page", unique: true
+  end
 
   create_table "users", force: :cascade do |t|
     t.text "email", default: "", null: false
@@ -26,6 +39,7 @@ ActiveRecord::Schema.define(version: 2018_09_28_160452) do
     t.datetime "last_sign_in_at"
     t.inet "current_sign_in_ip"
     t.inet "last_sign_in_ip"
+    t.boolean "admin", default: false
     t.text "real_name"
     t.text "location"
     t.text "i18n", default: "en"
@@ -40,4 +54,5 @@ ActiveRecord::Schema.define(version: 2018_09_28_160452) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "pages", "users", column: "editor_id", on_update: :cascade, on_delete: :nullify
 end

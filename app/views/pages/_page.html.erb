@@ -1,0 +1,15 @@
+<% content_for :site_title, "#{@site_title} - #{@site_page.title}" %>
+<% markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true) %>
+<h1 class="page-title">
+  <%= @site_page.title %>
+  <% if admin? %>
+    <%= link_to edit_page_path(@site_page), class: 'btn btn-sm btn-outline-primary pull-right' do %>
+      <%= fa_icon(:edit, text: t(:edit_page)) %>
+    <% end %>
+  <% end %>
+  <hr/>
+</h1>
+
+<article class="page-content">
+  <%= sanitize(markdown.render(@site_page.content), tags: ALLOWED_HTML_TAGS, attributes: ALLOWED_HTML_ATTRIBUTES).html_safe %>
+</article>

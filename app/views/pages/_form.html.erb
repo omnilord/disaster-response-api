@@ -1,0 +1,51 @@
+<h4><em>Use markdown to format the content of the page</em></h4>
+<%= form_for @page do |f| %>
+  <div class="form">
+    <% if @page.new_record? %>
+      <%= f.label :page  %>
+      <%= f.text_field :page, class: 'form-control' %>
+    <% else %>
+      <h2>Page: <em><%= @page.page  %></em></h2>
+    <% end %>
+    <%= f.label :title %>
+    <%= f.text_field :title, class: 'form-control' %>
+    <%= f.label :content %>
+    <%= f.text_area :content, class: 'form-control' %>
+    <button type="button" id="toggle-preview" class="preview-markdown btn btn-link"
+                          data-src="#page_content"
+                          data-target="#preview-window">
+      <%= fa_icon :eye, text: t(:preview_content) %>
+    </button>
+    <div id="preview-window" class="content-preview"></div>
+  </div>
+
+  <div class="btn-group d-flex justify-content-center mt-3">
+  <%= f.submit class: 'btn btn-sm btn-primary' %>
+  <%= link_to t(:pages_index), pages_path, class: 'btn btn-sm btn-outline-info' %>
+  <% unless @page.new_record? %>
+    <%= link_to 'Delete Page', page_path(@page),
+                  method: :delete,
+                  data: { confirm: 'Are you sure?' },
+                  class: 'btn btn-sm btn-outline-danger' %>
+  <% end %>
+  </div>
+<% end %>
+<script>
+$(function () {
+  var markdown_converter = new showdown.Converter(),
+      source = $('#page_content'),
+      target = $('#preview-window'),
+      toggle =  $('#toggle-preview').one('click', function preview_on() {
+        target.html(filterXSS(markdown_converter.makeHtml(source.val())));
+        toggle.html('<%= fa_icon 'eye-slash', text: t(:hide_preview) %>');
+        source.one('keyup', function () {
+          toggle.trigger('click');
+        });
+        toggle.one('click', function () {
+          target.html('');
+          toggle.html('<%= fa_icon :eye, text: t(:preview_content) %>');
+          toggle.one('click', preview_on);
+        });
+      });
+});
+</script>

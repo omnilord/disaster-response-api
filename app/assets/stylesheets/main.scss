@@ -1,0 +1,12 @@
+h1.page-title {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.content-preview {
+  border: 1px dashed #333333;
+
+  &:empty {
+    display: none;
+  }
+}
