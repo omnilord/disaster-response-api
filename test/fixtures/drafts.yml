@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  draftable: one
+  draftable_type: Draftable
+  record: MyText
+  user: one
+
+two:
+  draftable: two
+  draftable_type: Draftable
+  record: MyText
+  user: two

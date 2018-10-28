@@ -4,7 +4,6 @@
            text: t(:shelters).titleize,
            items: [
              { icon: 'list', text: t(:list_all) },
-             { icon: 'exclamation-triangle', text: t(:outdated, ) },
              { icon: 'archive', text: t(:archived) },
              { separator?: true },
              { icon: 'edit', text: t(:update_queue) },
@@ -18,7 +17,6 @@
            text: t(:pods).titleize,
            items: [
              { icon: 'list', text: t(:list_all) },
-             { icon: 'exclamation-triangle', text: t(:outdated, ) },
              { icon: 'archive', text: t(:archived) },
              { separator?: true },
              { icon: 'edit', text: t(:update_queue) },
@@ -31,8 +29,13 @@
            icon: 'gears',
            text: t(:admin).titleize,
            items: [
+             { icon: 'exclamation-triangle', text: t(:outdated) },
+             { icon: 'edit', text: t(:drafts), url: drafts_path },
+             { separator?: true },
              { icon: 'user-o', text: t(:users) },
              { separator?: true },
              { icon: 'file-o', text: t(:pages), url: pages_path },
+             { separator?: true },
+             { icon: 'trash-o', text: t(:trash) },
            ]
 %>

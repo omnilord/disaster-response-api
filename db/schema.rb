@@ -10,10 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_30_075741) do
+ActiveRecord::Schema.define(version: 2018_10_03_204351) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "drafts", force: :cascade do |t|
+    t.string "draftable_type"
+    t.bigint "draftable_id"
+    t.jsonb "data"
+    t.bigint "user_id"
+    t.bigint "approved_by_id"
+    t.datetime "approved_at"
+    t.bigint "denied_by_id"
+    t.datetime "denied_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["approved_by_id"], name: "index_drafts_on_approved_by_id"
+    t.index ["denied_by_id"], name: "index_drafts_on_denied_by_id"
+    t.index ["draftable_type", "draftable_id"], name: "index_drafts_on_draftable_type_and_draftable_id"
+    t.index ["user_id"], name: "index_drafts_on_user_id"
+  end
 
   create_table "pages", force: :cascade do |t|
     t.text "i18n", default: "en"
@@ -23,6 +40,8 @@ ActiveRecord::Schema.define(version: 2018_09_30_075741) do
     t.integer "editor_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "current_draft_id"
+    t.index ["current_draft_id"], name: "index_pages_on_current_draft_id"
     t.index ["editor_id"], name: "index_pages_on_editor_id"
     t.index ["i18n"], name: "index_pages_on_i18n"
     t.index ["page"], name: "index_pages_on_page", unique: true
@@ -54,5 +73,9 @@ ActiveRecord::Schema.define(version: 2018_09_30_075741) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "drafts", "users"
+  add_foreign_key "drafts", "users", column: "approved_by_id"
+  add_foreign_key "drafts", "users", column: "denied_by_id"
+  add_foreign_key "pages", "drafts", column: "current_draft_id"
   add_foreign_key "pages", "users", column: "editor_id", on_update: :cascade, on_delete: :nullify
 end
