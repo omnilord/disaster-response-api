@@ -6,6 +6,7 @@
       <%= f.text_field :page, class: 'form-control' %>
     <% else %>
       <h2>Page: <em><%= @page.page  %></em></h2>
+      <%= f.hidden_field :page %>
     <% end %>
     <%= f.label :title %>
     <%= f.text_field :title, class: 'form-control' %>

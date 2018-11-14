@@ -3,7 +3,16 @@ class DraftsController < ApplicationController
   before_action :set_draft, only: [:show, :edit, :update, :destroy]
 
   def index
-    @drafts = Draft.all
+    @drafts =
+      begin
+        if params[:type].present? && params[:type].constantize
+          Draft.where(draftable_type: params[:type])
+        else
+          Draft.all
+        end.where(approved_by: nil)
+      rescue NameError
+        []
+      end
   end
 
   def show

@@ -4,5 +4,5 @@
 
 <% @pages.each do |page| %>
   <hr/>
-  <h4><%= link_to "#{page.title} (#{page.page})", edit_page_path(page) %></h4>
+  <h4><%= link_to page.link_to_text, page %></h4>
 <% end %>

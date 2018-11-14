@@ -1,9 +1,24 @@
 <%= render 'application/navbars/dropdown',
+           dropdown_id: 'eventssmenu',
+           icon: 'bolt',
+           text: t(:events).titleize,
+           items: [
+             { icon: 'list', text: t(:list_all) },
+             { icon: 'exclamation-triangle', text: t(:outdated) },
+             { icon: 'archive', text: t(:archived) },
+             { separator?: true },
+             { icon: 'edit', text: t(:update_queue) },
+             { separator?: true },
+             { icon: 'plus', text: t(:new_event) },
+           ]
+%>
+<%= render 'application/navbars/dropdown',
            dropdown_id: 'serversmenu',
            icon: 'home',
            text: t(:shelters).titleize,
            items: [
              { icon: 'list', text: t(:list_all) },
+             { icon: 'exclamation-triangle', text: t(:outdated) },
              { icon: 'archive', text: t(:archived) },
              { separator?: true },
              { icon: 'edit', text: t(:update_queue) },
@@ -17,6 +32,7 @@
            text: t(:pods).titleize,
            items: [
              { icon: 'list', text: t(:list_all) },
+             { icon: 'exclamation-triangle', text: t(:outdated) },
              { icon: 'archive', text: t(:archived) },
              { separator?: true },
              { icon: 'edit', text: t(:update_queue) },

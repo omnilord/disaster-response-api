@@ -10,3 +10,9 @@ h1.page-title {
     display: none;
   }
 }
+
+.collapsing {
+    -webkit-transition: none;
+    transition: none;
+    display: none;
+}

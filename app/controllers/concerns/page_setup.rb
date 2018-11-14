@@ -21,7 +21,7 @@ module PageSetup
           end
         @site_page = Page.find_or_default(page, options)
       rescue ActiveRecord::RecordNotFound => ex
-        redirect_to (options[:not_found_url] || root_path)
+        render_not_found
       end
     end
 
@@ -34,7 +34,7 @@ module PageSetup
       before_action **before_params do
         page = "#{controller_name}_#{action_name}"
         options[:title] =
-          if SINGULAR.include?(action_name)
+          if PageSetup::SINGULAR.include?(action_name)
             "#{action_name} #{controller_name.singularize}".titleize
           end
         @site_page ||= Page.find_or_default(page, options)

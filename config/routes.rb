@@ -5,12 +5,12 @@ Rails.application.routes.draw do
 
   devise_for :users, controllers: { registrations: 'user/registrations' }
 
-  root 'pages#show', page: 'home'
+  root 'pages#page', page: 'home'
 
   resources :drafts, only: %i[index show update destroy]
-  resources :pages
+  resources :pages, concerns: %i[draftable]
 
-  get '/:page', to: 'pages#show'
+  get '/:page', to: 'pages#page'
 
   match '*unmatched_route', to: 'application#not_found', via: :all
 end

@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(version: 2018_10_03_204351) do
     t.integer "editor_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "current_draft_id"
+    t.bigint "current_draft_id", null: false
     t.index ["current_draft_id"], name: "index_pages_on_current_draft_id"
     t.index ["editor_id"], name: "index_pages_on_editor_id"
     t.index ["i18n"], name: "index_pages_on_i18n"

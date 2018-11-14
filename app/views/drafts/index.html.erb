@@ -1,31 +1,56 @@
-<p id="notice"><%= notice %></p>
-
 <h1>Drafts</h1>
 
-<table class="container">
-  <thead>
-    <tr>
-      <th>Draft Type</th>
-      <th>Draft</th>
-      <th>User</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @drafts.each do |draft| %>
+<div class="container">
+  <table id="draftsList" class="table">
+    <thead>
       <tr>
-        <td><%= draft.draftable.class.name %></td>
-        <td><%= link_to draft.draftable.link_to_text, draft.draftable %></td>
-        <td><%= draft.user.real_name %></td>
-        <td><%= link_to 'Show', draft %></td>
-        <td><%= link_to 'Edit', edit_draft_path(draft) %></td>
-        <td><%= link_to 'Destroy', draft, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>Draft Type</th>
+        <th>Draft</th>
+        <th>User</th>
+        <th colspan="4"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
 
-<br>
+    <tbody>
+      <% if @drafts.empty? %>
+        <tr>
+          <td colspan="7">
+            <%= format(t(:nothing_found), thing: t(:drafts)) %>
+          </td>
+        </tr>
+      <% else %>
+        <% @drafts.each do |draft| %>
+          <tr>
+            <td><%= draft.draftable.class.name %></td>
+            <td><%= link_to draft.draftable.link_to_text, draft.draftable %></td>
+            <td><%= draft.user.real_name %></td>
+            <td><%= link_to 'Show', draft %></td>
+            <td><%= link_to 'Edit', edit_draft_path(draft) %></td>
+            <td><%= link_to 'Destroy', draft, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <td><button type="button" class="btn btn-link"data-toggle="collapse" data-target=".preview-row-<%= draft.id %>" data-collapse-state="false" aria-expanded='false'><%= t(:show_changes) %></button></td>
+          </tr>
+          <tr class="collapse preview-row-<%= draft.id %>" data-parent="#draftsList">
+            <td>&nbsp;</td>
+            <td colspan="6">
+              <%= render draft %>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 
-<%= link_to 'New Draft', new_draft_path %>
+<script>
+$('#draftsList').on('click', 'button[data-toggle="collapse"]', function () {
+  var $this = $(this),
+      expanded = $this.data('collapse-state');
+
+  $('#draftsList button[data-collapse-state]')
+    .text('<%= t(:show_changes) %>')
+    .data('false');
+  $this
+    .text(expanded == 'true' ? '<%= t(:show_changes) %>' : '<%= t(:hide_changes) %>')
+    .data('collapse-state', { 'false': 'true', 'true': 'false' }[expanded]);
+});
+</script>
