@@ -34,17 +34,6 @@
             <td>&nbsp;</td>
             <td colspan="7">
               <%= render draft %>
-              <div class="text-center">
-                <hr/>
-                <%= link_to draft_path(draft), class: 'btn btn-success', method: :post,
-                                               title: format(t(:approve), type: t(:draft)) do %>
-                  <%= fa_icon(:check, text: t(:approve)) %>
-                <% end %>
-                <%= link_to draft, class: 'btn btn-danger', method: :delete, data: { confirm: t(:generic_confirm) },
-                                   title: format(t(:deny), type: t(:draft)) do %>
-                  <%= fa_icon(:ban, text: t(:deny)) %>
-                <% end %>
-              </div>
             </td>
           </tr>
         <% end %>

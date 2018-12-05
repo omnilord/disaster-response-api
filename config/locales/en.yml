@@ -45,6 +45,7 @@ en:
   draft: 'Draft'
   drafts: 'Drafts'
   drafts_exist: 'Drafts already exist for this resource. Please be sure you wish to edit.'
+  draft_applied: '%{type} draft was successulfully applied.'
   draft_denied: 'Draft has been denied.'
   draft_id: 'Draft ID'
   draft_type: 'Draft Type'

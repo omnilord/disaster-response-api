@@ -28,32 +28,25 @@ class DraftsController < ApplicationController
   end
 
   def update
+    @draft.approve
+    type = @draft.draftable.class.name
     respond_to do |format|
-      if @draft.update(draft_params)
-        format.html { redirect_to @draft, notice: I18n.t(:draft_updated) }
-        format.json { render :show, status: :ok, location: @draft }
-      else
-        format.html { render :edit }
-        format.json { render json: @draft.errors, status: :unprocessable_entity }
-      end
+      format.html { redirect_to drafts_path, notice: I18n.t(:draft_updated, type: type) }
+      format.json { head :no_content, status: :ok }
     end
   end
 
   def destroy
     @draft.deny
     respond_to do |format|
-      format.html { redirect_to drafts_url, notice: I18n.t(:draft_denied) }
-      format.json { head :no_content }
+      format.html { redirect_to drafts_path, notice: I18n.t(:draft_denied) }
+      format.json { head :no_content, status: :ok }
     end
   end
 
   private
     def set_draft
       @draft = Draft.find(params[:id])
-    end
-
-    def draft_params
-      params.require(:draft).permit(:data)
     end
 
     def check_access!
