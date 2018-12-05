@@ -10,7 +10,7 @@ module PageSetup
       options[:page] ||= action.to_s
 
       before_params = options.delete(:before_params) || {}
-      before_params[:if] ||= ->(c) { c.action_name == options[:page] }
+      before_params[:if] ||= ->(c) { c.action_name == action.to_s }
 
       before_action **before_params do
         page =

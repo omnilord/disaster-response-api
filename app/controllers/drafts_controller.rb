@@ -1,15 +1,21 @@
 class DraftsController < ApplicationController
-  before_action :admin!
+  include PageSetup
+
+  before_action :signed_in!
   before_action :set_draft, only: [:show, :edit, :update, :destroy]
+  before_action :check_access!
+
+  page :index, create: true, page: 'drafts_index',
+                             content: I18n.t(:press_edit, type: 'page')
 
   def index
     @drafts =
       begin
         if params[:type].present? && params[:type].constantize
-          Draft.where(draftable_type: params[:type])
+          Draft.actionable_by_type(params[:type])
         else
-          Draft.all
-        end.where(approved_by: nil)
+          Draft.actionable
+        end
       rescue NameError
         []
       end
@@ -24,7 +30,7 @@ class DraftsController < ApplicationController
   def update
     respond_to do |format|
       if @draft.update(draft_params)
-        format.html { redirect_to @draft, notice: 'Draft was successfully updated.' }
+        format.html { redirect_to @draft, notice: I18n.t(:draft_updated) }
         format.json { render :show, status: :ok, location: @draft }
       else
         format.html { render :edit }
@@ -36,19 +42,21 @@ class DraftsController < ApplicationController
   def destroy
     @draft.deny
     respond_to do |format|
-      format.html { redirect_to drafts_url, notice: 'Draft was successfully destroyed.' }
+      format.html { redirect_to drafts_url, notice: I18n.t(:draft_denied) }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_draft
       @draft = Draft.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def draft_params
-      params.require(:draft).permit(:draftable_id, :draftable_type, :data, :user_id)
+      params.require(:draft).permit(:data)
+    end
+
+    def check_access!
+      admin! unless @draft&.user_id == Current.user.id
     end
 end

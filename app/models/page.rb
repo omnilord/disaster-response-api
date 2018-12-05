@@ -7,18 +7,20 @@ class Page < ApplicationRecord
   before_save :sanitize!
   before_save -> { self.editor = Current.user }
 
-  def self.find_or_default(page, **options)
-    if options[:create]
-      where(page: page).first_or_create do |p|
-        p.title = options[:title] || page.titleize
-        p.content = options[:content] || ''
-        p.drafts << Draft.create(draftable_type: Page,
-                                 approved_by: Current.user, approved_at: p.created_at,
-                                 data: { page: p.page, title: p.title, content: p.content })
-        p.current_draft_id = p.drafts.last.id
-      end
+  def self.find_or_default(pagename, **options)
+    page = where(page: pagename).first
+    if page.nil? && options[:create]
+      draft = Draft.create(draftable_type: Page,
+                           approved_by: Current.user,
+                           data: {
+                             page: pagename,
+                             title: options[:title] || pagename.titleize,
+                             content: options[:content] || ''
+                           })
+      draft.approve
+      draft.draftable
     else
-      find_by!(page: page)
+      page
     end
   end
 

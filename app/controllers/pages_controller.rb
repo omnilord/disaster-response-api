@@ -4,6 +4,7 @@ class PagesController < ApplicationController
   before_action :signed_in!, except: [:page]
   before_action :admin!, only: [:destroy]
   before_action :set_page, only: [:show, :edit, :update, :destroy]
+  before_action :set_draft_count_warning, only: [:edit]
 
   page :page, use_param: :page, create: true, content: I18n.t(:press_edit, type: 'page')
   resource_pages mode: :permissive, create: true
@@ -69,6 +70,11 @@ private
   rescue ActiveRecord::RecordNotFound
     flash[:danger] = I18n.t(:rest_404, type: I18n.t(:page))
     redirect_to root_path && return
+  end
+
+  def set_draft_count_warning
+    @draft_count = Draft.where(draftable: @page).actionable.count
+    flash[:warning] = I18n.t(:drafts_exist) if @draft_count > 0
   end
 
   def page_params

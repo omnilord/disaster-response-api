@@ -16,3 +16,23 @@ h1.page-title {
     transition: none;
     display: none;
 }
+
+[data-toggle="collapse"]:after {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  text-decoration: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: "\f054";
+  transform: rotate(-90deg) ;
+  transition: all linear 0.25s;
+
+  &:active, &:hover, &:visited {
+    text-decoration: none;
+  }
+}
+[data-toggle="collapse"].collapsed:after {
+  transform: rotate(90deg) ;
+}

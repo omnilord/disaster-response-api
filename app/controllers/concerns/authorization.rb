@@ -9,7 +9,7 @@ private
 
   def signed_in!
     unless user_signed_in?
-      redirect_to request.referrer || root_path, notice: I18n.t(:permission_denied)
+      redirect_to request.referrer || root_path, notice: I18n.t(:please_sign_in)
     end
   end
 
