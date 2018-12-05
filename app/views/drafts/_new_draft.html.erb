@@ -1,0 +1,34 @@
+<% draft.build_record %>
+<div class="row text-center">
+  <div class="col-2"><h4><%= t(:field) %></h4></div>
+  <div class="col alert-success"><h4><%= t(:draft) %></h4></div>
+</div>
+<% draft.draftable.class.column_names.each_with_index do |col, i| %>
+  <% next if col.to_s.match?(Draft::EDIT_REJECTION) %>
+  <hr />
+  <div class="row draft-field-diff">
+    <div class="col-2"><%= col.to_s %></div>
+    <% if draft.draftable.changes[col].nil? %>
+    <div class="col cell text-center bg-light">
+      <div class="cell-body"><%= draft.draftable.send(col) %></div>
+    </div>
+    <% else %>
+    <div class="col cell text-center alert-success">
+      <div class="cell-body"><%= draft.draftable.changes[col][1] %></div>
+    </div>
+    <% end %>
+  </div>
+<% end %>
+<% if admin? %>
+  <div class="text-center">
+    <hr/>
+    <%= link_to draft_path(draft), class: 'btn btn-success', method: :patch,
+                                   title: format(t(:approve), type: t(:draft)) do %>
+      <%= fa_icon(:check, text: t(:approve)) %>
+    <% end %>
+    <%= link_to draft, class: 'btn btn-danger', method: :delete, data: { confirm: t(:generic_confirm) },
+                       title: format(t(:deny), type: t(:draft)) do %>
+      <%= fa_icon(:ban, text: t(:deny)) %>
+    <% end %>
+  </div>
+<% end %>

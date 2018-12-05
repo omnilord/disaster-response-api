@@ -36,3 +36,7 @@ h1.page-title {
 [data-toggle="collapse"].collapsed:after {
   transform: rotate(90deg) ;
 }
+
+.draft-list + .draft-header {
+  border-top: 2px solid #333;
+}

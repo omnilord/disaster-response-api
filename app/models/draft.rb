@@ -8,7 +8,7 @@ class Draft < ApplicationRecord
 
   validate :draftable_edited?, on: :create
 
-  scope :actionable, -> { where(approved_by: nil, denied_by: nil) }
+  scope :actionable, -> { includes(:draftable).where(approved_by: nil, denied_by: nil) }
   scope :actionable_by_type, ->(type) { actionable.where(draftable_type: type) }
   scope :denied, -> { where.not(denied_by: nil) }
   scope :approved, -> { where.not(approved_by: nil) }
@@ -49,7 +49,7 @@ private
       self.draftable = nil
       self.draftable_type = t
     else
-      self.draftable.clear_changes_information
+      self.draftable.reload
     end
   end
 end

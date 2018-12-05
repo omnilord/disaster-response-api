@@ -1,45 +1,85 @@
 <%= render 'pages/page' %>
 
 <div class="container">
-  <table id="draftsList" class="table">
-    <thead>
-      <tr>
-        <th><%= t(:draft_id) %></th>
-        <th><%= t(:draft_type) %></th>
-        <th><%= t(:draft) %></th>
-        <th><%= t(:user) %></th>
-        <th>&nbsp;</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% if @drafts.empty? %>
-        <tr>
-          <td colspan="7">
-            <%= format(t(:nothing_found), thing: t(:drafts)) %>
-          </td>
-        </tr>
-      <% else %>
-        <% @drafts.each do |draft| %>
-          <tr>
-            <td><%= draft.id %></td>
-            <td><%= draft.draftable.class.name %></td>
-            <td><%= link_to draft.draftable.link_to_text, draft.draftable %></td>
-            <td><%= draft.user.real_name %></td>
-            <td>
-              <a class="btn btn-link collapsed" data-toggle="collapse" data-target=".preview-row-<%= draft.id %>" data-collapse-state="false" aria-expanded='false'>&nbsp;</a>
-            </td>
-          </tr>
-          <tr class="collapse preview-row-<%= draft.id %>" data-parent="#draftsList">
-            <td>&nbsp;</td>
-            <td colspan="7">
-              <%= render draft %>
-            </td>
-          </tr>
+  <% if @drafts.empty? %>
+    <div class="row">
+      <div class="col">
+        <%= format(t(:nothing_found), thing: t(:drafts)) %>
+      </div>
+    </div>
+  <% else %>
+    <% @drafts.each do |item, drafts| %>
+    <div class="row draft-header">
+      <div class="col">
+        <h3>
+        <% if item.nil? %>
+          New Items
+          <span class="pull-right">
+            <a class="btn btn-link collapsed" data-toggle="collapse"
+                                              data-target=".draft-list-row-new-items"
+                                              data-collapse-state="false"
+                                              aria-expanded='false'>&nbsp;</a>
+          </span>
+        <% else %>
+          <%= link_to item.link_to_text, item %>
+          <small class="text-muted">
+            <em><%= t(:resource) %>:</em>
+            <%= item.class.name %> <%= item.id %>
+          </small>
+          <span class="pull-right">
+            <a class="btn btn-link collapsed" data-toggle="collapse"
+                                              data-target=".draft-list-row-<%= item.class.name %>-<%= item.id %>"
+                                              data-collapse-state="false"
+                                              aria-expanded='false'>&nbsp;</a>
+          </span>
         <% end %>
-      <% end %>
-    </tbody>
-  </table>
+        </h3>
+      </div>
+    </div>
+    <div class="row draft-list collapse draft-list-row-<%= item.nil? ? 'new-items' : "#{item.class.name}-#{item.id}" %>">
+      <div class="col">
+        <table id="draftsList" class="table">
+          <thead>
+            <tr>
+              <th>&nbsp;</th>
+              <% if item.nil? %><th><%= t(:draft_type) %></th><% end %>
+              <th><%= t(:draft_id) %></th>
+              <th><%= t(:timestamp) %></th>
+              <th><%= t(:user) %></th>
+              <th colspan="2">&nbsp;</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% drafts.each do |draft| %>
+              <tr>
+                <td>&nbsp;</td>
+              <% if item.nil? %><th><%= draft.draftable_type %></th><% end %>
+                <td><%= draft.id %></td>
+                <td><%= draft.created_at %></td>
+                <td><%= draft.user.real_name %></td>
+                <td class="text-right">
+                  <a class="btn btn-link collapsed" data-toggle="collapse"
+                                                    data-target=".preview-row-<%= draft.id %>"
+                                                    data-collapse-state="false"
+                                                    aria-expanded='false'>&nbsp;</a>
+                </td>
+                <td>&nbsp;</td>
+              </tr>
+              <tr class="collapse preview-row-<%= draft.id %>" data-parent="#draftsList">
+                <td>&nbsp;</td>
+                <td colspan="<%= item.nil? ? 5 : 4 %>">
+                  <%= render draft %>
+                </td>
+                <td>&nbsp;</td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <% end %>
+  <% end %>
 </div>
 
 <script>
