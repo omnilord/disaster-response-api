@@ -1,11 +1,14 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+admin:
+  email: admin@localhost.tld
+  real_name: "Adminly Admin"
+  admin: true
 
-# This model initially had no columns defined. If you add columns to the
-# model remove the '{}' from the fixture names and add the columns immediately
-# below each fixture, per the syntax in the comments below
-#
-one: {}
-# column: value
-#
-two: {}
-# column: value
+generic_one:
+  email: gereric1@localhost.tld
+  real_name: "First Generic User"
+  admin: false
+
+generic_two:
+  email: gereric2@localhost.tld
+  real_name: "Second Generic User"
+  admin: false

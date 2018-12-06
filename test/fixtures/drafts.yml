@@ -1,13 +1,69 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+page_one:
+  draftable: lorem
+  draftable_type: Page
+  data:
+    page: lorem_ipsum
+    title: "Lorem Ipsum"
+    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+  user: admin
+  approved_by: admin
+  approved_at: <%= 1.day.ago %>
 
-one:
-  draftable: one
-  draftable_type: Draftable
-  record: MyText
-  user: one
+page_two:
+  draftable: pirate
+  draftable_type: Page
+  data:
+    page: pirate_ipsum
+    title: "Pirate Ipsum"
+    content: "Hempen halter rutters pirate lateen sail jib me splice the main brace hands strike colors provost. Bounty dead men tell no tales wench marooned fluke yard Brethren of the Coast come about squiffy chase. Yard tender parrel log nipperkin Jolly Roger scurvy clipper gun Brethren of the Coast."
+  user: admin
+  approved_by: admin
+  approved_at: <%= 1.day.ago %>
 
-two:
-  draftable: two
-  draftable_type: Draftable
-  record: MyText
-  user: two
+page_three:
+  draftable: lorem
+  draftable_type: Page
+  data:
+    page: lorem_ipsum
+    title: "No more Lorem Madness, Please"
+    content: "Testing, 123, testing."
+  user: generic_one
+
+page_four:
+  draftable: lorem
+  draftable_type: Page
+  data:
+    page: testing
+    title: "No more Lorem Madness, Please"
+    content: "Testing, 123, testing."
+  user: generic_one
+
+page_five:
+  draftable_type: Page
+  data:
+    page: new_page
+    title: "New Page, New Pirate"
+    content: "Schooner nipperkin parrel bring a spring upon her cable Corsair pirate hail-shot league belay chantey. Hang the jib Barbary Coast run a rig gunwalls transom rigging bucko belay cog Davy Jones' Locker. Mizzen lugsail quarterdeck spyglass scurvy mizzenmast nipper lanyard stern Yellow Jack."
+  user: generic_two
+
+page_six:
+  draftable: lorem
+  draftable_type: Page
+  data:
+    page: testing
+    title: "No more Lorem Madness, Please, Pleaaaase"
+    content: "Testing, 123, testing. Hahahhaha"
+  user: generic_one
+  denied_by: admin
+  denied_at: <%= 3.hour.ago %>
+
+page_seven:
+  draftable: lorem
+  draftable_type: Page
+  data:
+    page: testing
+    title: "No more Lorem Madness, Please"
+    content: "Testing, 123, testing."
+  user: generic_one
+  approved_by: admin
+  approved_at: <%= 1.hour.ago %>
