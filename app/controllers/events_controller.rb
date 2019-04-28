@@ -1,9 +1,12 @@
 class EventsController < ApplicationController
+  include PageSetup
   include DraftHandler
 
   before_action :set_event, only: %i[show edit update destroy]
   before_action :admin!, only: %i[destroy]
   before_action :set_draft_count_warning, only: [:edit]
+
+  resource_pages create: true, content: I18n.t(:press_edit, type: I18n.t(:page))
 
   def index
     @active_events = Event.active

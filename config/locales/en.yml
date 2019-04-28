@@ -52,6 +52,7 @@ en:
   draft_updated: 'Draft was successfully updated.'
   edit: 'Edit %{type}'
   event: 'Event'
+  event_page: 'Event Page'
   events: 'Events'
   event_team: 'Event Management Team'
   field: 'Field'
@@ -134,3 +135,5 @@ en:
         administrator: 'Event Administrator'
         deactivated: 'Deactivated'
         disaster_type: 'Disaster Type'
+      page:
+        title: "Title"

@@ -4,7 +4,6 @@ module PageSetup
   DISALLOWED = %w[create update destroy].freeze
   SINGULAR = %w[new edit show].freeze
 
-
   included do
     def self.page(action, **options)
       options[:page] ||= action.to_s
