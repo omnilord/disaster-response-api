@@ -15,5 +15,15 @@ module DisasterResponseApi
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
+
+    #
+    # Application Specific Configurations
+    #
+
+    config.date_format = '%m/%d/%Y'
+    config.date_format_ui = 'mm/dd/yy'
+    config.datetime_format = '%m/%d/%Y %H:%M:%S'
+
+    config.default_disaster_type = :hurricane
   end
 end

@@ -42,16 +42,20 @@ class PagesController < ApplicationController
 private
 
   def save_or_draft(method)
-    success, pending, error_render =
+    @draft, success, pending, error_render =
       if method == :create
-        @draft = Draft.create(draftable_type: Page, data: page_params)
-        [:new_success, :new_draft_pending, :new]
+        [
+          Draft.new(draftable_type: Page, data: page_params),
+          :new_success, :new_draft_pending, :new
+        ]
       else
-        @draft = Draft.create(draftable: @page, data: page_params)
-        [:update_success, :update_draft_pending, :edit]
+        [
+          Draft.new(draftable: @page, data: page_params),
+          :update_success, :update_draft_pending, :edit
+        ]
       end
 
-    if @draft
+    if @draft.save
       if Current.user&.admin? && @draft.approve
         @page = @draft.draftable
         redirect_to pages_path, notice: I18n.t(success, type: "`#{@page.page}` #{I18n.t(:page)}")
@@ -59,7 +63,7 @@ private
         redirect_to @draft, notice: I18n.t(pending, draft: I18n.t(:page))
       end
     else
-      flash[:notice] = I18n.t(:generic_error)
+      flash[:error] = @draft.errors.full_messages || I18n.t(:generic_error)
       render error_render
     end
   end

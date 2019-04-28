@@ -50,12 +50,13 @@ class DraftsController < ApplicationController
     end
   end
 
-  private
-    def set_draft
-      @draft = Draft.find(params[:id])
-    end
+private
 
-    def check_drafter_access!
-      admin! unless @draft&.user_id == Current.user.id
-    end
+  def set_draft
+    @draft = Draft.find(params[:id])
+  end
+
+  def check_drafter_access!
+    admin! unless @draft&.user_id == Current.user.id
+  end
 end

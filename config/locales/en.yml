@@ -51,9 +51,9 @@ en:
   draft_type: 'Draft Type'
   draft_updated: 'Draft was successfully updated.'
   edit: 'Edit %{type}'
-  edit_page: 'Edit Page'
   event: 'Event'
   events: 'Events'
+  event_team: 'Event Management Team'
   field: 'Field'
   field_name: 'Field Name'
   generic_confirm: 'Are you sure?'
@@ -62,6 +62,8 @@ en:
   hide_changes: 'Hide Changes'
   hide_preview: 'Hide Preview'
   home: 'Home'
+  invalid_date: 'Invalid date'
+  invalid_slug_format: 'format is wrong'
   invite_to_help: 'How can I help?'
   list_all: 'List All'
   must_edit_to_save: 'You must edit the %{type} in order to save it.'
@@ -95,6 +97,7 @@ en:
   sign_out: 'Sign Out'
   sign_up: 'Sign Up'
   site_title: 'Disaster Resources API'
+  supports_markdown: 'Supports Markdown'
   timestamp: 'Time Stamp'
   trash: 'Trash'
   update_draft_pending: 'Your %{draft} update is pending approval.'
@@ -102,3 +105,32 @@ en:
   update_success: '%{type} was successfully updated.'
   user: 'User'
   users: 'Users'
+
+  attributes:
+    content: 'Content'
+    created_at: 'Created At'
+    name: 'Name'
+    updated_at: 'Last Updated At'
+
+  activerecord:
+    attributes:
+      event:
+        disaster_types:
+          earthquake: 'Earthquake'
+          flood: 'Flood'
+          hurricane: 'Hurricane'
+          riot: 'Riot'
+          storm: 'Storm'
+          tornado: 'Tornado'
+          tsunami: 'Tsunami'
+          warfare: 'Warfare'
+          wildfire: 'Wildfire'
+          other: 'Other'
+
+  helpers:
+    label:
+      event:
+        activated: 'Activated'
+        administrator: 'Event Administrator'
+        deactivated: 'Deactivated'
+        disaster_type: 'Disaster Type'

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :events
   concern :draftable do
     resources :drafts, shallow: true, only: %i[index edit update show destroy]
   end

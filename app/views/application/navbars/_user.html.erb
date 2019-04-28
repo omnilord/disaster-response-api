@@ -3,10 +3,10 @@
            icon: 'bolt',
            text: t(:events).titleize,
            items: [
-             { icon: 'list', text: t(:list_all) },
+             { icon: 'list', text: t(:list_all), url: events_path },
              { icon: 'exclamation-triangle', text: t(:outdated) },
              { separator?: true },
-             { icon: 'plus', text: t(:new_event) },
+             { icon: 'plus', text: t(:new_event), url: new_event_path },
            ]
 %>
 <%= render 'application/navbars/dropdown',

@@ -12,7 +12,7 @@
 //
 //= require jquery3
 //= require jquery_ujs
-//= require activestorage
+//= require jquery-ui/datepicker
 //= require turbolinks
 //= require bootstrap
 //= require_tree .

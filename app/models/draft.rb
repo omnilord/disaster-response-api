@@ -1,5 +1,5 @@
 class Draft < ApplicationRecord
-  EDIT_REJECTION = /(?:id|_at)\z/
+  EDIT_REJECTION = /(?:\Aid|_at)\z/
 
   belongs_to :draftable, polymorphic: true, optional: true
   belongs_to :user, optional: true, default: -> { Current.user }

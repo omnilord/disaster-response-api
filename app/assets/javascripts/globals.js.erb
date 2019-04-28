@@ -1,0 +1,14 @@
+<% environment.context_class.instance_eval { include ApplicationHelper } %>
+
+$(document).on('turbolinks:load', function () {
+  $('input[type="text"].datepicker').each(function () {
+    var $this = $(this);
+
+    $this.datepicker({
+      dateFormat: '<%= conf.date_format_ui %>',
+      maxDate: $this.data('maxdate') || null,
+      minDate: $this.data('mindate') || null,
+      defaultDate: $this.data('defaultdate') || null,
+    });
+  });
+});

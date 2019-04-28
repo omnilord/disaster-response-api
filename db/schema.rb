@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_03_204351) do
+ActiveRecord::Schema.define(version: 2018_12_07_000500) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,35 @@ ActiveRecord::Schema.define(version: 2018_10_03_204351) do
     t.index ["denied_by_id"], name: "index_drafts_on_denied_by_id"
     t.index ["draftable_type", "draftable_id"], name: "index_drafts_on_draftable_type_and_draftable_id"
     t.index ["user_id"], name: "index_drafts_on_user_id"
+  end
+
+  create_table "event_managers", force: :cascade do |t|
+    t.bigint "event_id"
+    t.bigint "user_id"
+    t.boolean "active", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_event_managers_on_event_id"
+    t.index ["user_id"], name: "index_event_managers_on_user_id"
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.text "slug", null: false
+    t.text "name"
+    t.text "disaster_type"
+    t.text "content"
+    t.datetime "activated"
+    t.datetime "deactivated"
+    t.bigint "administrator_id"
+    t.bigint "created_by_id"
+    t.bigint "updated_by_id"
+    t.bigint "current_draft_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["administrator_id"], name: "index_events_on_administrator_id"
+    t.index ["created_by_id"], name: "index_events_on_created_by_id"
+    t.index ["current_draft_id"], name: "index_events_on_current_draft_id"
+    t.index ["updated_by_id"], name: "index_events_on_updated_by_id"
   end
 
   create_table "pages", force: :cascade do |t|
@@ -76,6 +105,12 @@ ActiveRecord::Schema.define(version: 2018_10_03_204351) do
   add_foreign_key "drafts", "users"
   add_foreign_key "drafts", "users", column: "approved_by_id"
   add_foreign_key "drafts", "users", column: "denied_by_id"
+  add_foreign_key "event_managers", "events"
+  add_foreign_key "event_managers", "users"
+  add_foreign_key "events", "drafts", column: "current_draft_id"
+  add_foreign_key "events", "users", column: "administrator_id"
+  add_foreign_key "events", "users", column: "created_by_id"
+  add_foreign_key "events", "users", column: "updated_by_id"
   add_foreign_key "pages", "drafts", column: "current_draft_id"
   add_foreign_key "pages", "users", column: "editor_id", on_update: :cascade, on_delete: :nullify
 end

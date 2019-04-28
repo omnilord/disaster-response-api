@@ -1,0 +1,61 @@
+<% content_for :site_title, "#{@site_title} - #{@event.name}" %>
+<% markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true) %>
+<div class="card bg-light">
+  <div class="card-header">
+    <div class="row clearfix">
+      <div class="col-11">
+      <h1><%= @event.name %><%= admin? ? " <small>(event id: #{@event.id})</small>".html_safe : '' %></h1>
+      </div>
+      <div class="col-1">
+      <% if user_signed_in? && @event.manager?(Current.user) %>
+        <%= link_to edit_event_path(@event), class: 'btn btn-sm btn-outline-primary float-right' do %>
+          <%= fa_icon(:edit, text: t(:edit, type: t(:event))) %>
+        <% end %>
+      <% end %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-3">
+        <h6><%= label(:event, :disaster_type) %>:</h6>
+        <%= @event.humanize_disaster_type %>
+      </div>
+      <div class="col-3">
+        <h6><%= label(:event, :activated) %>:</h6>
+        <%= @event.activated&.strftime("%B %d, %Y") %>
+      </div>
+      <div class="col-3">
+        <h6><%= label(:event, :deactivated) %>:</h6>
+        <%= @event.deactivated&.strftime("%B %d, %Y") %>
+      </div>
+      <div class="col-3">
+        <h6><%= label(:event, :administrator) %>:</h6>
+        <%= @event.administrator.link_to_text %>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <%= sanitize(markdown.render(@event.content), tags: ALLOWED_HTML_TAGS, attributes: ALLOWED_HTML_ATTRIBUTES).html_safe %>
+  </div>
+  <div class="card-footer">
+    <div class="row">
+      <div class="col-3">
+        <h6><%= label(:event, :created_at) %></h6>
+        <%=@event.created_at.strftime("%B %d, %Y %H:%M%p") %><br/>
+        <small>by: <%= @event.created_by.link_to_text %></small>
+      </div>
+      <div class="col-3">
+        <h6><%= label(:event, :updated_at) %></h6>
+        <%=@event.updated_at.strftime("%B %d, %Y %H:%M%p") %><br/>
+        <small>by: <%= @event.updated_by.link_to_text %></small>
+      </div>
+    </div>
+  </div>
+</div>
+<% unless @event.managers.empty? %>
+  <h2><%= t(:event_team) %></h2>
+<ul>
+<% @event.managers.each do |user| %>
+  <li><%= user.link_to_text %></li>
+<% end %>
+</ul>
+<% end %>

@@ -12,9 +12,9 @@ h1.page-title {
 }
 
 .collapsing {
-    -webkit-transition: none;
-    transition: none;
-    display: none;
+  -webkit-transition: none;
+  transition: none;
+  display: none;
 }
 
 [data-toggle="collapse"]:after {

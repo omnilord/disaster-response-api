@@ -1,0 +1,27 @@
+      <button type="button" id="toggle-preview" class="preview-markdown btn btn-link"
+                            data-src="<%= source %>"
+                            data-target="#preview-window">
+        <%= fa_icon :eye, text: t(:preview_content) %>
+      </button>
+      <div id="preview-window" class="content-preview"></div>
+      <script>
+function setup_markdown_preview(target_id, preview_id, toggle_id) {
+  var markdown_converter = new showdown.Converter(),
+      source = $(target_id),
+      target = $(preview_id),
+      toggle = $(toggle_id).one('click', function preview_on() {
+        target.html(filterXSS(markdown_converter.makeHtml(source.val())));
+        toggle.html('<%= fa_icon 'eye-slash', text: t(:hide_preview) %>');
+        source.one('keyup', function () {
+          toggle.trigger('click');
+        });
+        toggle.one('click', function () {
+          target.html('');
+          toggle.html('<%= fa_icon :eye, text: t(:preview_content) %>');
+          toggle.one('click', preview_on);
+        });
+      });
+}
+$(function () { setup_markdown_preview('<%= source %>', '#preview-window', '#toggle-preview'); });
+      </script>
+
