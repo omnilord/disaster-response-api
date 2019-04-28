@@ -35,9 +35,9 @@ class DraftsController < ApplicationController
 
   def update
     @draft.approve
-    type = @draft.draftable.class.name
+    type = @draft.draftable.class.name.downcase.to_sym
     respond_to do |format|
-      format.html { redirect_to drafts_path, notice: I18n.t(:draft_updated, type: type) }
+      format.html { redirect_to drafts_path, notice: I18n.t(:draft_updated, type: I18n.t(type)) }
       format.json { head :no_content, status: :ok }
     end
   end

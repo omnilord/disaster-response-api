@@ -63,6 +63,10 @@ class Event < ApplicationRecord
     name
   end
 
+  def draft_type
+    name
+  end
+
   def admin?(user)
     user.admin? || administrator == user
   end

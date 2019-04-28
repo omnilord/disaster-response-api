@@ -1,6 +1,9 @@
 class EventsController < ApplicationController
+  include DraftHandler
+
   before_action :set_event, only: %i[show edit update destroy]
   before_action :admin!, only: %i[destroy]
+  before_action :set_draft_count_warning, only: [:edit]
 
   def index
     @active_events = Event.active
@@ -31,34 +34,6 @@ class EventsController < ApplicationController
   end
 
 private
-
-  def save_or_draft(method)
-    @draft, success, pending, error_render =
-      if method == :create
-        [
-          Draft.new(draftable_type: Event, data: event_params),
-          :new_success, :new_draft_pending, :new
-        ]
-      else
-        [
-          Draft.new(draftable: @event, data: event_params),
-          :update_success, :update_draft_pending, :edit
-        ]
-      end
-
-
-    if @draft.save
-      if Current.user&.admin? && @draft.approve
-        @event = @draft.draftable
-        redirect_to events_path, notice: I18n.t(success, type: "`#{@event.name}` #{I18n.t(:event)}")
-      else
-        redirect_to @draft, notice: I18n.t(pending, draft: I18n.t(:event))
-      end
-    else
-      flash[:error] = @draft.errors.full_messages || I18n.t(:generic_error)
-      render error_render
-    end
-  end
 
   def set_event
     @event = Event.find_by(slug: params[:id])

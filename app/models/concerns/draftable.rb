@@ -10,6 +10,10 @@ module Draftable
     scope :historic_drafts, -> { drafts.historic.order(created_at: :desc) }
   end
 
+  def draft_type
+    raise 'Draftables must define #draft_type'
+  end
+
   def current_draft
     Draft.find(current_draft_id) unless current_draft_id.nil?
   end

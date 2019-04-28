@@ -28,6 +28,10 @@ class Page < ApplicationRecord
     "#{title} (#{page})"
   end
 
+  def draft_type
+    page
+  end
+
 private
 
   def sanitize!
