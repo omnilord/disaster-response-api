@@ -69,14 +69,14 @@
     </div>
 
     <div class="btn-group d-flex justify-content-center mt-3">
-    <%= f.submit class: 'btn btn-sm btn-primary' %>
-    <%= link_to t(:events_index), events_path, class: 'btn btn-sm btn-outline-info' %>
-    <% unless @event.new_record? %>
-      <%= link_to t(:delete_type, type: t(:event)), event_path(@event),
-                    method: :delete,
-                    data: { confirm: 'Are you sure?' },
-                    class: 'btn btn-sm btn-outline-danger' %>
-    <% end %>
+      <%= f.submit class: 'btn btn-sm btn-primary' %>
+      <%= link_to t(:events_index), events_path, class: 'btn btn-sm btn-outline-info' %>
+      <% unless event.new_record? %>
+        <%= link_to t(:delete_type, type: t(:event)), event_path(event),
+                      method: :delete,
+                      data: { confirm: 'Are you sure?' },
+                      class: 'btn btn-sm btn-outline-danger' %>
+      <% end %>
     </div>
   </div>
 <% end %>

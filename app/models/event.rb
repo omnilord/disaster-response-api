@@ -33,6 +33,8 @@ class Event < ApplicationRecord
   belongs_to :updated_by, class_name: 'User', default: -> { Current.user }
   belongs_to :administrator, class_name: 'User', default: -> { Current.user }
 
+  accepts_nested_attributes_for :managers, allow_destroy: true
+
   # publications are micro-news bits that get pushed out to various outlets
   # Could be as simple as a URL to a news outlet that generates an OEmbed preview
   # TODO: has_many :publications
@@ -68,10 +70,12 @@ class Event < ApplicationRecord
   end
 
   def admin?(user)
+    return false if user.nil?
     user.admin? || administrator == user
   end
 
   def manager?(user)
+    return false if user.nil?
     admin?(user) || managers.exists?(user)
   end
 

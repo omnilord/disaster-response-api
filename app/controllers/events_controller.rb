@@ -40,7 +40,7 @@ private
 
   def set_event
     @event = Event.find_by(slug: params[:id])
-    @event ||= Event.find_(params[:id])
+    @event ||= Event.find(params[:id])
   rescue ActiveRecord::RecordNotFound
     flash[:danger] = I18n.t(:rest_404, type: I18n.t(:event))
     redirect_to root_path && return

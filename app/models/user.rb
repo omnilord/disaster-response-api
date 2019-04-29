@@ -15,6 +15,8 @@ class User < ApplicationRecord
 
   # live = undeleted users
   scope :live, -> { where(deleted: false) }
+  scope :admin, -> { where(admin: true) }
+  scope :not_admin, -> { where(admin: false) }
 
   def active_for_authentication?
     super && !deleted
