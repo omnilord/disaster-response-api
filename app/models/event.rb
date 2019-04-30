@@ -42,7 +42,6 @@ class Event < ApplicationRecord
   validates :slug, presence: true,
                    uniqueness: { case_sensitive: false },
                    format: { with: /\A\w+-\d{4}\z/, message: I18n.t(:invalid_slug_format) }
-  validate :validate_activity_dates
 
   after_initialize :init_defaults
 
@@ -83,26 +82,23 @@ class Event < ApplicationRecord
     humanize_enum(:disaster_type)
   end
 
+  def activated
+    super&.strftime(Rails.configuration.date_format)
+  end
+
+  def deactivated
+    super&.strftime(Rails.configuration.date_format)
+  end
+
 private
 
   def sanitize!
     self.name = sanitize(self.name)
     self.content = sanitize(self.content, tags: ALLOWED_HTML_TAGS, attributes: ALLOWED_HTML_ATTRIBUTES)
-    self.activated = Date.strptime(self.activated, Rails.configuration.date_format) unless self.activated.nil?
-    self.deactivated = Date.strptime(self.deactivated, Rails.configuration.date_format) unless self.activated.nil?
-  end
-
-  def validate_activity_dates
-    %i[activated deactivated].each do |fieldname|
-      field = self.send(fieldname)
-      field.nil? || Date.strptime(field, Rails.configuration.date_format)
-    rescue ArgumentError
-      errors.add(fieldname, I18n.t(:invalid_date))
-    end
   end
 
   def init_defaults
-    self.activated ||= Date.today.strftime(Rails.configuration.date_format)
+    self.activated ||= Date.today.strftime(Rails.configuration.date_format).to_s
     self.disaster_type ||= Rails.configuration.default_disaster_type
   end
 end

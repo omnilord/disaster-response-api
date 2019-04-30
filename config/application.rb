@@ -22,7 +22,7 @@ module DisasterResponseApi
 
     config.date_format = '%m/%d/%Y'
     config.date_format_ui = 'mm/dd/yy'
-    config.datetime_format = '%m/%d/%Y %H:%M:%S'
+    config.datetime_format = '%m/%d/%Y %H:%M:%S %p'
 
     config.default_disaster_type = :hurricane
   end

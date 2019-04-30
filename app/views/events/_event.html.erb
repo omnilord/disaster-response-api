@@ -21,11 +21,11 @@
       </div>
       <div class="col-3">
         <h6><%= label(:event, :activated) %>:</h6>
-        <%= item.activated&.strftime("%B %d, %Y") %>
+        <%= item.activated %>
       </div>
       <div class="col-3">
         <h6><%= label(:event, :deactivated) %>:</h6>
-        <%= item.deactivated&.strftime("%B %d, %Y") %>
+        <%= item.deactivated %>
       </div>
       <div class="col-3">
         <h6><%= label(:event, :administrator) %>:</h6>
@@ -40,12 +40,12 @@
     <div class="row">
       <div class="col-3">
         <h6><%= label(:event, :created_at) %></h6>
-        <%=item.created_at.strftime("%B %d, %Y %H:%M%p") %><br/>
+        <%=item.created_at.strftime(Rails.configuration.datetime_format) %><br/>
         <small>by: <%= item.created_by.link_to_text %></small>
       </div>
       <div class="col-3">
         <h6><%= label(:event, :updated_at) %></h6>
-        <%=item.updated_at.strftime("%B %d, %Y %H:%M%p") %><br/>
+        <%=item.updated_at.strftime(Rails.configuration.datetime_format) %><br/>
         <small>by: <%= item.updated_by.link_to_text %></small>
       </div>
     </div>

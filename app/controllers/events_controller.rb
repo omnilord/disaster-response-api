@@ -47,6 +47,15 @@ private
   end
 
   def event_params
+    %i[activated deactivated].each do |field|
+      unless params[:event][field].blank?
+        a = params[:event][field]
+        params[:event][field] = Date.strptime(a, Rails.configuration.date_format).strftime('%Y-%m-%d').to_s
+      end
+    rescue ArgumentError
+      params[:event][field] = ''
+    end
+
     params.require(:event).permit(:name, :disaster_type, :content, :activated, :deactivated, :administrator_id)
   end
 end
