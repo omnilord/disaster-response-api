@@ -21,7 +21,7 @@ module DraftHandler
       end
 
     if @draft.save
-      if Current.user&.admin? && @draft.approve
+      if @draft.approve
         obj = @draft.draftable
         self.instance_variable_set("@#{name}", obj)
         redirect_to obj, notice: I18n.t(success, type: "`#{obj.draft_type}` #{I18n.t(name.to_sym)}")

@@ -54,7 +54,7 @@
         <% draft_count = item.drafts.actionable.count %>
         <% if draft_count > 0 %>
         <span><%= pluralize(draft_count, 'draft') %></span>
-        <%= link_to(t(:manage), event_drafts_path(item), class: 'btn btn-sm btn-outline-primary') if event.admin?(Current.user) %>
+        <%= link_to(t(:manage), event_drafts_path(item), class: 'btn btn-sm btn-outline-primary') if item.manager?(Current.user) %>
         <% else %>
         <span><%= t(:no_drafts) %></span>
         <% end %>

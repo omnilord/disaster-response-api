@@ -9,7 +9,8 @@ Rails.application.routes.draw do
 
   resources :drafts, only: %i[index show update destroy]
   resources :pages, concerns: %i[draftable]
-  resources :events, concerns: %i[draftable] do
+  resources :events, param: :slug do
+    concerns :draftable, module: :events
     get '/managers', to: 'events/managers#edit'
     patch '/managers', to: 'events/managers#update'
     delete '/managers', to: 'events/managers#destroy'

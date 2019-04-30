@@ -19,6 +19,10 @@ module Draftable
     raise 'Draftables must define #draft_type'
   end
 
+  def draft_approver?(user)
+    raise 'Draftables must define #draft_approver?(user)'
+  end
+
   def current_draft
     Draft.find(current_draft_id) unless current_draft_id.nil?
   end

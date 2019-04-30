@@ -29,9 +29,26 @@ class Draft < ApplicationRecord
 
   def approve
     build_record
-    if draftable.save
+
+    if approver?(Current.user) && draftable.save
       update(draftable: draftable, approved_by: Current.user, approved_at: draftable.updated_at)
     end
+  end
+
+  def approved?
+    !approved_by.nil?
+  end
+
+  def denied?
+    !denied_by.nil?
+  end
+
+  def actionable?
+    approved_by.nil? && denied_by.nil?
+  end
+
+  def approver?(user)
+    draftable.draft_approver?(user)
   end
 
 private

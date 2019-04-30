@@ -1,10 +1,48 @@
+<% content_for(:not_actionable) do %>
+      <% if draft.approved? %>
+      <span class="btn btn-block active btn-success">
+        <%= fa_icon(:check, text: t(:approved)) %>
+      </span>
+      <% elsif draft.denied? %>
+      <span class="btn btn-block active btn-danger">
+        <%= fa_icon(:ban, text: t(:denied)) %>
+      </span>
+      <% end %>
+<% end %>
 <div class="card bg-light">
   <% if include_header ||= false %>
   <div class="card-header">
-    <%= t(draft.draftable.nil? ? :new : :edit, type: t(draft.draftable_type.downcase.to_sym)) %>
+    <h2>
+      <% if draft.draftable.nil? %>
+      <%= t(:new, type: t(draft.draftable_type.downcase.to_sym)) %>
+      <% else %>
+      <%= link_to draft.draftable.link_to_text, draft.draftable %>
+      <small class="text-muted">
+        <em><%= t(:resource) %>:</em>
+        <%= draft.draftable.class.name %> <%= draft.draftable.id %>
+      </small>
+      <% end %>
+    </h2>
+    <%= yield :not_actionable if !draft.actionable? %>
   </div>
   <% end %>
   <div class="card-body">
     <%= render draft.draftable.nil? ? 'drafts/new_draft' : 'drafts/edit_draft', draft: draft %>
   </div>
+  <div class="card-footer">
+    <div class="text-center">
+    <% if !draft.actionable? %>
+      <%= yield :not_actionable %>
+    <% elsif draft.approver?(Current.user) %>
+      <hr/>
+      <%= link_to draft_path(draft), class: 'btn btn-success', method: :patch,
+                                     title: format(t(:approve), type: t(:draft)) do %>
+        <%= fa_icon(:check, text: t(:approve)) %>
+      <% end %>
+      <%= link_to draft, class: 'btn btn-danger', method: :delete, data: { confirm: t(:generic_confirm) },
+                         title: format(t(:deny), type: t(:draft)) do %>
+        <%= fa_icon(:ban, text: t(:deny)) %>
+      <% end %>
+    <% end %>
+    </div>
 </div>

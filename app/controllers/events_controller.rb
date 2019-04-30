@@ -39,8 +39,12 @@ class EventsController < ApplicationController
 private
 
   def set_event
-    @event = Event.find_by(slug: params[:id])
-    @event ||= Event.find(params[:id])
+    @event =
+      if params[:slug].present?
+        Event.find_by(slug: params[:slug])
+      else
+        Event.find(params[:id])
+      end
   rescue ActiveRecord::RecordNotFound
     flash[:danger] = I18n.t(:rest_404, type: I18n.t(:event))
     redirect_to root_path && return

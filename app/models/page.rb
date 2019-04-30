@@ -32,6 +32,10 @@ class Page < ApplicationRecord
     page
   end
 
+  def draft_approver?(user)
+    user.admin?
+  end
+
 private
 
   def sanitize!

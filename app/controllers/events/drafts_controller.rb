@@ -1,10 +1,9 @@
 class DraftsController < ApplicationController
   include PageSetup
-  include Polymorphable
 
   before_action :signed_in!
-  before_action :set_draftable, only: %i[index]
-  before_action :manageable!, only: %i[index edit update]
+  before_action :set_event
+  before_action :event_manager?, only: %i[index edit update]
   before_action :set_draft, only: %i[show edit update destroy]
   before_action :check_drafter_access!, only: %i[show destroy]
 
@@ -12,23 +11,8 @@ class DraftsController < ApplicationController
                              content: I18n.t(:press_edit, type: 'page')
 
   def index
-    @drafts =
-      begin
-        if @draftable
-          Draft.actionable.where(draftable: @draftable)
-        elsif params[:type].present? && params[:type].constantize
-          Draft.actionable_by_type(params[:type])
-        else
-          Draft.actionable
-        end
-      rescue NameError
-        []
-      end
-      .group_by(&:draftable).sort do |a, b|
-        1 if a[0].nil?
-        -1 if b[0].nil?
-        a[0].class.name <=> b[0].class.name
-      end
+    @drafts = Draft.find_by(draftable: @event).actionable
+    render 'drafts/index'
   end
 
   def show
@@ -56,12 +40,17 @@ class DraftsController < ApplicationController
 
 private
 
-  def set_draftable
-    @draftable ||= find_polymorph
+  def set_event
+    @event = Event.find_by(slug: params[:id])
+    @event ||= Event.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    flash[:danger] = I18n.t(:rest_404, type: I18n.t(:event))
+    redirect_to root_path && return
   end
 
-  def manageable!
-    admin! unless user_signed_in?
+  def event_manager?
+    binding.pry
+    admin! unless @event.manager?(Current.user)
   end
 
   def set_draft
@@ -69,7 +58,6 @@ private
   end
 
   def check_drafter_access!
-    return if @draftable&.manager?(Current.user)
     admin! unless @draft&.user_id == Current.user.id
   end
 end

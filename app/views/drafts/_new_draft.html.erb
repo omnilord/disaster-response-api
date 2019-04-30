@@ -19,7 +19,7 @@
     <% end %>
   </div>
 <% end %>
-<% if admin? %>
+<% if admin? && draft.actionable? %>
   <div class="text-center">
     <hr/>
     <%= link_to draft_path(draft), class: 'btn btn-success', method: :patch,

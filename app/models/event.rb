@@ -41,7 +41,7 @@ class Event < ApplicationRecord
 
   validates :slug, presence: true,
                    uniqueness: { case_sensitive: false },
-                   format: { with: /\A\w+-\d{4}\z/, message: I18n.t(:invalid_slug_format) }
+                   format: { with: /\A?(?:\w+-)+\d{4}\z/, message: I18n.t(:invalid_slug_format) }
 
   after_initialize :init_defaults
 
@@ -66,6 +66,10 @@ class Event < ApplicationRecord
 
   def draft_type
     name
+  end
+
+  def draft_approver?(user)
+    manager?(user)
   end
 
   def admin?(user)

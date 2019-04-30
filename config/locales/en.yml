@@ -33,6 +33,7 @@ en:
   admin: 'Admin'
   admin_only: 'Only administrators may access that page.'
   approve: 'Approve'
+  approved: 'Approved'
   approve_type: 'Approve %{type}'
   archived: 'Archived'
   back_to: 'Back to %{type}'
@@ -41,6 +42,7 @@ en:
   disaster: 'Disaster'
   delete: 'Delete'
   delete_type: 'Delete %{type}'
+  denied: 'Denied'
   deny: 'Deny'
   deny_type: 'Deny %{type}'
   destroy_success: '%{type} was successfully destroyed.'
@@ -70,6 +72,7 @@ en:
   invalid_slug_format: 'format is wrong'
   invite_to_help: 'How can I help?'
   list_all: 'List All'
+  manage: 'Manage'
   must_edit_to_save: 'You must edit the %{type} in order to save it.'
   my_settings: 'My Settings'
   navbar_welcome: 'Welcome, %{username}!'
@@ -111,6 +114,7 @@ en:
   update_success: '%{type} was successfully updated.'
   user: 'User'
   users: 'Users'
+  view: 'View'
 
   attributes:
     content: 'Content'
