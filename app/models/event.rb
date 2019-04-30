@@ -75,7 +75,7 @@ class Event < ApplicationRecord
 
   def manager?(user)
     return false if user.nil?
-    admin?(user) || managers.exists?(user)
+    admin?(user) || managers.exists?(user.id)
   end
 
   def humanize_disaster_type

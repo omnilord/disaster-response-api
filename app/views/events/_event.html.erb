@@ -48,8 +48,25 @@
         <%=item.updated_at.strftime(Rails.configuration.datetime_format) %><br/>
         <small>by: <%= item.updated_by.link_to_text %></small>
       </div>
+      <div class="col-3">&nbsp;</div>
+      <div class="col-3">
+        <h6><label><%= t(:drafts) %></label></h6>
+        <% draft_count = item.drafts.actionable.count %>
+        <% if draft_count > 0 %>
+        <span><%= pluralize(draft_count, 'draft') %></span>
+        <%= link_to(t(:manage), event_drafts_path(item), class: 'btn btn-sm btn-outline-primary') if event.admin?(Current.user) %>
+        <% else %>
+        <span><%= t(:no_drafts) %></span>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>
 
+<div class="row">
+  <div class="col-6">
 <%= render 'events/managers/show', event: item %>
+  </div>
+  <div class="col-6">
+  </div>
+</div>
