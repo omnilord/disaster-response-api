@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_07_000500) do
+ActiveRecord::Schema.define(version: 2019_05_03_125307) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,14 +66,16 @@ ActiveRecord::Schema.define(version: 2018_12_07_000500) do
     t.text "page"
     t.text "title"
     t.text "content"
-    t.integer "editor_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "current_draft_id", null: false
+    t.bigint "created_by_id"
+    t.bigint "updated_by_id"
+    t.index ["created_by_id"], name: "index_pages_on_created_by_id"
     t.index ["current_draft_id"], name: "index_pages_on_current_draft_id"
-    t.index ["editor_id"], name: "index_pages_on_editor_id"
     t.index ["i18n"], name: "index_pages_on_i18n"
     t.index ["page"], name: "index_pages_on_page", unique: true
+    t.index ["updated_by_id"], name: "index_pages_on_updated_by_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -112,5 +114,6 @@ ActiveRecord::Schema.define(version: 2018_12_07_000500) do
   add_foreign_key "events", "users", column: "created_by_id"
   add_foreign_key "events", "users", column: "updated_by_id"
   add_foreign_key "pages", "drafts", column: "current_draft_id"
-  add_foreign_key "pages", "users", column: "editor_id", on_update: :cascade, on_delete: :nullify
+  add_foreign_key "pages", "users", column: "created_by_id"
+  add_foreign_key "pages", "users", column: "updated_by_id"
 end

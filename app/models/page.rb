@@ -2,10 +2,11 @@ class Page < ApplicationRecord
   include ActionView::Helpers::SanitizeHelper
   include Draftable
 
-  belongs_to :editor, class_name: 'User', optional: true, default: -> { Current.user }
+  belongs_to :created_by, class_name: 'User', default: -> { Current.user }
+  belongs_to :updated_by, class_name: 'User', default: -> { Current.user }
 
   before_save :sanitize!
-  before_save -> { self.editor = Current.user }
+  before_save -> { self.updated_by = Current.user }
 
   def self.find_or_default(pagename, **options)
     page = where(page: pagename).first
