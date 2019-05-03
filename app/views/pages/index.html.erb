@@ -1,8 +1,39 @@
 <%= render 'pages/page' %>
 
-<%= link_to 'Add New Page', new_page_path, class: 'button button-outline' %>
-
-<% @pages.each do |page| %>
-  <hr/>
-  <h4><%= link_to page.link_to_text, page %></h4>
+<% if @pages.empty? %>
+  <div class="card">
+    <div class="card-body bg-danger">
+      That's odd, there are no pages yet.
+    </div>
+  </div>
+<% else %>
+  <table class="table table-striped table-sm">
+    <caption class="sr-only"><%= t(:pages_index_caption) %></caption>
+    <thead>
+      <th scope="col"><%= t(:page) %></th>
+      <th scope="col"><%= t(:created) %></th>
+      <th scope="col"><%= t(:updated_last) %></th>
+    </thead>
+    <tbody>
+    <% @pages.each do |page| %>
+      <tr>
+        <th scope="row"><%= link_to page.link_to_text, page %></th>
+        <td class="metainfo">
+          <label><%= t(:at) %>:</label>
+          <%= page.created_at.strftime(Rails.configuration.datetime_format) %>
+          <br/>
+          <label><%= t(:by) %>:</label>
+          <%= page.created_by&.link_to_text || t(:anonymous) %>
+        </td>
+        <td class="metainfo">
+          <label><%= t(:at) %>:</label>
+          <%= page.updated_at.strftime(Rails.configuration.datetime_format) %>
+          <br/>
+          <label><%= t(:by) %>:</label>
+          <%= page.updated_by&.link_to_text || t(:anonymous) %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
 <% end %>

@@ -11,7 +11,7 @@ class PagesController < ApplicationController
   resource_pages create: true
 
   def index
-    @pages = Page.all
+    @pages = Page.includes(:created_by, :updated_by).all
   end
 
   def new
