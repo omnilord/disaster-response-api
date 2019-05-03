@@ -14,6 +14,11 @@
   </div>
 
   <div class="form-group">
+    <%= f.label :time_zone %>
+    <%= f.time_zone_select :time_zone, nil, { default: 'Eastern Time (US & Canada)' }, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
     <%= f.label :password %>
     <%= f.password_field :password, autocomplete: 'new-password', class: 'form-control' %>
 
