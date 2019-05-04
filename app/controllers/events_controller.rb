@@ -6,7 +6,7 @@ class EventsController < ApplicationController
   before_action :admin!, only: %i[destroy]
   before_action :set_draft_count_warning, only: [:edit]
 
-  resource_pages create: true, content: I18n.t(:press_edit, type: I18n.t(:page))
+  resource_pages create: true
 
   def index
     @active_events = Event.active

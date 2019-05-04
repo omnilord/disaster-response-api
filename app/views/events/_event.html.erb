@@ -9,7 +9,7 @@
       <div class="col-1">
       <% if user_signed_in? && item.manager?(Current.user) %>
         <%= link_to edit_event_path(item), class: 'btn btn-sm btn-outline-primary float-right' do %>
-          <%= fa_icon(:edit, text: t(:edit, type: t(:event))) %>
+          <%= fa_icon(:edit_type, text: t(:edit, type: t(:event))) %>
         <% end %>
       <% end %>
       </div>

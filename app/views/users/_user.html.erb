@@ -1,0 +1,36 @@
+<div class="card">
+  <div class="card-header clearfix">
+    <h2>
+      <%= item.link_to_text %>
+      <small class="pull-right"><%= item.role %></small>
+    </h2>
+      <%= link_to(t(:edit_type, type: t(:user)), edit_user_path(user), class: 'btn btn-sm btn-outline-primary') %>
+      <%= link_to(t(:delete_type, type: t(:user)), edit_user_path(user), class: 'btn btn-sm btn-outline-danger') %>
+  </div>
+  <div class="card-body">
+    <p>
+      <strong><%= label(:user, :location) %>:</strong>
+      <%= item.location %>
+    </p>
+    <p>
+      <strong><%= label(:user, :timezone) %>:</strong>
+      <%= item.time_zone %>
+    </p>
+    <p>
+      <strong><%= label(:user, :localization) %>:</strong>
+      <%= item.i18n %>
+    </p>
+    <p>
+      <strong><%= label(:user, :created_at) %>:</strong>
+      <%=item.created_at.strftime(Rails.configuration.datetime_format) %>
+    </p>
+    <p>
+      <strong><%= label(:user, :updated_at) %>:</strong>
+      <%=item.updated_at.strftime(Rails.configuration.datetime_format) %>
+    </p>
+    <p>
+      <strong><%= label(:user, :last_log_in_at) %>:</strong>
+      <%=item.last_sign_in_at.strftime(Rails.configuration.datetime_format) %>
+    </p>
+  </div>
+</div>
