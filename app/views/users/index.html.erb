@@ -1,0 +1,30 @@
+<%= render 'pages/page' %>
+
+<div class="col">
+  <table id="draftsList" class="table">
+    <thead>
+      <tr>
+        <th><%= t(:id) %></th>
+        <th><%= t(:user) %></th>
+        <th><%= t(:created) %></th>
+        <th><%= t(:last_seen) %></th>
+        <th><%= t(:role) %></th>
+        <th colspan="2">&nbsp;</th>
+      </tr>
+    </thead>
+
+    <tbody>
+<% @users.each do |user| %>
+      <tr>
+        <td><%= user.id %></td>
+        <td><%= link_to(user.link_to_text, user) %></td>
+        <td><%= user.created_at.strftime(Rails.configuration.datetime_format) %></td>
+        <td><%= user.last_sign_in_at.strftime(Rails.configuration.datetime_format) %></td>
+        <td><%= t(user.role) %></td>
+        <td><%= link_to(t(:edit, type: t(:user)), edit_user_path(user), class: 'btn btn-sm btn-outline-primary') %></td>
+        <td></td>
+      </tr>
+<% end %>
+    </tbody>
+  </table>
+</div>

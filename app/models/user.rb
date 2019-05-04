@@ -33,4 +33,12 @@ class User < ApplicationRecord
   def link_to_text
     "#{real_name} (#{email})"
   end
+
+  def role
+    case
+    when deleted then :deleted
+    when admin then :admin
+    else :user
+    end
+  end
 end
