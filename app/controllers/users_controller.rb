@@ -45,6 +45,6 @@ private
   end
 
   def user_params
-    params.require(:user).permit(:email, :real_name, :time_zone, :admin, :deleted)
+    params.require(:user).permit(:email, :real_name, :location, :time_zone, :admin, :deleted)
   end
 end

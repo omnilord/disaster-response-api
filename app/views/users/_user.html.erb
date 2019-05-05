@@ -4,11 +4,14 @@
       <%= item.link_to_text %>
       <small class="pull-right"><%= item.role %></small>
     </h2>
-      <%= link_to(t(:edit_type, type: t(:user)), edit_user_path(item), class: 'btn btn-sm btn-outline-primary') %>
-      <%= link_to(t(:delete_type, type: t(:user)), user_path(item),
-                  method: :delete,
-                  data: { confirm: t(:are_you_sure?) },
-                  class: 'btn btn-sm btn-outline-danger') %>
+    <%= link_to(edit_user_path(item), class: 'btn btn-sm btn-outline-primary') do %>
+      <%= fa_icon(:edit, text: t(:edit_type, type: t(:user))) %>
+    <% end %>
+    <%= link_to(user_path(item), method: :delete,
+                data: { confirm: t(:are_you_sure?) },
+                class: 'btn btn-sm btn-outline-danger') do %>
+    <%= fa_icon(:trash, text: t(:delete_type, type: t(:user))) %>
+    <% end %>
   </div>
   <div class="card-body">
     <p>
