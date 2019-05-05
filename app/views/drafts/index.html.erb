@@ -8,6 +8,7 @@
       </div>
     </div>
   <% else %>
+    <% @c1 = @drafts.length == 1 %>
     <% @drafts.each do |item, drafts| %>
     <div class="row draft-header">
       <div class="col">
@@ -15,10 +16,10 @@
         <% if item.nil? %>
           New Items
           <span class="pull-right">
-            <a class="btn btn-link collapsed" data-toggle="collapse"
+            <a class="btn btn-link<%= @c1 ? '' : ' collapsed' %>" data-toggle="collapse"
                                               data-target=".draft-list-row-new-items"
                                               data-collapse-state="false"
-                                              aria-expanded='false'>&nbsp;</a>
+                                              aria-expanded='<%= @c1.to_s %>'>&nbsp;</a>
           </span>
         <% else %>
           <%= link_to item.link_to_text, item %>
@@ -27,16 +28,16 @@
             <%= item.class.name %> <%= item.id %>
           </small>
           <span class="pull-right">
-            <a class="btn btn-link collapsed" data-toggle="collapse"
+            <a class="btn btn-link<%= @c1 ? '' : ' collapsed' %>" data-toggle="collapse"
                                               data-target=".draft-list-row-<%= item.class.name %>-<%= item.id %>"
                                               data-collapse-state="false"
-                                              aria-expanded='false'>&nbsp;</a>
+                                              aria-expanded='<%= @c1.to_s %>'>&nbsp;</a>
           </span>
         <% end %>
         </h3>
       </div>
     </div>
-    <div class="row draft-list collapse draft-list-row-<%= item.nil? ? 'new-items' : "#{item.class.name}-#{item.id}" %>">
+    <div class="row draft-list collapse <%= @c1 ? 'show ' : '' %>draft-list-row-<%= item.nil? ? 'new-items' : "#{item.class.name}-#{item.id}" %>">
       <div class="col">
         <table id="draftsList" class="table">
           <thead>
@@ -51,6 +52,7 @@
           </thead>
 
           <tbody>
+            <% @c2 = drafts.length == 1 %>
             <% drafts.each do |draft| %>
               <tr>
                 <td>&nbsp;</td>
@@ -59,14 +61,14 @@
                 <td><%= draft.created_at.strftime(Rails.configuration.datetime_format) %></td>
                 <td><%= draft.user.real_name %></td>
                 <td class="text-right">
-                  <a class="btn btn-link collapsed" data-toggle="collapse"
+                  <a class="btn btn-link<%= @c2 ? '' : ' collapsed' %>" data-toggle="collapse"
                                                     data-target=".preview-row-<%= draft.id %>"
                                                     data-collapse-state="false"
-                                                    aria-expanded='false'>&nbsp;</a>
+                                                    aria-expanded='<%= @c2.to_s %>'>&nbsp;</a>
                 </td>
                 <td>&nbsp;</td>
               </tr>
-              <tr class="collapse preview-row-<%= draft.id %>" data-parent="#draftsList">
+              <tr class="collapse <%= @c2 ? 'show ' : '' %>preview-row-<%= draft.id %>" data-parent="#draftsList">
                 <td>&nbsp;</td>
                 <td colspan="<%= item.nil? ? 5 : 4 %>">
                   <%= render draft %>
@@ -81,17 +83,3 @@
     <% end %>
   <% end %>
 </div>
-
-<script>
-$('#draftsList').on('click', 'button[data-toggle="collapse"]', function () {
-  var $this = $(this),
-      expanded = $this.data('collapse-state');
-
-  $('#draftsList button[data-collapse-state]')
-    .text('<%= t(:show_changes) %>')
-    .data('false');
-  $this
-    .text(expanded == 'true' ? '<%= t(:show_changes) %>' : '<%= t(:hide_changes) %>')
-    .data('collapse-state', { 'false': 'true', 'true': 'false' }[expanded]);
-});
-</script>
