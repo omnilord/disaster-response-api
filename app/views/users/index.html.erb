@@ -21,7 +21,11 @@
         <td><%= user.created_at.strftime(Rails.configuration.datetime_format) %></td>
         <td><%= user.last_sign_in_at.strftime(Rails.configuration.datetime_format) %></td>
         <td><%= t(user.role) %></td>
-        <td><%= link_to(t(:edit_type, type: t(:user)), edit_user_path(user), class: 'btn btn-sm btn-outline-primary') %></td>
+        <td>
+          <%= link_to(edit_user_path(user), class: 'btn btn-sm btn-outline-primary') do %>
+            <%= fa_icon(:edit, text: t(:edit_type, type: t(:user))) %>
+          <% end %>
+        </td>
         <td></td>
       </tr>
 <% end %>

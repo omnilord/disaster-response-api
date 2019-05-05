@@ -9,7 +9,7 @@
       <div class="col-1">
       <% if user_signed_in? && item.manager?(Current.user) %>
         <%= link_to edit_event_path(item), class: 'btn btn-sm btn-outline-primary float-right' do %>
-          <%= fa_icon(:edit_type, text: t(:edit, type: t(:event))) %>
+          <%= fa_icon(:edit, text: t(:edit_type, type: t(:event))) %>
         <% end %>
       <% end %>
       </div>
@@ -54,7 +54,9 @@
         <% draft_count = item.drafts.actionable.count %>
         <% if draft_count > 0 %>
         <span><%= pluralize(draft_count, 'draft') %></span>
-        <%= link_to(t(:manage), event_drafts_path(item), class: 'btn btn-sm btn-outline-primary') if item.manager?(Current.user) %>
+        <%= link_to(event_drafts_path(item), class: 'btn btn-sm btn-outline-primary') {
+          fa_icon(:list, text: t(:manage))
+        } if item.manager?(Current.user) %>
         <% else %>
         <span><%= t(:no_drafts) %></span>
         <% end %>
@@ -68,5 +70,6 @@
 <%= render 'events/managers/show', event: item %>
   </div>
   <div class="col-6">
+    <!-- extra space for something, forgot what -->
   </div>
 </div>
