@@ -46,7 +46,7 @@
     <%= link_to(t(:delete_type, type: t(:user)), user_path(@user),
                 method: :delete,
                 data: { confirm: t(:are_you_sure?) },
-                class: 'btn btn-sm btn-outline-danger') %>
+                class: 'btn btn-sm btn-outline-danger') unless @user.id == 1 %>
     <%= link_to(t(:cancel), @user,
                 class: 'btn btn-sm btn-outline-secondary') %>
   </div>

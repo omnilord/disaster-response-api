@@ -31,9 +31,11 @@ class UsersController < ApplicationController
     else
       @user.deleted = true
       if @user.save
-        redirect_to users_path, warning: "#{@user.link_to_text} has been soft deleted."
+        flash[:warning] = "#{@user.link_to_text} has been soft deleted."
+        redirect_to users_path
       else
-        redirect_to @user, danger: @user.errors.full_messages
+        flash[:danger] = @user.errors.full_messages
+        redirect_to @user
       end
     end
   end
