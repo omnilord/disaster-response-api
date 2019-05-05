@@ -1,0 +1,48 @@
+<%= form_for @user do |f| %>
+  <div class="form-group">
+    <%= f.label :email %>
+    <%= f.email_field :email, autofocus: true, autocomplete: 'email', class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :real_name %>
+    <%= f.text_field :real_name, autocomplete: 'real_name', class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :time_zone %>
+    <%= f.time_zone_select :time_zone, nil, { default: 'Eastern Time (US & Canada)' }, class: 'form-control' %>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-6">
+      <%= f.label :password %>
+      <%= f.password_field :password, autocomplete: 'new-password', class: 'form-control' %>
+    </div>
+    <div class="col-6">
+      <%= f.label :password_confirmation %>
+      <%= f.password_field :password_confirmation, autocomplete: 'new-password', class: 'form-control'  %>
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-3">
+      <%= f.label :admin %>
+      <%= f.check_box :admin, class: 'form-control'  %>
+    </div>
+    <div class="col-3">
+      <%= f.label t(:disable) =%>
+      <%= f.check_box :deleted, class: 'form-control'  %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.submit t(:update), class: 'btn btn-sm btn-primary' %>
+    <%= link_to(t(:delete_type, type: t(:user)), user_path(@user),
+                method: :delete,
+                data: { confirm: t(:are_you_sure?) },
+                class: 'btn btn-sm btn-outline-danger') %>
+    <%= link_to(t(:cancel), @user,
+                class: 'btn btn-sm btn-outline-secondary') %>
+  </div>
+<% end %>

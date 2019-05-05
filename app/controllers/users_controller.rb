@@ -26,9 +26,15 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    @user.deleted = true
-    if @user.save
+    if @user.id == 1
+      redirect_to @user, danger: 'Cannot delete root admin.'
     else
+      @user.deleted = true
+      if @user.save
+        redirect_to users_path, warning: "#{@user.link_to_text} has been soft deleted."
+      else
+        redirect_to @user, danger: @user.errors.full_messages
+      end
     end
   end
 
@@ -39,6 +45,6 @@ private
   end
 
   def user_params
-    params.require(:user).permit(:email, :real_name, :time_zone, :admin)
+    params.require(:user).permit(:email, :real_name, :time_zone, :admin, :deleted)
   end
 end
