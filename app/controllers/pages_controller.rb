@@ -8,7 +8,7 @@ class PagesController < ApplicationController
   before_action :set_draft_count_warning, only: [:edit]
 
   page :page, use_param: :page, create: true, content: I18n.t(:press_edit, type: I18n.t(:page))
-  resource_pages create: true
+  resource_pages
 
   def index
     @pages = Page.includes(:created_by, :updated_by).all

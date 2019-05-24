@@ -1,10 +1,12 @@
 <% page ||= @site_page %>
+<% if page %>
 <% content_for :site_title, "#{@site_title} - #{page.title}" %>
 <% markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true) %>
 <h1 class="page-title">
   <%= page.title %>
   <% if user_signed_in? %>
-    <%= link_to edit_page_path(page), class: 'btn btn-sm btn-outline-primary pull-right' do %>
+    <% page_link = page.id.nil? ? new_page_path : edit_page_path(page) %>
+    <%= link_to page_link, class: 'btn btn-sm btn-outline-primary pull-right' do %>
       <%= fa_icon(:edit, text: t(:edit_type, type: t(:page))) %>
     <% end %>
   <% end %>
@@ -14,3 +16,4 @@
 <article class="page-content">
   <%= sanitize(markdown.render(page.content), tags: ALLOWED_HTML_TAGS, attributes: ALLOWED_HTML_ATTRIBUTES).html_safe %>
 </article>
+<% end %>

@@ -10,16 +10,21 @@ class Page < ApplicationRecord
 
   def self.find_or_default(pagename, **options)
     page = where(page: pagename).first
-    if page.nil? && options[:create]
-      draft = Draft.create(draftable_type: Page,
-                           approved_by: Current.user,
-                           data: {
-                             page: pagename,
-                             title: options[:title] || pagename.titleize,
-                             content: options[:content] || ''
-                           })
-      draft.approve
-      draft.draftable
+    if page.nil?
+      page_data = {
+        page: pagename,
+        title: options[:title] || pagename.titleize,
+        content: options[:content] || ''
+      }
+      if options[:create]
+        draft = Draft.create(draftable_type: Page,
+                             approved_by: Current.user,
+                             data: page_data)
+        draft.approve
+        draft.draftable
+      else
+        Page.new(page_data)
+      end
     else
       page
     end
@@ -34,7 +39,7 @@ class Page < ApplicationRecord
   end
 
   def draft_approver?(user)
-    user.admin?
+    user&.admin?
   end
 
 private

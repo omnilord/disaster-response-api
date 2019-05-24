@@ -59,7 +59,7 @@
               <% if item.nil? %><th><%= draft.draftable_type %></th><% end %>
                 <td><%= draft.id %></td>
                 <td><%= draft.created_at.strftime(Rails.configuration.datetime_format) %></td>
-                <td><%= draft.user.real_name %></td>
+                <td><%= draft.user&.real_name || t(:anonymous) %></td>
                 <td class="text-right">
                   <a class="btn btn-link<%= @c2 ? '' : ' collapsed' %>" data-toggle="collapse"
                                                     data-target=".preview-row-<%= draft.id %>"

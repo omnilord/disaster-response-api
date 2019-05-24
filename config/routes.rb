@@ -19,5 +19,5 @@ Rails.application.routes.draw do
 
   get '/:page', to: 'pages#page'
 
-  match '*unmatched_route', to: 'application#not_found', via: :all
+  match '*unmatched_route', to: 'application#render_not_found', via: :all
 end

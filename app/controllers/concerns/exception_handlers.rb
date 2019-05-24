@@ -19,4 +19,8 @@ module ExceptionHandlers
       f.any { render text: '404 not found', status: :not_found }
     end
   end
+
+  def trace_dump(msg = 'show me')
+    raise msg unless Rails.env.development?
+  end
 end
