@@ -11,11 +11,10 @@ class DraftsControllerTest < DevisedTest
     assert_redirected_to root_path
   end
 
-  test 'Generic users cannot access drafts index' do
+  test 'Generic users can access drafts index' do
     sign_in users(:generic_one)
     get drafts_path
-    assert_response :redirect
-    assert_redirected_to root_path
+    assert_response :success
   end
 
   test 'Admin users can see drafts index' do
@@ -91,7 +90,7 @@ class DraftsControllerTest < DevisedTest
       assert_no_changes('page_three.draftable.attributes') do
         patch draft_path(page_three)
         assert_response :redirect
-        assert_redirected_to root_path
+        assert_redirected_to drafts_path
         page_three.reload
       end
     end
@@ -104,7 +103,7 @@ class DraftsControllerTest < DevisedTest
       assert_difference('Page.count', 0) do
         patch draft_path(page_five)
         assert_response :redirect
-        assert_redirected_to root_path
+        assert_redirected_to drafts_path
         page_five.reload
       end
     end

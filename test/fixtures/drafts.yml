@@ -67,3 +67,42 @@ page_seven:
   user: generic_one
   approved_by: admin
   approved_at: <%= 1.hour.ago %>
+
+hurricane_one:
+  draftable: hurricane
+  draftable_type: Event
+  data:
+    name: "My Text Hurricane"
+    disaster_type: "hurricane"
+    content: "A major category 4 is looming off the coast of florida."
+    activated: "2019-04-30"
+    deactivated: null
+  user: generic_one
+  approved_by: admin
+  approved_at: <%= 1.hour.ago %>
+
+earthquake_one:
+  draftable: earthquake
+  draftable_type: Event
+  data:
+    name: "Memphis Quake"
+    disaster_type: "earthquake"
+    content: "A major 7.7 quake with an epicenter near Memphis, Tennessea, puuts a typoe"
+    activated: "2019-04-30"
+    deactivated: null
+  user: generic_one
+  approved_by: admin
+  approved_at: <%= 2.hour.ago %>
+
+earthquake_two:
+  draftable: earthquake
+  draftable_type: Event
+  data:
+    name: "Memphis Quake"
+    disaster_type: "earthquake"
+    content: "A major 7.7 quake with an epicenter near Memphis, Tennessee"
+    activated: "2019-04-30"
+    deactivated: null
+  user: generic_one
+  approved_by: admin
+  approved_at: <%= 1.hour.ago %>

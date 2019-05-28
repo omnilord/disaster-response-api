@@ -8,7 +8,7 @@ class DraftsController < ApplicationController
   before_action :set_draft, only: %i[show edit update destroy]
   before_action :check_drafter_access!, only: %i[show destroy]
 
-  page :index, create: true, page: 'drafts_index',
+  page :index, create: false, page: 'drafts_index',
                              content: I18n.t(:press_edit, type: 'page')
 
   def index

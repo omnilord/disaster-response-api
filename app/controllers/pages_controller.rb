@@ -7,7 +7,7 @@ class PagesController < ApplicationController
   before_action :set_page, only: [:show, :edit, :update, :destroy]
   before_action :set_draft_count_warning, only: [:edit]
 
-  page :page, use_param: :page, create: true, content: I18n.t(:press_edit, type: I18n.t(:page))
+  page :page, use_param: :page, create: false, content: I18n.t(:press_edit, type: I18n.t(:page))
   resource_pages
 
   def index

@@ -19,7 +19,7 @@ class Events::ManagersController < ApplicationController
 private
 
   def set_event
-    @event = Event.find_by(slug: params[:event_id])
+    @event = Event.find_by(slug: params[:event_slug])
     @event ||= Event.find(params[:event_id])
   rescue ActiveRecord::RecordNotFound
     flash[:danger] = I18n.t(:rest_404, type: I18n.t(:event))

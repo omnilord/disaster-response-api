@@ -6,6 +6,7 @@ class Draft < ApplicationRecord
   belongs_to :approved_by, class_name: 'User', optional: true
   belongs_to :denied_by, class_name: 'User', optional: true
 
+  # draftable was edited, not created
   validate :draftable_edited?, on: :create
 
   scope :actionable, -> { includes(:draftable).where(approved_by: nil, denied_by: nil) }

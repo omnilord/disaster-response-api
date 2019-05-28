@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   before_action :admin!
   before_action :set_user, only: %i[show edit update destroy]
 
-  resource_pages create: true
+  resource_pages
 
   def index
     @users = User.order(:last_sign_in_at).all

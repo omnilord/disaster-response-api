@@ -1,7 +1,21 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: MyText
+hurricane:
+  name: "My Text Hurricane"
+  slug: "my-test-hurricane-2019"
+  disaster_type: "hurricane"
+  content: "A major category 4 is looming off the coast of florida."
+  current_draft_id: hurricane_one (Draft)
+  administrator: admin
+  created_by: admin
+  updated_by: admin
 
-two:
-  name: MyText
+earthquake:
+  name: "Memphis Quake"
+  slug: "memphis-quake-2019"
+  disaster_type: "earthquake"
+  content: "A major 7.7 quake with an epicenter near Memphis, Tennessee"
+  current_draft_id: earthquake_two (Draft)
+  administrator: generic_one
+  created_by: generic_one
+  updated_by: generic_one

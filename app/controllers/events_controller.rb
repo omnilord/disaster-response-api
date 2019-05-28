@@ -4,9 +4,10 @@ class EventsController < ApplicationController
 
   before_action :set_event, only: %i[show edit update destroy]
   before_action :admin!, only: %i[destroy]
+  before_action :signed_in!, only: %i[new create edit update]
   before_action :set_draft_count_warning, only: [:edit]
 
-  resource_pages create: true
+  resource_pages
 
   def index
     @active_events = Event.active
