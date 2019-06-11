@@ -2,7 +2,7 @@
   <div class="card-header clearfix">
     <h2>
       <%= item.link_to_text %>
-      <small class="pull-right"><%= item.role %></small>
+      <small class="pull-right"><%= t(item.role) %></small>
     </h2>
     <%= link_to(edit_user_path(item), class: 'btn btn-sm btn-outline-primary') do %>
       <%= fa_icon(:edit, text: t(:edit_type, type: t(:user))) %>

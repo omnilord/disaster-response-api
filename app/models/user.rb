@@ -16,7 +16,9 @@ class User < ApplicationRecord
   # live = undeleted users
   scope :live, -> { where(deleted: false) }
   scope :admin, -> { where(admin: true) }
+  scope :trusted, -> { admin.or(where(trusted: true)) }
   scope :not_admin, -> { where(admin: false) }
+  scope :untrusted, -> { where(admin: false, trusted: false) }
 
   def active_for_authentication?
     super && !deleted
@@ -38,6 +40,7 @@ class User < ApplicationRecord
     case
     when deleted then :deleted
     when admin then :admin
+    when trusted then :trusted
     else :user
     end
   end

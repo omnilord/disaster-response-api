@@ -36,6 +36,10 @@
       <%= f.check_box :admin, class: 'form-control'  %>
     </div>
     <div class="col-3">
+      <%= f.label :trusted %>
+      <%= f.check_box :trusted, class: 'form-control'  %>
+    </div>
+    <div class="col-3">
       <%= f.label t(:disable) =%>
       <%= f.check_box :deleted, class: 'form-control'  %>
     </div>
