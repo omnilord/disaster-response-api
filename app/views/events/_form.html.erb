@@ -74,7 +74,7 @@
       <% unless event.new_record? %>
         <%= link_to t(:delete_type, type: t(:event)), event_path(event),
                       method: :delete,
-                      data: { confirm: 'Are you sure?' },
+                      data: { confirm: t(:generic_confirm) },
                       class: 'btn btn-sm btn-outline-danger' %>
       <% end %>
     </div>

@@ -1,10 +1,18 @@
-<% content_for :site_title, "#{@site_title} - #{item.name}" %>
-<% markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true) %>
+<%
+markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true)
+content_for :site_title, "#{@site_title} - #{item.name}"
+render 'events/managers/show', event: item
+render 'events/drafts/show', event: item
+Resource::TYPE_ROUTES.each do |type|
+  ts = type.to_sym
+  render 'events/resources/show', event: item, title: ts, list: item.send(ts)
+end
+%>
 <div class="card bg-light">
   <div class="card-header">
     <div class="row clearfix">
       <div class="col-11">
-      <h1><%= item.name %><%= admin? ? " <small>(event id: #{item.id})</small>".html_safe : '' %></h1>
+        <h1><%= item.name %><%= admin? ? " <small>(event id: #{item.id})</small>".html_safe : '' %></h1>
       </div>
       <div class="col-1">
       <% if user_signed_in? && item.manager?(Current.user) %>
@@ -49,27 +57,11 @@
         <small>by: <%= item.updated_by.link_to_text %></small>
       </div>
       <div class="col-3">&nbsp;</div>
-      <div class="col-3">
-        <h6><label><%= t(:drafts) %></label></h6>
-        <% draft_count = item.drafts.actionable.count %>
-        <% if draft_count > 0 %>
-        <span><%= pluralize(draft_count, 'draft') %></span>
-        <%= link_to(event_drafts_path(item), class: 'btn btn-sm btn-outline-primary') {
-          fa_icon(:list, text: t(:manage))
-        } if item.manager?(Current.user) %>
-        <% else %>
-        <span><%= t(:no_drafts) %></span>
-        <% end %>
-      </div>
+      <div class="col-3">&nbsp;</div>
     </div>
   </div>
 </div>
 
-<div class="row">
-  <div class="col-6">
-<%= render 'events/managers/show', event: item %>
-  </div>
-  <div class="col-6">
-    <!-- extra space for something, forgot what -->
-  </div>
+<div class="mt-2 row">
+  <%= content_for(:management_bodies) %>
 </div>

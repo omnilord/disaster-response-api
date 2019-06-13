@@ -1,0 +1,28 @@
+<%= form_with(url: event_resources_path(event, type), model: event) do |f| %>
+  <h2><%= t(:event_resources_edit, event: event.name, type: title.titleize) %></h2>
+  <div class="form">
+    <div class="form-group row">
+      <div class="col-12">
+        <ul class="list-group">
+          <%= f.collection_check_boxes(:resource_ids, resources, :id, :name, {}, { multiple: true }) do |el| %>
+          <li class="list-group-item">
+            <% checked = event.managers.any? { |man| man.id == el.value } %>
+            <%= el.check_box %> <%= el.label %>
+          </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+
+    <div class="btn-group d-flex justify-content-center mt-3">
+      <%= f.submit t(:save, type: t(type)), class: 'btn btn-sm btn-primary' %>
+      <%= link_to t(:back_to, type: t(:event)), event_path(event), class: 'btn btn-sm btn-outline-info' %>
+      <% unless event.new_record? %>
+        <%= link_to t(:delete_type, type: t(type)), event_resources_path(event, type),
+                      method: :delete,
+                      data: { confirm: 'Are you sure?' },
+                      class: 'btn btn-sm btn-outline-danger' %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

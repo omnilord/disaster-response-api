@@ -106,3 +106,33 @@ earthquake_two:
   user: generic_one
   approved_by: admin
   approved_at: <%= 1.hour.ago %>
+
+shelter_one:
+  draftable: shelter
+  draftable_type: Resource
+  data:
+    name: Refuge Shelter
+    resource_type: shelter
+  user: admin
+  approved_by: admin
+  approved_at: <%= 1.day.ago %>
+
+pod_one:
+  draftable: pod
+  draftable_type: Resource
+  data:
+    name: Soup Kitchen
+    resource_type: pod
+  user: generic_one
+  approved_by: generic_one
+  approved_at: <%= 1.day.ago %>
+
+medsite_one:
+  draftable: medsite
+  draftable_type: Resource
+  data:
+    name: Bandaid Hut
+    resource_type: medsite
+  user: generic_two
+  approved_by: generic_one
+  approved_at: <%= 1.day.ago %>

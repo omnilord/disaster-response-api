@@ -13,17 +13,17 @@
            ]
 %>
 <%= render 'application/navbars/dropdown',
-           dropdown_id: 'serversmenu',
+           dropdown_id: 'sheltersmenu',
            icon: 'home',
            text: t(:shelters).titleize,
            items: [
-             { icon: 'list', text: t(:list_all) },
+             { icon: 'list', text: t(:list_all), url: "#{resources_path}?resource_type=shelters" },
              { icon: 'exclamation-triangle', text: t(:outdated) },
              { icon: 'archive', text: t(:archived) },
              { separator?: true },
              { icon: 'edit', text: t(:update_queue) },
              { separator?: true },
-             { icon: 'plus', text: t(:new_shelter) },
+             { icon: 'plus', text: t(:new_shelter), url: "#{new_resource_path}?resource_type=shelter" },
            ]
 %>
 <%= render 'application/navbars/dropdown',
@@ -31,13 +31,13 @@
            icon: 'shopping-basket',
            text: t(:pods).titleize,
            items: [
-             { icon: 'list', text: t(:list_all) },
+             { icon: 'list', text: t(:list_all), url: "#{resources_path}?resource_type=pods" },
              { icon: 'exclamation-triangle', text: t(:outdated) },
              { icon: 'archive', text: t(:archived) },
              { separator?: true },
              { icon: 'edit', text: t(:update_queue) },
              { separator?: true },
-             { icon: 'plus', text: t(:new_pod) },
+             { icon: 'plus', text: t(:new_pod), url: "#{new_resource_path}?resource_type=pod" },
            ]
 %>
 <%= render 'application/navbars/dropdown',

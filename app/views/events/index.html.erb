@@ -1,7 +1,5 @@
 <%= render 'pages/page' %>
 
-<%= link_to 'Add New Event', new_event_path, class: 'button button-outline' %>
-
 <% if @active_events.empty? && @inactive_events.empty? %>
   <hr/>
   No Events Registered.

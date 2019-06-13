@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_05_000222) do
+ActiveRecord::Schema.define(version: 2019_06_05_000224) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -78,6 +78,48 @@ ActiveRecord::Schema.define(version: 2019_06_05_000222) do
     t.index ["updated_by_id"], name: "index_pages_on_updated_by_id"
   end
 
+  create_table "resource_activations", force: :cascade do |t|
+    t.bigint "event_id", null: false
+    t.bigint "resource_id", null: false
+    t.boolean "active", default: true
+    t.json "data"
+    t.index ["event_id", "resource_id"], name: "unique_activation", unique: true
+    t.index ["event_id"], name: "index_resource_activations_on_event_id"
+    t.index ["resource_id"], name: "index_resource_activations_on_resource_id"
+  end
+
+  create_table "resources", force: :cascade do |t|
+    t.text "name", null: false
+    t.text "resource_type", null: false
+    t.text "latitude"
+    t.text "longitude"
+    t.text "google_place_id"
+    t.text "address"
+    t.text "city"
+    t.text "county"
+    t.text "state"
+    t.text "postal_code"
+    t.text "primary_phone"
+    t.text "secondary_phone"
+    t.text "private_contact"
+    t.text "private_email"
+    t.text "private_phone"
+    t.text "private_notes"
+    t.text "notes"
+    t.text "latest_data_source"
+    t.bigint "current_draft_id", null: false
+    t.boolean "active", default: true
+    t.bigint "created_by_id"
+    t.bigint "updated_by_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["created_by_id"], name: "index_resources_on_created_by_id"
+    t.index ["current_draft_id"], name: "index_resources_on_current_draft_id"
+    t.index ["name"], name: "index_resources_on_name"
+    t.index ["resource_type"], name: "index_resources_on_resource_type", using: :hash
+    t.index ["updated_by_id"], name: "index_resources_on_updated_by_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.text "email", default: "", null: false
     t.text "encrypted_password", default: "", null: false
@@ -117,4 +159,7 @@ ActiveRecord::Schema.define(version: 2019_06_05_000222) do
   add_foreign_key "pages", "drafts", column: "current_draft_id"
   add_foreign_key "pages", "users", column: "created_by_id"
   add_foreign_key "pages", "users", column: "updated_by_id"
+  add_foreign_key "resources", "drafts", column: "current_draft_id"
+  add_foreign_key "resources", "users", column: "created_by_id"
+  add_foreign_key "resources", "users", column: "updated_by_id"
 end

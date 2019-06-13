@@ -1,0 +1,4 @@
+<%= render('form', event: @event,
+                   title: Resource.title_for(@type),
+                   type: @type,
+                   resources: @event.send(@type)) unless @errors %>

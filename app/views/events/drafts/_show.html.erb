@@ -1,21 +1,19 @@
 <% render('application/manage_body_wrapper', target: :management_bodies) do %>
 <div class="card card-body bg-light flex-grow">
   <h2>
-    <%= t(:event_team) %>
+    <%= t(:drafts) %>
     <% if event.admin?(Current.user) %>
-    <%= link_to(event_managers_path(event), class: 'btn btn-sm btn-outline-primary') do %>
+    <%= link_to(event_drafts_path(event), class: 'btn btn-sm btn-outline-primary') do %>
       <%= fa_icon(:list, text: t(:manage)) %>
     <% end %>
     <% end %>
   </h2>
-  <% if event.managers.empty? %>
-  <%= t(:no_management_team) %>
+
+  <% draft_count = event.drafts.actionable.count %>
+  <% if draft_count > 0 %>
+  <span><%= pluralize(draft_count, 'draft') %></span>
   <% else %>
-  <ul>
-    <% event.managers.each do |user| %>
-    <li><%= user.link_to_text %></li>
-    <% end %>
-  </ul>
+  <span><%= t(:no_drafts) %></span>
   <% end %>
 </div>
 <% end %>

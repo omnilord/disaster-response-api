@@ -25,6 +25,7 @@ class Event < ApplicationRecord
   # Multiple epicenters (such as aftershocks) can be represented as MultiPoint
   # has_many :event_geoms
 
+  # PEOPLE
   # events should have a designated management team responsible for overseeing
   # operational data and ensuring that updates are timely and consistent
   has_many :event_managers, dependent: :destroy
@@ -34,11 +35,18 @@ class Event < ApplicationRecord
   belongs_to :administrator, class_name: 'User', default: -> { Current.user }
 
   accepts_nested_attributes_for :managers, allow_destroy: true
+  validates_associated :event_managers
+  validates_associated :managers
+
+  # RESOURCES
+  has_many :resource_activations, dependent: :destroy
+  has_many :resources, through: :resource_activations
 
   # publications are micro-news bits that get pushed out to various outlets
   # Could be as simple as a URL to a news outlet that generates an OEmbed preview
   # TODO: has_many :publications
 
+  validates :name, presence: true
   validates :slug, presence: true,
                    uniqueness: { case_sensitive: false },
                    format: { with: /\A?(?:\w+-)+\d{4}\z/, message: I18n.t(:invalid_slug_format) }
@@ -48,7 +56,7 @@ class Event < ApplicationRecord
   before_validation(on: :create) do |m|
     year = Date.current.year.to_s
     m.name = "#{m.name} #{year}" unless m.name.end_with?(year)
-    m.slug = name.downcase.gsub(/[^\w]+/i, '-')
+    m.slug = m.name.downcase.gsub(/[^\w]+/i, '-')
   end
 
   before_save :sanitize!
@@ -92,6 +100,18 @@ class Event < ApplicationRecord
 
   def deactivated
     super&.strftime(Rails.configuration.date_format)
+  end
+
+  def shelters
+    resources.select { |r| r.shelter? && active? }
+  end
+
+  def pods
+    resources.select { |r| r.pod? && active? }
+  end
+
+  def medsites
+    resources.select { |r| r.medsite? && active? }
   end
 
 private

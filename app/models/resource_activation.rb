@@ -1,0 +1,16 @@
+class ResourceActivation < ApplicationRecord
+  belongs_to :event
+  belongs_to :resource
+
+  scope :active, -> { where(active: true) }
+
+  def toggle(value = nil)
+    if value.nil?
+      self[:active] = !self[:active]
+    else
+      self[:active] = !!value
+    end
+    save!
+    self[:active]
+  end
+end

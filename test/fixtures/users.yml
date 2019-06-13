@@ -2,13 +2,22 @@ admin:
   email: admin@localhost.tld
   real_name: "Adminly Admin"
   admin: true
+  trusted: false
+
+trusted:
+  email: trusted@localhost.tld
+  real_name: "Trusted User"
+  admin: false
+  trusted: true
 
 generic_one:
-  email: gereric1@localhost.tld
+  email: generic1@localhost.tld
   real_name: "First Generic User"
   admin: false
+  trusted: false
 
 generic_two:
-  email: gereric2@localhost.tld
+  email: generic2@localhost.tld
   real_name: "Second Generic User"
   admin: false
+  trusted: false

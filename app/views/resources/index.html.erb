@@ -1,0 +1,39 @@
+<%= render 'pages/page' %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>&nbsp;</th>
+      <th><%= t(:id) %></th>
+      <th><%= t(:resource) %></th>
+      <th><%= t(:active) %></th>
+      <th><%= t(:resource_type) %></th>
+      <th><%= t(:address) %></th>
+      <th><%= t(:city) %></th>
+      <th><%= t(:county) %></th>
+      <th><%= t(:state) %></th>
+      <th><%= t(:postal_code) %></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @resources.each do |resource| %>
+      <tr>
+        <td class="btn-group-vertical">
+          <%= link_to 'Show', resource, class: 'btn btn-sm btn-outline-primary' %>
+          <%= link_to 'Edit', edit_resource_path(resource), class: 'btn btn-sm btn-outline-secondary' %>
+          <%= link_to 'Destroy', resource, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-outline-danger' %>
+        </td>
+        <td><%= resource.id %></td>
+        <td><%= resource.name %></td>
+        <td><%= resource.active? ? t(:yes) : t(:no) %></td>
+        <td><%= resource.humanize_resource_type %></td>
+        <td><%= resource.address %></td>
+        <td><%= resource.city %></td>
+        <td><%= resource.county %></td>
+        <td><%= resource.state %></td>
+        <td><%= resource.postal_code %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

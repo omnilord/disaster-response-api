@@ -4,12 +4,12 @@
         <% end %>
       </li>
       <li class="nav-item">
-        <%= link_to '#', class: 'nav-link' do %>
+        <%= link_to "#{resources_path}?resource_type=shelters", class: 'nav-link' do %>
           <%= fa_icon('home', text: t(:shelters).titleize) %>
         <% end %>
       </li>
       <li class="nav-item">
-        <%= link_to '#', class: 'nav-link' do %>
+        <%= link_to "#{resources_path}?resource_type=pods", class: 'nav-link' do %>
           <%= fa_icon('shopping-basket', text: t(:pods).titleize) %>
         <% end %>
       </li>

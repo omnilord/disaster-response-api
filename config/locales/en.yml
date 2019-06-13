@@ -30,6 +30,7 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  address_placeholder: '1234 Main St'
   admin: 'Admin'
   admin_only: 'Only administrators may access that page.'
   anonymous: 'Anonymous'
@@ -42,6 +43,7 @@ en:
   back_to: 'Back to %{type}'
   by: 'By'
   close: 'Close'
+  contact_notes: 'Contact Notes'
   create: 'Create'
   created: 'Created'
   current: 'Current'
@@ -65,6 +67,7 @@ en:
   edit_type: 'Edit %{type}'
   event: 'Event'
   event_page: 'Event Page'
+  event_resources_edit: 'Edit %{type} for %{event}'
   events: 'Events'
   event_team: 'Event Management Team'
   event_team_edit: 'Edit Event Management Team for %{event}'
@@ -72,6 +75,7 @@ en:
   field_name: 'Field Name'
   generic_confirm: 'Are you sure?'
   generic_error: 'Something went wrong.'
+  geocoding: 'Geocoding'
   help: 'Help'
   hide_changes: 'Hide Changes'
   hide_preview: 'Hide Preview'
@@ -81,7 +85,10 @@ en:
   invalid_slug_format: 'format is wrong'
   invite_to_help: 'How can I help?'
   list_all: 'List All'
+  location: 'Location'
   manage: 'Manage'
+  medsite: 'Medical Site'
+  medsites: 'Medical Sites'
   must_edit_to_save: 'You must edit the %{type} in order to save it.'
   my_settings: 'My Settings'
   navbar_welcome: 'Welcome, %{username}!'
@@ -104,8 +111,10 @@ en:
   pods: 'Distribution Points'
   press_edit: 'Press "Edit" to update this %{type}.'
   preview_content: 'Preview Content'
+  private: 'Private'
   relief: 'Relief'
   resource: 'Resource'
+  resource_type: 'Resource Type'
   review_draft: 'Review Draft'
   rest_404: 'No %{type} with that name or id found.'
   role: 'Role'
@@ -152,6 +161,11 @@ en:
           warfare: 'Warfare'
           wildfire: 'Wildfire'
           other: 'Other'
+      resource:
+        resource_types:
+          shelter: 'Shelter'
+          pod: 'Distribution Point'
+          medsite: 'Medical Site'
 
   helpers:
     label:
@@ -161,4 +175,22 @@ en:
         deactivated: 'Deactivated'
         disaster_type: 'Disaster Type'
       page:
-        title: "Title"
+        title: 'Title'
+      resource:
+        resource_type: 'Resource Type'
+        latitude: 'Latitude'
+        longitude: 'Longitude'
+        google_place_id: 'Google Place ID'
+        address: 'Address'
+        city: 'City'
+        county: 'County'
+        state: 'State'
+        postal_code: 'Zip Code'
+        primary_phone: 'Primary Phone'
+        secondary_phone: 'Secondary Phone'
+        private_contact: 'Private Contact'
+        private_email: 'Private Email'
+        private_phone: 'Private Phone'
+        private_notes: 'Private Notes'
+        notes: 'Notes'
+        latest_data_source: 'Data Source'

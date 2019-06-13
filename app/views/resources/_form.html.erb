@@ -1,0 +1,143 @@
+<%= form_with(model: resource, local: true) do |f| %>
+  <div class="form">
+    <% if resource.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(resource.errors.count, "error") %> prohibited this resource from being saved:</h2>
+
+        <ul>
+        <% resource.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="form-group row">
+      <div class="col-12">
+        <%= f.label :name %>
+        <%= f.text_field :name, autofocus: true, class: 'form-control' %>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-3">
+        <%= f.label(:active, class: 'form-check-label') %>
+        <%= f.check_box :active, { class: 'form-control centered' } %>
+      </div>
+
+      <div class="col-6">
+        <%= f.label :resource_type %>
+        <div class="form-group">
+          <% Resource::TYPE_KEYS.each do |type_sym| %>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :resource_type, type_sym,  class: 'form-check-input' %>
+            <%= f.label :resource_type, t(type_sym), class: 'form-check-label' %>
+          </div>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="col-3">
+        <%= f.label :latest_data_source %>
+        <%= f.text_field :latest_data_source, class: 'form-control' %>
+      </div>
+    </div>
+
+    <fieldset class="form-group p-1">
+      <legend><%= t(:location) %></legend>
+      <div class="form-group">
+        <%= f.label :address %>
+        <%= f.text_field :address, class: 'form-control', placeholder: t(:address_placeholder) %>
+      </div>
+      <div class="form-group">
+        <%= f.label :county %>
+        <%= f.text_field :county, class: 'form-control' %>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <%= f.label :city %>
+          <%= f.text_field :city, class: 'form-control' %>
+        </div>
+        <div class="form-group col-md-4">
+          <%= f.label :state %>
+          <%= f.text_field :state, class: 'form-control' %>
+        </div>
+        <div class="form-group col-md-2">
+          <%= f.label :postal_code %>
+          <%= f.text_field :postal_code, class: 'form-control' %>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset class="form-group p-1">
+      <legend class="form-label"><%= t(:geocoding) %></legend>
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <%= f.label :latitude %>
+          <%= f.text_field :latitude, class: 'form-control', disabled: true %>
+        </div>
+        <div class="form-group col-md-4">
+          <%= f.label :longitude %>
+          <%= f.text_field :longitude, class: 'form-control', disabled: true %>
+        </div>
+        <div class="form-group col-md-4">
+          <%= f.label :google_place_id %>
+          <%= f.text_field :google_place_id, class: 'form-control', disabled: true %>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset class="form-group p-1">
+      <legend class="form-label"><%= t(:contact_notes) %></legend>
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <%= f.label :primary_phone %>
+          <%= f.text_field :primary_phone, class: 'form-control' %>
+        </div>
+        <div class="form-group col-md-4">
+          <%= f.label :secondary_phone %>
+          <%= f.text_field :secondary_phone, class: 'form-control' %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :notes %>
+        <%= f.text_area :notes, class: 'form-control' %>
+      </div>
+    </fieldset>
+
+    <% if admin? %>
+    <fieldset class="form-group p-1">
+      <legend class="form-label"><%= t(:private) %></legend>
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <%= f.label :private_contact %>
+          <%= f.text_field :private_contact, class: 'form-control' %>
+        </div>
+        <div class="form-group col-md-4">
+          <%= f.label :private_phone %>
+          <%= f.text_field :private_phone, class: 'form-control' %>
+        </div>
+        <div class="form-group col-md-4">
+          <%= f.label :private_email %>
+          <%= f.text_field :private_email, class: 'form-control' %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :private_notes %>
+        <%= f.text_area :private_notes, class: 'form-control' %>
+      </div>
+    </fieldset>
+    <% end %>
+
+    <div class="btn-group d-flex justify-content-center mt-3">
+      <%= f.submit class: 'btn btn-sm btn-primary' %>
+      <%= link_to t(:resources_index), resources_path, class: 'btn btn-sm btn-outline-info' %>
+      <% unless resource.new_record? %>
+        <%= link_to t(:delete_type, type: t(:resource)), resource_path(resource),
+                      method: :delete,
+                      data: { confirm: t(:generic_confirm) },
+                      class: 'btn btn-sm btn-outline-danger' %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

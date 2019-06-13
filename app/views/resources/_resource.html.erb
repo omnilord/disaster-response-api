@@ -1,0 +1,138 @@
+<div class="card bg-light">
+  <div class="card-header">
+    <div class="row clearfix">
+      <div class="col-11">
+        <h1><%= item.name %><%= trusted? ? " <small>(event id: #{item.id})</small>".html_safe : '' %></h1>
+      </div>
+      <div class="col-1">
+      <% if trusted? %>
+        <%= link_to edit_resource_path(item), class: 'btn btn-sm btn-outline-primary float-right' do %>
+          <%= fa_icon(:edit, text: t(:edit_type, type: t(:resource))) %>
+        <% end %>
+      <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <div class="row">
+      <div class="col-3">
+        <h6><%= label(:resource, :active) %></h6>
+        <%= item.active? ? t(:yes) : t(:no) %>
+      </div>
+
+      <div class="col-3">
+        <h6><%= label(:resource, :resource_type) %></h6>
+        <%= t(item.humanize_resource_type) %>
+      </div>
+
+      <div class="col-6">
+        <h6><%= label(:resource, :latest_data_source) %></h6>
+        <%= item.latest_data_source %>
+      </div>
+    </div>
+
+    <fieldset class="form-group p-1">
+      <legend><%= t(:location) %></legend>
+      <div class="form-group">
+        <h6><%= label(:resource, :address) %></h6>
+        <%= item.address %>
+      </div>
+      <div class="form-group">
+        <h6><%= label(:resource, :county) %></h6>
+        <%= item.county %>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <h6><%= label(:resource, :city) %></h6>
+          <%= item.city %>
+        </div>
+        <div class="form-group col-md-4">
+          <h6><%= label(:resource, :state) %></h6>
+          <%= item.state %>
+        </div>
+        <div class="form-group col-md-2">
+          <h6><%= label(:resource, :postal_code) %></h6>
+          <%= item.postal_code %>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset class="form-group p-1">
+      <legend class="form-label"><%= t(:geocoding) %></legend>
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <h6><%= label(:resource, :latitude) %></h6>
+          <%= item.latitude %>
+        </div>
+        <div class="form-group col-md-4">
+          <h6><%= label(:resource, :longitude) %></h6>
+          <%= item.longitude %>
+        </div>
+        <div class="form-group col-md-4">
+          <h6><%= label(:resource, :google_place_id) %></h6>
+          <%= item.google_place_id %>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset class="form-group p-1">
+      <legend class="form-label"><%= t(:contact_notes) %></legend>
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <h6><%= label(:resource, :primary_phone) %></h6>
+          <%= item.primary_phone %>
+        </div>
+        <div class="form-group col-md-4">
+          <h6><%= label(:resource, :secondary_phone) %></h6>
+          <%= item.secondary_phone %>
+        </div>
+      </div>
+      <div class="form-group">
+        <h6><%= label(:resource, :notes) %></h6>
+        <%= item.notes %>
+      </div>
+    </fieldset>
+
+    <% if admin? %>
+    <fieldset class="form-group p-1">
+      <legend class="form-label"><%= t(:private) %></legend>
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <h6><%= label(:resource, :private_contact) %></h6>
+          <%= item.private_contact %>
+        </div>
+        <div class="form-group col-md-4">
+          <h6><%= label(:resource, :private_phone) %></h6>
+          <%= item.private_phone %>
+        </div>
+        <div class="form-group col-md-4">
+          <h6><%= label(:resource, :private_email) %></h6>
+          <%= item.private_email %>
+        </div>
+      </div>
+      <div class="form-group">
+          <h6><%= label(:resource, :private_notes) %></h6>
+        <%= item.private_notes %>
+      </div>
+    </fieldset>
+    <% end %>
+  </div>
+
+  <div class="card-footer">
+    <div class="row">
+      <div class="col-3">
+        <h6><%= label(:resource, :created_at) %></h6>
+        <%=item.created_at.strftime(Rails.configuration.datetime_format) %><br/>
+        <small>by: <%= item.created_by.link_to_text %></small>
+      </div>
+      <div class="col-3">
+        <h6><%= label(:resource, :updated_at) %></h6>
+        <%=item.updated_at.strftime(Rails.configuration.datetime_format) %><br/>
+        <small>by: <%= item.updated_by.link_to_text %></small>
+      </div>
+      <div class="col-3">&nbsp;</div>
+      <div class="col-3">&nbsp;</div>
+    </div>
+  </div>
+</div>
