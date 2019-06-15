@@ -77,7 +77,8 @@ class Event < ApplicationRecord
   end
 
   def draft_approver?(user)
-    manager?(user)
+    return false if user.nil?
+    manager?(user) || user.trusted?
   end
 
   def admin?(user)

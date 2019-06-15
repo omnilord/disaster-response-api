@@ -1,6 +1,20 @@
 require 'test_helper'
+require 'minitest/spec'
 
 class EventsControllerTest < DevisedTest
+  extend Minitest::Spec::DSL
+
+  let(:default_params) do
+    {
+      event: {
+        name: 'A Fire. A wild wild fire.',
+        disaster_type: 'wildfire',
+        content: 'Another fire in California.',
+        administrator_id: users(:admin).id
+      }
+    }
+  end
+
   #
   # anyone should be able to see events
   #
@@ -12,6 +26,12 @@ class EventsControllerTest < DevisedTest
 
   test 'generic user should get event index' do
     sign_in users(:generic_one)
+    get events_path
+    assert_response :success
+  end
+
+  test 'trusted user should get event index' do
+    sign_in users(:trusted)
     get events_path
     assert_response :success
   end
@@ -29,6 +49,12 @@ class EventsControllerTest < DevisedTest
 
   test 'generic users can see individual events' do
     sign_in users(:generic_one)
+    get event_path(events(:hurricane))
+    assert_response :success
+  end
+
+  test 'trusted users can see individual events' do
+    sign_in users(:trusted)
     get event_path(events(:hurricane))
     assert_response :success
   end
@@ -55,6 +81,12 @@ class EventsControllerTest < DevisedTest
     assert_response :success
   end
 
+  test 'trusted users can get new' do
+    sign_in users(:admin)
+    get new_event_path
+    assert_response :success
+  end
+
   test 'admin users can get new' do
     sign_in users(:admin)
     get new_event_path
@@ -62,59 +94,42 @@ class EventsControllerTest < DevisedTest
   end
 
   test 'anonymous users should not create event' do
-    params = {
-      event: {
-        name: 'A Fire. A wild wild fire.',
-        disaster_type: :wildfire,
-        content: 'Another fire in California.',
-        administrator_id: users(:admin).id
-      }
-    }
-
     assert_difference('Draft.count', 0) do
       assert_difference('Event.count', 0) do
-        post events_path, params: params
+        post events_path, params: default_params
         assert_response :redirect
         assert_redirected_to root_path
       end
     end
   end
 
-
   test 'generic users should create a draft event' do
-    params = {
-      event: {
-        name: 'A Fire. A wild wild fire.',
-        disaster_type: :wildfire,
-        content: 'Another fire in California.',
-        administrator_id: users(:admin).id
-      }
-    }
-
     sign_in users(:generic_one)
     assert_difference('Draft.count', 1) do
       assert_difference('Event.count', 0) do
-        post events_path, params: params
+        post events_path, params: default_params
         assert_response :redirect
         assert_redirected_to draft_path(Draft.last)
       end
     end
   end
 
-  test 'admin users should create a draft event' do
-    params = {
-      event: {
-        name: 'A Fire. A wild wild fire.',
-        disaster_type: :wildfire,
-        content: 'Another fire in California.',
-        administrator_id: users(:admin).id
-      }
-    }
+  test 'trusted users should create a draft and event' do
+    sign_in users(:trusted)
+    assert_difference('Draft.count', 1) do
+      assert_difference('Event.count', 1) do
+        post events_path, params: default_params
+        assert_response :redirect
+        assert_redirected_to event_path(Event.last)
+      end
+    end
+  end
 
+  test 'admin users should create a draft and event' do
     sign_in users(:admin)
     assert_difference('Draft.count', 1) do
       assert_difference('Event.count', 1) do
-        post events_path, params: params
+        post events_path, params: default_params
         assert_response :redirect
         assert_redirected_to event_path(Event.last)
       end
@@ -138,6 +153,12 @@ class EventsControllerTest < DevisedTest
     assert_response :success
   end
 
+  test 'trusted users can get edit' do
+    sign_in users(:admin)
+    get edit_event_path(events(:hurricane))
+    assert_response :success
+  end
+
   test 'admin users can get edit' do
     sign_in users(:admin)
     get edit_event_path(events(:hurricane))
@@ -145,7 +166,9 @@ class EventsControllerTest < DevisedTest
   end
 
   test 'anonymous users should not update event' do
-    params = { event: { name: events(:hurricane).name } }
+    params = default_params.dup
+    params[:event].delete(:administrator_id)
+
     patch event_path(events(:hurricane)), params: params
     assert_response :redirect
     assert_redirected_to root_path
@@ -153,14 +176,8 @@ class EventsControllerTest < DevisedTest
 
   test 'Generic users only create a draft when updating events' do
     event = events(:hurricane)
-    params = {
-      event: {
-        name: 'A Fire. A wild wild fire.',
-        disaster_type: 'wildfire',
-        content: 'Another fire in California.',
-        administrator_id: users(:admin).id
-      }
-    }
+    params = default_params.dup
+    params[:event].delete(:administrator_id)
 
     sign_in users(:generic_one)
     assert_difference('Draft.count', 1) do
@@ -175,7 +192,7 @@ class EventsControllerTest < DevisedTest
     end
   end
 
-  test 'Admin users create and apply a draft when updating events' do
+  test 'trusted users create and apply a draft when updating events' do
     event = events(:hurricane)
     comp = lambda do
       {
@@ -184,13 +201,36 @@ class EventsControllerTest < DevisedTest
         content: event.content
       }
     end
-    params = {
-      event: {
-        name: 'A Fire. A wild wild fire.',
-        disaster_type: 'wildfire',
-        content: 'Another fire in California.'
+    params = default_params.dup
+    params[:event].delete(:administrator_id)
+
+    sign_in users(:trusted)
+    assert_difference('Draft.count', 1) do
+      assert_difference('Event.count', 0) do
+        assert_changes(comp,
+                       from: comp.call,
+                       to: params[:event]) do
+          patch event_path(event), params: params
+          assert_response :redirect
+          event.reload
+          assert_equal users(:trusted), event.current_draft.user
+          assert_redirected_to event_path(event)
+        end
+      end
+    end
+  end
+
+  test 'admin users create and apply a draft when updating events' do
+    event = events(:hurricane)
+    comp = lambda do
+      {
+        name: event.name,
+        disaster_type: event.disaster_type,
+        content: event.content
       }
-    }
+    end
+    params = default_params.dup
+    params[:event].delete(:administrator_id)
 
     sign_in users(:admin)
     assert_difference('Draft.count', 1) do
@@ -208,7 +248,7 @@ class EventsControllerTest < DevisedTest
     end
   end
 
-  test 'Generic users as event administrators create and apply a draft when updating events' do
+  test 'generic users as event administrators create and apply a draft when updating events' do
     event = events(:earthquake)
     comp = lambda do
       {
@@ -217,13 +257,8 @@ class EventsControllerTest < DevisedTest
         content: event.content
       }
     end
-    params = {
-      event: {
-        name: 'A Fire. A wild wild fire.',
-        disaster_type: 'wildfire',
-        content: 'Another fire in California.'
-      }
-    }
+    params = default_params.dup
+    params[:event].delete(:administrator_id)
 
     sign_in users(:generic_one)
     assert_difference('Draft.count', 1) do
@@ -241,7 +276,7 @@ class EventsControllerTest < DevisedTest
     end
   end
 
-  test 'Generic users as event managers create and apply a draft when updating events' do
+  test 'generic users as event managers create and apply a draft when updating events' do
     event = events(:earthquake)
     comp = lambda do
       {
@@ -250,13 +285,8 @@ class EventsControllerTest < DevisedTest
         content: event.content
       }
     end
-    params = {
-      event: {
-        name: 'A Fire. A wild wild fire.',
-        disaster_type: 'wildfire',
-        content: 'Another fire in California.'
-      }
-    }
+    params = default_params.dup
+    params[:event].delete(:administrator_id)
 
     sign_in users(:generic_two)
     assert_difference('Draft.count', 1) do

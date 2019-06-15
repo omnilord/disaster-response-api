@@ -21,7 +21,7 @@ class Draft < ApplicationRecord
     else
       self.draftable = self.draftable_type.constantize.new(data)
     end
-    self.draftable.current_draft_id = self.id
+    self.draftable.current_draft = self
   end
 
   def deny
