@@ -104,15 +104,19 @@ class Event < ApplicationRecord
   end
 
   def shelters
-    resources.select { |r| r.shelter? && active? }
+    resources.select { |r| r.shelter? && r.active? }
   end
 
   def pods
-    resources.select { |r| r.pod? && active? }
+    resources.select { |r| r.pod? && r.active? }
   end
 
   def medsites
-    resources.select { |r| r.medsite? && active? }
+    resources.select { |r| r.medsite? && r.active? }
+  end
+
+  def resource_activation(resource)
+    ResourceActivation.where(event: self, resource: resource).first
   end
 
 private

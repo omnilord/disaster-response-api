@@ -57,6 +57,10 @@ class Resource < ApplicationRecord
     humanize_enum(:resource_type)
   end
 
+  def resource_activation(event)
+    ResourceActivation.where(event: event, resource: self).first
+  end
+
 private
 
   def sanitize!

@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+  dynamic_resource_routes = lambda do |route, target|
+    get route, to: "#{target}#edit"
+    patch route, to: "#{target}#update"
+    put route, to: "#{target}#update"
+    delete route, to: "#{target}#destroy"
+  end
+
   concern :draftable do
     resources :drafts, shallow: true, only: %i[index edit update show destroy]
   end
@@ -16,17 +23,22 @@ Rails.application.routes.draw do
     concerns :draftable, module: :events
 
     # Event Managers
-    get '/managers', to: 'events/managers#edit'
-    patch '/managers', to: 'events/managers#update'
-    delete '/managers', to: 'events/managers#destroy'
+    dynamic_resource_routes.call('/managers', 'events/managers')
 
     # Event Resources
-    constraints(lambda { |request| Resource::TYPE_ROUTES
-                                     .include?(request.parameters[:resource_type]) }) do
-      get '/:resource_type', to: 'events/resources#edit', as: :resources
-      patch '/:resource_type', to: 'events/resources#update'
-      delete '/:resource_type', to: 'events/resources#destroy'
-    end
+    dynamic_resource_routes.call('/resources', 'events/resources')
+    dynamic_resource_routes.call('/shelters', 'events/shelters')
+    dynamic_resource_routes.call('/pods', 'events/pods')
+    dynamic_resource_routes.call('/medsites', 'events/med_sites')
+
+    # TODO: Eventually come back to this when dynamic enums for types are a thing
+    # constraints(lambda { |request| request.parameters[:resource_type] == 'resources' \
+    #                                 || Resource::TYPE_ROUTES
+    #                                 .include?(request.parameters[:resource_type]) }) do
+    #   get '/:resource_type', to: 'events/resources#edit' , as: :resources
+    #   patch '/:resource_type', to: 'events/resources#update'
+    #   delete '/:resource_type', to: 'events/resources#destroy'
+    # end
   end
 
   get '/:page', to: 'pages#page'

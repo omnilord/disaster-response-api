@@ -1,9 +1,12 @@
-<% render('application/manage_body_wrapper', target: :management_bodies) do %>
+<%
+render('application/manage_body_wrapper', target: :management_bodies) do
+  list = event.send(type)
+%>
 <div class="card card-body bg-light flex-grow">
   <h2>
-    <%= t(title) %>
+    <%= t(type) %>
     <% if event.admin?(Current.user) %>
-      <%= link_to(event_resources_path(event, title), class: 'btn btn-sm btn-outline-primary') do %>
+      <%= link_to(path, class: 'btn btn-sm btn-outline-primary') do %>
       <%= fa_icon(:list, text: t(:manage)) %>
     <% end %>
     <% end %>

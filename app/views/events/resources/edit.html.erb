@@ -1,4 +1,98 @@
-<%= render('form', event: @event,
-                   title: Resource.title_for(@type),
-                   type: @type,
-                   resources: @event.send(@type)) unless @errors %>
+<h2 class="text-center clear-fix">
+  <span class="pull-left">
+    <%= link_to t(:back_to, type: t(:event)), @event, class: 'btn btn-sm btn-link' %>
+  </span>
+  <%= t(:event_resources_edit, event: @event.name, type: @title) %>
+</h2>
+<div class="text-center row">
+  <div class="col">
+    <input type="search"
+           name="resource_search"
+           id="resource_search"
+           class="form-control search"
+           placeholder="<%= t(:search) %>"
+           data-column="all" />
+  </div>
+</div>
+<div class="text-center row">
+  <div class="col-6">
+    <h3><%= t(:associated_resources, type: @title) %></h3>
+    <table id="associated_resources" class="table">
+      <thead>
+        <tr>
+          <th data-sorter="false" title="Action">Active</th>
+          <th title=""><%= t(@type) %></th>
+        </tr>
+      </thead>
+      <tbody>
+      <% if @event_resources.blank? %>
+        <tr>
+          <td colspan="2" class="text-center"><%= t(:none) %></td>
+        </tr>
+      <% else %>
+        <% @event_resources.each do |r| activation = r.resource_activation(@event) %>
+          <tr>
+            <td>
+              <%= check_box_tag "toggle_event_resource_activation[#{activation.id}]",
+                               '',
+                               activation.active && r.active,
+                               data: {
+                                 id: activation.id,
+                                 event_id: @event.id,
+                                 resource_id: r.id,
+                                 default: r.active
+                               } %>
+            </td>
+            <td>
+              <%= r.name %>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-6">
+    <h3><%= t(:available_resources, type: @title) %></h3>
+    <table id="available_resources" class="table">
+      <thead>
+        <tr>
+          <th data-sorter="false" title="Action">&nbsp;</th>
+          <th title=""><%= t(@type) %></th>
+        </tr>
+      </thead>
+      <tbody>
+      <% if @resources.blank? %>
+        <tr>
+          <td colspan="2" class="text-center"><%= t(:none) %></td>
+        </tr>
+      <% else %>
+        <% @resources.each do |r| %>
+          <tr>
+            <td>
+              <%= button_tag(type: 'button',
+                             data: { event_id: @event.id, resource_id: r.id }) do %>
+                <%= fa_icon('arrow-left') %>
+              <% end %>
+            </td>
+            <td>
+              <%= r.name %>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script charset="utf-8">
+  $('#associated_resources, #available_resources').tablesorter({
+    widgets: ['filter'],
+    widgetOptions : {
+      filter_external : '.search',
+      filter_columnFilters: false,
+      filter_functions: { 0: true }
+    }
+  });
+</script>

@@ -13,4 +13,9 @@
  *= require_tree .
  *= require_self
  *= require jquery-ui/datepicker
+ *= require jquery-tablesorter/theme.default
  */
+
+input[type=search]::-webkit-search-cancel-button {
+    -webkit-appearance: searchfield-cancel-button;
+}

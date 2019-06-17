@@ -1,15 +1,11 @@
 class Events::ResourcesController < ApplicationController
+  RESOURCE_SCOPE = :all
+
   before_action :set_event
+  before_action :set_resources, only: [:edit]
   before_action :event_admin!
-  before_action :set_users, only: [:edit]
 
   def edit
-    @type, @errors =
-      if Resource::TYPE_ROUTES.include?(params[:resource_type])
-        [params[:resource_type].to_sym, false]
-      else
-        [nil, true]
-      end
   end
 
   def update
@@ -22,18 +18,22 @@ class Events::ResourcesController < ApplicationController
     redirect_to @event
   end
 
-private
+protected
 
   def set_event
     @event = Event.find_by(slug: params[:event_slug])
     @event ||= Event.find(params[:event_id])
+    @errors = false
   rescue ActiveRecord::RecordNotFound
     flash[:danger] = I18n.t(:rest_404, type: I18n.t(:event))
     redirect_to events_path && return
   end
 
-  def set_users
-    @users = User.live.not_admin
+  def set_resources
+    scope =  self.class.const_get(:RESOURCE_SCOPE)
+    @type = scope == :all ? :resources : scope
+    @event_resources = @event.send(@type)
+    @resources = Resource.send(scope) - @event_resources
   end
 
   def event_admin!

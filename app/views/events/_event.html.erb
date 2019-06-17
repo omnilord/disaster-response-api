@@ -3,10 +3,9 @@ markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tabl
 content_for :site_title, "#{@site_title} - #{item.name}"
 render 'events/managers/show', event: item
 render 'events/drafts/show', event: item
-Resource::TYPE_ROUTES.each do |type|
-  ts = type.to_sym
-  render 'events/resources/show', event: item, title: ts, list: item.send(ts)
-end
+render 'events/resources/show', event: item, type: :shelters, path: event_shelters_path(item)
+render 'events/resources/show', event: item, type: :pods, path: event_pods_path(item)
+render 'events/resources/show', event: item, type: :medsites, path: event_medsites_path(item)
 %>
 <div class="card bg-light">
   <div class="card-header">
