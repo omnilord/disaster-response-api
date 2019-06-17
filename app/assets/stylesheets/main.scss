@@ -49,3 +49,13 @@ h1.page-title {
     font-style: italic;
   }
 }
+
+td.event-resource-row-content {
+  width: 100%;
+}
+
+label.colon:after {
+  content: ': ';
+  margin-right: 2pt;
+  font-weight: bold !important;
+}

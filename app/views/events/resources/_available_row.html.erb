@@ -1,0 +1,17 @@
+<tr>
+  <td>
+    <%= button_tag(type: 'button',
+                   class: 'btn btn-sm btn-success add_to_event',
+                   data: {
+                     route: event_resources_path(event),
+                     event_id: event.id,
+                     resource_id: item.id
+                   }) do %>
+      <%= fa_icon('arrow-left') %>
+    <% end %>
+  </td>
+  <td><%= t(item.resource_type.to_sym) %></td>
+  <td class="event-resource-row-content">
+    <%= render 'resources/table_cell', item: item %>
+  </td>
+</tr>

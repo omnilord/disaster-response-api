@@ -21,34 +21,12 @@
       <thead>
         <tr>
           <th data-sorter="false" title="Action">Active</th>
+          <th><%= t(:type) %></th>
           <th title=""><%= t(@type) %></th>
         </tr>
       </thead>
       <tbody>
-      <% if @event_resources.blank? %>
-        <tr>
-          <td colspan="2" class="text-center"><%= t(:none) %></td>
-        </tr>
-      <% else %>
-        <% @event_resources.each do |r| activation = r.resource_activation(@event) %>
-          <tr>
-            <td>
-              <%= check_box_tag "toggle_event_resource_activation[#{activation.id}]",
-                               '',
-                               activation.active && r.active,
-                               data: {
-                                 id: activation.id,
-                                 event_id: @event.id,
-                                 resource_id: r.id,
-                                 default: r.active
-                               } %>
-            </td>
-            <td>
-              <%= r.name %>
-            </td>
-          </tr>
-        <% end %>
-      <% end %>
+        <%= render 'events/resources/associated_rows', event: @event, list: @event_resources %>
       </tbody>
     </table>
   </div>
@@ -58,41 +36,79 @@
       <thead>
         <tr>
           <th data-sorter="false" title="Action">&nbsp;</th>
+          <th><%= t(:type) %></th>
           <th title=""><%= t(@type) %></th>
         </tr>
       </thead>
       <tbody>
-      <% if @resources.blank? %>
-        <tr>
-          <td colspan="2" class="text-center"><%= t(:none) %></td>
-        </tr>
-      <% else %>
-        <% @resources.each do |r| %>
-          <tr>
-            <td>
-              <%= button_tag(type: 'button',
-                             data: { event_id: @event.id, resource_id: r.id }) do %>
-                <%= fa_icon('arrow-left') %>
-              <% end %>
-            </td>
-            <td>
-              <%= r.name %>
-            </td>
-          </tr>
-        <% end %>
-      <% end %>
+        <%= render 'events/resources/available_rows', event: @event, list: @resources %>
       </tbody>
     </table>
   </div>
 </div>
 
 <script charset="utf-8">
+$(function () {
+  var $associated = $('#associated_resources'),
+      $available = $('#available_resources');
+
   $('#associated_resources, #available_resources').tablesorter({
     widgets: ['filter'],
-    widgetOptions : {
-      filter_external : '.search',
+    widgetOptions: {
+      filter_external: '.search',
       filter_columnFilters: false,
       filter_functions: { 0: true }
     }
-  });
+  })
+    .on('change', 'input[type="checkbox"].toggle_activation', function () {
+      var $this = $(this).hide(),
+          $working = $('<i class="fa fa-cog fa-spin"></i>').insertAfter($this),
+          checked = this.checked;
+
+      $.ajax($this.data('route'), {
+        method: 'PATCH',
+        dataType: 'json',
+        data: {
+          activation: {
+            activations: [{
+              id: $this.data('activationId'),
+              active: checked
+            }]
+          }
+        }
+      })
+        .done(function (res) {
+          // REVIEW: is there anything to do here?
+          // TODO: show modal with any errors
+        })
+        .fail(function (err) {
+          $this.prop('checked', !checked);
+          // TODO: show modal with any errors
+        })
+        .always(function () {
+          $working.remove();
+          $this.show();
+        });
+    })
+    .on('click', 'button.add_to_event', function () {
+      var $this = $(this).html('<i class="fa fa-cog fa-spin"></i>').prop('disabled', true),
+          id = parseInt($this.data('resourceId'));
+
+      $.ajax($this.data('route'), {
+        method: 'POST',
+        dataType: 'html',
+        data: { event: { resource_ids: [id] } }
+      })
+        .done(function (res) {
+          $associated.find('tbody').prepend(res);
+          $this.closest('tr').remove();
+          // TODO: show modal with any errors
+        })
+        .fail(function (err) {
+          console.log(err);
+          // TODO show modal with any errors
+          $this.html('<i class="fa fa-arrow-left"></i>').prop('disabled', false);
+        });
+    })
+});
 </script>

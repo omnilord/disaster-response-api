@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  dynamic_resource_routes = lambda do |route, target|
+  dynamic_resource_routes = lambda do |route, target, create: false|
+    post route, to: "#{target}#create" if create
     get route, to: "#{target}#edit"
     patch route, to: "#{target}#update"
     put route, to: "#{target}#update"
@@ -26,7 +27,7 @@ Rails.application.routes.draw do
     dynamic_resource_routes.call('/managers', 'events/managers')
 
     # Event Resources
-    dynamic_resource_routes.call('/resources', 'events/resources')
+    dynamic_resource_routes.call('/resources', 'events/resources', create: true)
     dynamic_resource_routes.call('/shelters', 'events/shelters')
     dynamic_resource_routes.call('/pods', 'events/pods')
     dynamic_resource_routes.call('/medsites', 'events/med_sites')

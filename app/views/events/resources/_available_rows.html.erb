@@ -1,0 +1,9 @@
+<% if list.blank? %>
+  <tr>
+    <td colspan="3" class="text-center available-none"><%= t(:none) %></td>
+  </tr>
+<% else %>
+  <% list.each do |r| %>
+    <%= render 'events/resources/available_row', event: event, item: r %>
+  <% end %>
+<% end %>

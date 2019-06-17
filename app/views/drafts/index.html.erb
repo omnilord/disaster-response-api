@@ -19,7 +19,7 @@
             <a class="btn btn-link<%= @c1 ? '' : ' collapsed' %>" data-toggle="collapse"
                                               data-target=".draft-list-row-new-items"
                                               data-collapse-state="false"
-                                              aria-expanded='<%= @c1.to_s %>'>&nbsp;</a>
+                                              aria-expanded="<%= @c1.to_s %>">&nbsp;</a>
           </span>
         <% else %>
           <%= link_to item.link_to_text, item %>
@@ -31,7 +31,7 @@
             <a class="btn btn-link<%= @c1 ? '' : ' collapsed' %>" data-toggle="collapse"
                                               data-target=".draft-list-row-<%= item.class.name %>-<%= item.id %>"
                                               data-collapse-state="false"
-                                              aria-expanded='<%= @c1.to_s %>'>&nbsp;</a>
+                                              aria-expanded="<%= @c1.to_s %>">&nbsp;</a>
           </span>
         <% end %>
         </h3>

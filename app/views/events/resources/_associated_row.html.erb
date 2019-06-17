@@ -1,0 +1,19 @@
+<% activation = item.resource_activation(event) %>
+<tr>
+  <td>
+    <%= check_box_tag "toggle_event_resource_activation[#{activation.id}]",
+                     '',
+                     activation.active && item.active,
+                     class: 'form-control toggle_activation',
+                     data: {
+                       activation_id: activation.id,
+                       event_id: event.id,
+                       resource_id: item.id,
+                       default: item.active
+                     } %>
+  </td>
+  <td><%= t(item.resource_type.to_sym) %></td>
+  <td class="event-resource-row-content">
+    <%= render 'resources/table_cell', item: item %>
+  </td>
+</tr>

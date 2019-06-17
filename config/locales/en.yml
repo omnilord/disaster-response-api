@@ -134,6 +134,7 @@ en:
   supports_markdown: 'Supports Markdown'
   timestamp: 'Time Stamp'
   trash: 'Trash'
+  type: 'Type'
   update: 'Update'
   updated: 'Updated'
   updated_last: 'Last Updated'

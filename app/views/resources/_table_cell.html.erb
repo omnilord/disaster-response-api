@@ -1,0 +1,54 @@
+<div class="row resource-header">
+  <div class="col">
+    <h6>
+      <%= link_to item.name, item %>
+      <span class="pull-right">
+        <a class="btn btn-link collapsed" data-toggle="collapse"
+                                          data-target=".resource-list-row-<%= item.class.name %>-<%= item.id %>"
+                                          data-collapse-state="false"
+                                          aria-expanded="false">&nbsp;</a>
+      </span>
+    </h6>
+</div>
+<div class="row resource-list collapse resource-list-row-<%= "#{item.class.name}-#{item.id}" %>">
+  <div class="col-6">
+    <strong><%= label(:resource, :latitude, class: 'colon') %></strong>
+    <%= item.latitude %>
+  </div>
+  <div class="col-6">
+    <strong><%= label(:resource, :longitude, class: 'colon') %></strong>
+    <%= item.longitude %>
+  </div>
+  <div class="col-12">
+    <strong><%= label(:resource, :county, class: 'colon') %></strong>
+    <%= item.county %>
+  </div>
+  <div class="col-12">
+    <strong><%= label(:resource, :address, class: 'colon') %></strong>
+    <%= item.address %>
+  </div>
+  <div class="col-6">
+    <strong><%= label(:resource, :city, class: 'colon') %></strong>
+    <%= item.city %>
+  </div>
+  <div class="col-3">
+    <strong><%= label(:resource, :state, class: 'colon') %></strong>
+    <%= item.state %>
+  </div>
+  <div class="col-3">
+    <strong><%= label(:resource, :postal_code, class: 'colon') %></strong>
+    <%= item.postal_code %>
+  </div>
+  <div class="col-6">
+    <strong><%= label(:resource, :primary_phone, class: 'colon') %></strong>
+    <%= item.primary_phone %>
+  </div>
+  <div class="col-6">
+    <strong><%= label(:resource, :secondary_phone, class: 'colon') %></strong>
+    <%= item.secondary_phone %>
+  </div>
+  <div class="col-12">
+    <strong><%= label(:resource, :notes, class: 'colon') %></strong>
+    <%= item.notes %>
+  </div>
+</div>

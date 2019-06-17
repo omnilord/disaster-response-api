@@ -8,9 +8,51 @@ class Events::ResourcesController < ApplicationController
   def edit
   end
 
+  def create
+    @successes = []
+    @errors = []
+
+    resources_params[:resource_ids].each do |id|
+      @event.resources << Resource.find(id) unless @event.resources.find_by(id: id)
+      @successes << id
+    rescue ActiveRecord::RecordNotFound
+      @errors << id
+    end
+
+    respond_to do |format|
+      format.html do
+        render partial: 'events/resources/associated_rows',
+               locals: {
+                 event: @event,
+                 list: @event.resources.where(id: @successes)
+               }
+      end
+      format.json { render json: { successes: @successes, errors: @errors } }
+    end
+  end
+
   def update
-    @event.update(resources_params)
-    redirect_to @event
+    @successes = []
+    @errors = []
+    activations_params[:activations].each do |_, activation|
+      ra = @event.resource_activations.find(activation['id'])
+      ra.active = ActiveRecord::Type::Boolean.new.cast(activation['active'])
+      ra.save
+      @successes << ra.resource_id
+    rescue ActiveRecord::RecordNotFound
+      @errors << activation
+    end
+
+    respond_to do |format|
+      format.html do
+        render partial: 'events/resources/associated_rows',
+               locals: {
+                 event: @event,
+                 list: @event.resources.where(id: @successes)
+               }
+      end
+      format.json { render json: { successes: @successes, errors: @errors } }
+    end
   end
 
   def destroy
@@ -42,5 +84,10 @@ protected
 
   def resources_params
     params.require(:event).permit(resource_ids: [])
+  end
+
+  def activations_params
+    puts params
+    params.require(:activation).permit(activations: {})
   end
 end
