@@ -21,3 +21,39 @@ generic_two:
   real_name: "Second Generic User"
   admin: false
   trusted: false
+
+generic_three:
+  email: generic3@localhost.tld
+  real_name: "Three Generic User"
+  admin: false
+  trusted: false
+
+generic_four:
+  email: generic4@localhost.tld
+  real_name: "Four Generic User"
+  admin: false
+  trusted: false
+
+generic_five:
+  email: generic5@localhost.tld
+  real_name: "Five Generic User"
+  admin: false
+  trusted: false
+
+generic_six:
+  email: generic6@localhost.tld
+  real_name: "Six Generic User"
+  admin: false
+  trusted: false
+
+generic_seven:
+  email: generic7@localhost.tld
+  real_name: "Seven Generic User"
+  admin: false
+  trusted: false
+
+generic_eight:
+  email: generic8@localhost.tld
+  real_name: "Eight Generic User"
+  admin: false
+  trusted: false
