@@ -30,6 +30,8 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  action: 'Action'
+  active: 'Active'
   address_placeholder: '1234 Main St'
   admin: 'Admin'
   admin_only: 'Only administrators may access that page.'

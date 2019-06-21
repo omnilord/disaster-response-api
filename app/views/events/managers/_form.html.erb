@@ -33,7 +33,7 @@
       <% unless event.new_record? %>
         <%= link_to t(:delete_type, type: t(:event_team)), event_managers_path(event),
                       method: :delete,
-                      data: { confirm: 'Are you sure?' },
+                      data: { confirm: t(:are_you_sure?) },
                       class: 'btn btn-sm btn-outline-danger' %>
       <% end %>
     </div>
