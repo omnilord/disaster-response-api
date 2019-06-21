@@ -9,6 +9,7 @@ FIXTURE_ORDERED_LOAD = %w[
   events
   event_managers
   resources
+  resource_activations
 ].freeze
 
 class ActiveSupport::TestCase

@@ -69,12 +69,10 @@ $(function () {
         method: 'PATCH',
         dataType: 'json',
         data: {
-          activation: {
-            activations: [{
-              id: $this.data('activationId'),
-              active: checked
-            }]
-          }
+          activations: [{
+            id: $this.data('activationId'),
+            active: checked
+          }]
         }
       })
         .done(function (res) {

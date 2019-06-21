@@ -18,6 +18,10 @@ class ResourcesControllerTest < DevisedTest
     }
   end
 
+  let(:shelter) do
+    resources(:shelter_one)
+  end
+
   #
   # anyone should be able to see resources
   #
@@ -46,25 +50,25 @@ class ResourcesControllerTest < DevisedTest
   end
 
   test 'anonymous users can see individual resources' do
-    get resource_path(resources(:shelter))
+    get resource_path(shelter)
     assert_response :success
   end
 
   test 'generic users can see individual resources' do
     sign_in users(:generic_one)
-    get resource_path(resources(:shelter))
+    get resource_path(shelter)
     assert_response :success
   end
 
   test 'trusted users can see individual resources' do
     sign_in users(:trusted)
-    get resource_path(resources(:shelter))
+    get resource_path(shelter)
     assert_response :success
   end
 
   test 'admin users can see individual resources' do
     sign_in users(:admin)
-    get resource_path(resources(:shelter))
+    get resource_path(shelter)
     assert_response :success
   end
 
@@ -146,37 +150,37 @@ class ResourcesControllerTest < DevisedTest
   #
 
   test 'anonymous users should not get edit' do
-    get edit_resource_path(resources(:shelter))
+    get edit_resource_path(shelter)
     assert_response :redirect
     assert_redirected_to root_path
   end
 
   test 'generic users can get edit' do
     sign_in users(:generic_one)
-    get edit_resource_path(resources(:shelter))
+    get edit_resource_path(shelter)
     assert_response :success
   end
 
   test 'trusted users can get edit' do
     sign_in users(:trusted)
-    get edit_resource_path(resources(:shelter))
+    get edit_resource_path(shelter)
     assert_response :success
   end
 
   test 'admin users can get edit' do
     sign_in users(:admin)
-    get edit_resource_path(resources(:shelter))
+    get edit_resource_path(shelter)
     assert_response :success
   end
 
   test 'anonymous users should not update resource' do
-    patch resource_path(resources(:shelter)), params: params
+    patch resource_path(shelter), params: params
     assert_response :redirect
     assert_redirected_to root_path
   end
 
   test 'Generic users only create a draft when updating resources' do
-    resource = resources(:shelter)
+    resource = shelter
     sign_in users(:generic_one)
     assert_difference('Draft.count', 1) do
       assert_difference('Resource.count', 0) do
@@ -191,7 +195,7 @@ class ResourcesControllerTest < DevisedTest
   end
 
   test 'Trusted users create and apply a draft when updating resources' do
-    resource = resources(:shelter)
+    resource = shelter
     comp = lambda do
       {
         name: resource.name,
@@ -222,7 +226,7 @@ class ResourcesControllerTest < DevisedTest
   end
 
   test 'Admin users create and apply a draft when updating resources' do
-    resource = resources(:shelter)
+    resource = shelter
     comp = lambda do
       {
         name: resource.name,

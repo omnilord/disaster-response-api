@@ -41,6 +41,8 @@ class Event < ApplicationRecord
   # RESOURCES
   has_many :resource_activations, dependent: :destroy
   has_many :resources, through: :resource_activations
+  has_many :active_activations, -> { active }, class_name: 'ResourceActivation'
+  has_many :active_resources, through: :active_activations, source: :resource
 
   # publications are micro-news bits that get pushed out to various outlets
   # Could be as simple as a URL to a news outlet that generates an OEmbed preview
@@ -78,12 +80,12 @@ class Event < ApplicationRecord
 
   def draft_approver?(user)
     return false if user.nil?
-    manager?(user) || user.trusted?
+    manager?(user)
   end
 
   def admin?(user)
     return false if user.nil?
-    user.admin? || administrator == user
+    user.admin? || user.trusted? || administrator == user
   end
 
   def manager?(user)

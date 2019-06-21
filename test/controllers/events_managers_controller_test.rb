@@ -21,13 +21,6 @@ class EventsManagersControllerTest < DevisedTest
     assert_redirected_to event_path(events(:earthquake))
   end
 
-  test 'trusted user should not get event managers index' do
-    sign_in users(:trusted)
-    get event_managers_path(events(:earthquake))
-    assert_response :redirect
-    assert_redirected_to event_path(events(:earthquake))
-  end
-
   test 'event manager should not get event managers index' do
     sign_in users(:generic_two)
     get event_managers_path(events(:earthquake))
@@ -37,6 +30,12 @@ class EventsManagersControllerTest < DevisedTest
 
   test 'event administrator should get event managers index' do
     sign_in users(:generic_one)
+    get event_managers_path(events(:earthquake))
+    assert_response :success
+  end
+
+  test 'trusted user should get event managers index' do
+    sign_in users(:trusted)
     get event_managers_path(events(:earthquake))
     assert_response :success
   end
@@ -51,7 +50,7 @@ class EventsManagersControllerTest < DevisedTest
   # Add Managers
   #
 
-  test 'anonymous user should not change event managers index' do
+  test 'anonymous user should not change event managers' do
     event = events(:earthquake)
     expected = [ users(:generic_two).id, users(:generic_five).id ].sort.freeze
     params = { event: { manager_ids: expected } }
@@ -65,7 +64,7 @@ class EventsManagersControllerTest < DevisedTest
     end
   end
 
-  test 'generic user should not change event managers index' do
+  test 'generic user should not change event managers' do
     event = events(:earthquake)
     expected = [ users(:generic_two).id, users(:generic_five).id ].sort.freeze
     params = { event: { manager_ids: expected } }
@@ -80,18 +79,18 @@ class EventsManagersControllerTest < DevisedTest
     end
   end
 
-  test 'trusted user should not change event managers index' do
+  test 'trusted user should add one manager' do
     event = events(:earthquake)
     expected = [ users(:generic_two).id, users(:generic_five).id ].sort.freeze
     params = { event: { manager_ids: expected } }
 
     sign_in users(:trusted)
-    assert_difference('EventManager.count', 0) do
+    assert_difference('EventManager.count', 1) do
       patch event_managers_path(event), params: params
       assert_response :redirect
       assert_redirected_to event_path(event)
       event.reload
-      assert_equal [users(:generic_two).id], event.manager_ids.sort
+      assert_equal expected, event.manager_ids.sort
     end
   end
 
@@ -156,7 +155,7 @@ class EventsManagersControllerTest < DevisedTest
   # Remove Managers
   #
 
-  test 'should removing managers' do
+  test 'event manager should removing managers' do
     event = events(:earthquake)
     event.manager_ids = [
       users(:generic_two).id,
@@ -165,6 +164,7 @@ class EventsManagersControllerTest < DevisedTest
       users(:generic_seven).id,
       users(:generic_eight).id
     ]
+    event.reload
     assert_equal 5, event.managers.count
 
     expected = [

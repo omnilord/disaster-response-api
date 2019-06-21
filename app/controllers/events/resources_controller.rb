@@ -3,7 +3,7 @@ class Events::ResourcesController < ApplicationController
 
   before_action :set_event
   before_action :set_resources, only: [:edit]
-  before_action :event_admin!
+  before_action :event_manager!
 
   def edit
   end
@@ -78,8 +78,8 @@ protected
     @resources = Resource.send(scope) - @event_resources
   end
 
-  def event_admin!
-    redirect_to(@event, notice: t(:admin_only)) unless @event.admin?(Current.user)
+  def event_manager!
+    redirect_to(@event, notice: t(:admin_only)) unless @event.manager?(Current.user)
   end
 
   def resources_params
@@ -87,7 +87,6 @@ protected
   end
 
   def activations_params
-    puts params
-    params.require(:activation).permit(activations: {})
+    params.permit(activations: [:id, :active])
   end
 end

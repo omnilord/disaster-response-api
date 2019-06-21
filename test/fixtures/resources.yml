@@ -1,22 +1,85 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-shelter:
-  name: Refuge Shelter
+shelter_one:
+  name: Refuge Shelter, A
   resource_type: shelter
   current_draft_id: shelter_one (Draft)
   created_by: admin
   updated_by: admin
 
-pod:
+shelter_two:
+  name: Refuge Shelter, B
+  resource_type: shelter
+  current_draft_id: shelter_two (Draft)
+  created_by: admin
+  updated_by: admin
+
+shelter_three:
+  name: Refuge Shelter, C
+  resource_type: shelter
+  current_draft_id: shelter_three (Draft)
+  created_by: admin
+  updated_by: admin
+
+shelter_four:
+  name: Refuge Shelter, D
+  resource_type: shelter
+  current_draft_id: shelter_four (Draft)
+  created_by: admin
+  updated_by: admin
+
+shelter_five:
+  name: Refuge Shelter, E
+  resource_type: shelter
+  current_draft_id: shelter_five (Draft)
+  created_by: admin
+  updated_by: admin
+
+pod_one:
   name: Soup Kitchen
   resource_type: pod
   current_draft_id: pod_one (Draft)
   created_by: admin
   updated_by: admin
 
-medsite:
+pod_two:
+  name: County Pantry
+  resource_type: pod
+  current_draft_id: pod_two (Draft)
+  created_by: admin
+  updated_by: admin
+
+pod_three:
+  name: City Food Bank
+  resource_type: pod
+  current_draft_id: pod_three (Draft)
+  created_by: admin
+  updated_by: admin
+
+pod_four:
+  name: Private Generous
+  resource_type: pod
+  current_draft_id: pod_four (Draft)
+  created_by: admin
+  updated_by: admin
+
+pod_five:
+  name: County Pantry
+  resource_type: pod
+  current_draft_id: pod_five (Draft)
+  created_by: admin
+  updated_by: admin
+
+medsite_one:
   name: Bandaid Hut
   resource_type: medsite
   current_draft_id: medsite_one (Draft)
+  created_by: admin
+  updated_by: admin
+
+medsite_two:
+  name: RedCross Support Station
+  resource_type: medsite
+  current_draft_id: medsite_two (Draft)
   created_by: admin
   updated_by: admin

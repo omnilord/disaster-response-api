@@ -111,10 +111,61 @@ shelter_one:
   draftable: shelter
   draftable_type: Resource
   data:
-    name: Refuge Shelter
+    name: Refuge Shelter, A
     resource_type: shelter
   user: admin
   approved_by: admin
+  approved_at: <%= 1.day.ago %>
+
+shelter_two:
+  draftable: shelter
+  draftable_type: Resource
+  data:
+    name: Refuge Shelter, B
+    resource_type: shelter
+  user: admin
+  approved_by: admin
+  approved_at: <%= 1.day.ago %>
+
+shelter_three:
+  draftable: shelter
+  draftable_type: Resource
+  data:
+    name: Refuge Shelter, C
+    resource_type: shelter
+  user: admin
+  approved_by: admin
+  approved_at: <%= 1.day.ago %>
+
+shelter_four:
+  draftable: shelter
+  draftable_type: Resource
+  data:
+    name: Refuge Shelter, D
+    resource_type: shelter
+  user: admin
+  approved_by: admin
+  approved_at: <%= 1.day.ago %>
+
+shelter_five:
+  draftable: shelter
+  draftable_type: Resource
+  data:
+    name: Refuge Shelter, E
+    resource_type: shelter
+  user: admin
+  approved_by: admin
+  approved_at: <%= 1.day.ago %>
+
+
+pod_one:
+  draftable: pod
+  draftable_type: Resource
+  data:
+    name: Soup Kitchen
+    resource_type: pod
+  user: generic_one
+  approved_by: generic_one
   approved_at: <%= 1.day.ago %>
 
 pod_one:
@@ -127,11 +178,61 @@ pod_one:
   approved_by: generic_one
   approved_at: <%= 1.day.ago %>
 
+pod_two:
+  draftable: pod
+  draftable_type: Resource
+  data:
+    name: County Pantry
+    resource_type: pod
+  user: generic_one
+  approved_by: generic_one
+  approved_at: <%= 1.day.ago %>
+
+pod_three:
+  draftable: pod
+  draftable_type: Resource
+  data:
+    name: City Food Bank
+    resource_type: pod
+  user: generic_one
+  approved_by: generic_one
+  approved_at: <%= 1.day.ago %>
+
+pod_four:
+  draftable: pod
+  draftable_type: Resource
+  data:
+    name: Private Generous
+    resource_type: pod
+  user: generic_one
+  approved_by: generic_one
+  approved_at: <%= 1.day.ago %>
+
+pod_five:
+  draftable: pod
+  draftable_type: Resource
+  data:
+    name: County Pantry
+    resource_type: pod
+  user: generic_one
+  approved_by: generic_one
+  approved_at: <%= 1.day.ago %>
+
 medsite_one:
   draftable: medsite
   draftable_type: Resource
   data:
     name: Bandaid Hut
+    resource_type: medsite
+  user: generic_two
+  approved_by: generic_one
+  approved_at: <%= 1.day.ago %>
+
+medsite_two:
+  draftable: medsite
+  draftable_type: Resource
+  data:
+    name: RedCross Support Station
     resource_type: medsite
   user: generic_two
   approved_by: generic_one
