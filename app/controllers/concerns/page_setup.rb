@@ -6,6 +6,8 @@ module PageSetup
 
   included do
 
+    helper_method :site_page
+
     #
     # Find or Create pages outside the RESTful scope
     #
@@ -50,5 +52,9 @@ module PageSetup
         @site_page ||= Page.find_or_default(page, opts)
       end
     end
+  end
+
+  def site_page
+    @site_page
   end
 end

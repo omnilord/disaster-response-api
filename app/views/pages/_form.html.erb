@@ -1,11 +1,11 @@
 <h4><em>Use markdown to format the content of the page</em></h4>
-<%= form_for @page do |f| %>
+<%= form_for page do |f| %>
   <div class="form">
-    <% if @page.new_record? %>
+    <% if page.new_record? %>
       <%= f.label :page  %>
       <%= f.text_field :page, class: 'form-control' %>
     <% else %>
-      <h2><%= label(:page, :title) %>: <em><%= @page.page  %></em></h2>
+      <h2><%= label(:page, :title) %>: <em><%= page.page  %></em></h2>
       <%= f.hidden_field :page %>
     <% end %>
     <%= f.label :title %>
@@ -18,8 +18,8 @@
   <div class="btn-group d-flex justify-content-center mt-3">
   <%= f.submit class: 'btn btn-sm btn-primary' %>
   <%= link_to t(:pages_index), pages_path, class: 'btn btn-sm btn-outline-info' %>
-  <% unless @page.new_record? %>
-    <%= link_to t(:delete_type, type: t(:page)), page_path(@page),
+  <% unless page.new_record? %>
+    <%= link_to t(:delete_type, type: t(:page)), page_path(page),
                   method: :delete,
                   data: { confirm: 'Are you sure?' },
                   class: 'btn btn-sm btn-outline-danger' %>

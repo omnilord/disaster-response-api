@@ -17,7 +17,7 @@
       <div class="col-12">
         <%= f.label :managers %>
         <ul class="list-group">
-          <%= f.collection_check_boxes(:manager_ids, @users, :id, :link_to_text, {}, { multiple: true }) do |el| %>
+          <%= f.collection_check_boxes(:manager_ids, users, :id, :link_to_text, {}, { multiple: true }) do |el| %>
           <li class="list-group-item">
             <% checked = event.managers.any? { |man| man.id == el.value } %>
             <%= el.check_box %> <%= el.label %>

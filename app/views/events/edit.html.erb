@@ -1,3 +1,4 @@
 <%= render 'pages/page' %>
 
-<%= render 'form', event: @event %>
+<%= render 'form', event: @event,
+                   page_title: "#{t(:edit_type, type: t(:event))}: #{@event.name}" %>

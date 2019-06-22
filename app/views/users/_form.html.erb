@@ -1,4 +1,4 @@
-<%= form_for @user do |f| %>
+<%= form_for user do |f| %>
   <div class="form-group">
     <%= f.label :email %>
     <%= f.email_field :email, autofocus: true, autocomplete: 'email', class: 'form-control' %>
@@ -47,11 +47,11 @@
 
   <div class="form-group">
     <%= f.submit t(:update), class: 'btn btn-sm btn-primary' %>
-    <%= link_to(t(:delete_type, type: t(:user)), user_path(@user),
+    <%= link_to(t(:delete_type, type: t(:user)), user_path(user),
                 method: :delete,
                 data: { confirm: t(:are_you_sure?) },
-                class: 'btn btn-sm btn-outline-danger') unless @user.id == 1 %>
-    <%= link_to(t(:cancel), @user,
+                class: 'btn btn-sm btn-outline-danger') unless user.id == 1 %>
+    <%= link_to(t(:cancel), user,
                 class: 'btn btn-sm btn-outline-secondary') %>
   </div>
 <% end %>

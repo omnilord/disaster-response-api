@@ -1,6 +1,6 @@
 <%
 markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true)
-content_for :site_title, "#{@site_title} - #{item.name}"
+content_for :site_title, "#{site_title} - Event: #{item.name}", flush: true
 render 'events/managers/show', event: item
 render 'events/drafts/show', event: item
 render 'events/resources/show', event: item, type: :shelters, path: event_shelters_path(item)

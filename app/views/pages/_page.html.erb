@@ -1,6 +1,6 @@
-<% page ||= @site_page %>
+<% page ||= site_page %>
 <% if page %>
-<% content_for :site_title, "#{@site_title} - #{page.title}" %>
+<% content_for :site_title, "#{site_title} - #{page.title}" %>
 <% markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true) %>
 <h1 class="page-title">
   <%= page.title %>

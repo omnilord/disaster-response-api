@@ -1,3 +1,4 @@
+<%= content_for :site_title, "#{site_title} - #{page_title}", flush: true %>
 <%= form_with(model: resource, local: true) do |f| %>
   <div class="form">
     <% if resource.errors.any? %>

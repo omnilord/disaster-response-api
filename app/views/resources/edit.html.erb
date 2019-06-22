@@ -1,3 +1,4 @@
 <%= render 'pages/page' %>
 
-<%= render 'form', resource: @resource %>
+<%= render 'form', resource: @resource,
+                   page_title: "#{t(:edit_type, type: t(@resource.resource_type.to_sym))}: #{@resource.name}" %>

@@ -43,6 +43,7 @@ group :development, :test do
   gem 'pry'
   gem 'pry-byebug'
   gem 'capybara', '>= 2.15'
+  gem 'rails_best_practices'
 end
 
 group :development do

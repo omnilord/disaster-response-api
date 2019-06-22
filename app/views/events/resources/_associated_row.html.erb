@@ -6,6 +6,7 @@
                      activation.active && item.active,
                      class: 'form-control toggle_activation',
                      data: {
+                       route: event_resources_path(event),
                        activation_id: activation.id,
                        event_id: event.id,
                        resource_id: item.id,

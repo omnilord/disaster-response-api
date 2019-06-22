@@ -1,7 +1,7 @@
     <ul class="navbar-nav navbar-right">
       <li class="dropdown nav-item collapse-open">
         <a href="#" id="usermenu" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-          <%= t(:navbar_welcome, username: @username) %><span class="caret"></span>
+          <%= t(:navbar_welcome, username: display_username) %><span class="caret"></span>
         </a>
 <% if user_signed_in? %>
         <ul class="dropdown-menu">
