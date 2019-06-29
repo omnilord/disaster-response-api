@@ -69,6 +69,7 @@ en:
   draft_updated: 'Draft was successfully updated.'
   edit: 'Edit'
   edit_type: 'Edit %{type}'
+  errors_prohibited: '%{count} prohibited this %{type} from being saved:'
   event: 'Event'
   event_page: 'Event Page'
   event_resources_edit: 'Edit %{type} for %{event}'
@@ -119,6 +120,7 @@ en:
   private: 'Private'
   relief: 'Relief'
   resource: 'Resource'
+  resources: 'Resources'
   resource_type: 'Resource Type'
   review_draft: 'Review Draft'
   rest_404: 'No %{type} with that name or id found.'
@@ -151,8 +153,10 @@ en:
   attributes:
     content: 'Content'
     created_at: 'Created At'
+    created_by: 'Created By'
     name: 'Name'
     updated_at: 'Last Updated At'
+    updated_by: 'Last Updated By'
 
   activerecord:
     attributes:

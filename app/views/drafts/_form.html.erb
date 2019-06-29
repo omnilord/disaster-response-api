@@ -1,7 +1,7 @@
 <%= form_with(model: draft, local: true) do |form| %>
   <% if draft.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(draft.errors.count, "error") %> prohibited this draft from being saved:</h2>
+        <h2><%= t(:errors_prohibited, type: t(:draft), count: pluralize(draft.errors.count, "error")) %></h2>
 
       <ul>
       <% draft.errors.full_messages.each do |message| %>
