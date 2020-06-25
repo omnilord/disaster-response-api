@@ -1,7 +1,6 @@
 <% page ||= site_page %>
 <% if page %>
 <% content_for :site_title, "#{site_title} - #{page.title}" %>
-<% markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true) %>
 <h1 class="page-title">
   <%= page.title %>
   <% if user_signed_in? %>
@@ -14,6 +13,6 @@
 </h1>
 
 <article class="page-content">
-  <%= sanitize(markdown.render(page.content), tags: ALLOWED_HTML_TAGS, attributes: ALLOWED_HTML_ATTRIBUTES).html_safe %>
+  <%= render_markdown(page.content) %>
 </article>
 <% end %>

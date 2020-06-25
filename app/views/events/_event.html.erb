@@ -1,5 +1,4 @@
 <%
-markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true)
 content_for :site_title, "#{site_title} - Event: #{item.name}", flush: true
 render 'events/managers/show', event: item
 render 'events/drafts/show', event: item
@@ -41,19 +40,23 @@ render 'events/resources/show', event: item, type: :medsites, path: event_medsit
     </div>
   </div>
   <div class="card-body">
-    <%= sanitize(markdown.render(item.content), tags: ALLOWED_HTML_TAGS, attributes: ALLOWED_HTML_ATTRIBUTES).html_safe %>
+    <%= render_markdown(item.content) %>
   </div>
   <div class="card-footer">
     <div class="row">
       <div class="col-3">
         <h6><%= label(:event, :created_at) %></h6>
-        <%=item.created_at.strftime(Rails.configuration.datetime_format) %><br/>
-        <small>by: <%= item.created_by.link_to_text %></small>
+        <%= item.created_at.strftime(Rails.configuration.datetime_format) %><br/>
+        <small>
+          <%= t(:by_who, who: item.created_by.link_to_text) %>
+        </small>
       </div>
       <div class="col-3">
         <h6><%= label(:event, :updated_at) %></h6>
-        <%=item.updated_at.strftime(Rails.configuration.datetime_format) %><br/>
-        <small>by: <%= item.updated_by.link_to_text %></small>
+        <%= item.updated_at.strftime(Rails.configuration.datetime_format) %><br/>
+        <small>
+          <%= t(:by_who, who: item.updated_by.link_to_text) %>
+        </small>
       </div>
       <div class="col-3">&nbsp;</div>
       <div class="col-3">&nbsp;</div>

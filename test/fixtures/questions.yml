@@ -1,0 +1,50 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+question_one:
+  content: Testing Questions 1?
+  active: true
+  current_draft: draft_question_one
+  created_by: admin
+  updated_by: admin
+
+question_two:
+  content: Testing Questions 2?
+  active: true
+  current_draft: draft_question_two
+  created_by: admin
+  updated_by: admin
+
+question_three:
+  content: Testing Questions 3?
+  active: true
+  current_draft: draft_question_three_four
+  created_by: admin
+  updated_by: admin
+
+question_four:
+  content: Testing Questions 4?
+  active: true
+  current_draft: draft_question_four
+  created_by: admin
+  updated_by: admin
+
+question_five:
+  content: Testing Questions 5?
+  active: true
+  current_draft: draft_question_five
+  created_by: admin
+  updated_by: admin
+
+question_six:
+  content: Testing Questions 6?
+  active: true
+  current_draft: draft_question_six
+  created_by: admin
+  updated_by: admin
+
+question_seven:
+  content: Testing Questions 7?
+  active: true
+  current_draft: draft_question_seven
+  created_by: admin
+  updated_by: admin

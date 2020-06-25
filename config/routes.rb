@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   resources :resources, concerns: %i[draftable]
 
   resources :events, param: :slug do
-    concerns :draftable, module: :events
+    concerns %i[draftable]
 
     # Event Managers
     dynamic_resource_routes.call('/managers', 'events/managers')
@@ -42,6 +42,15 @@ Rails.application.routes.draw do
     # end
   end
 
+  #
+  # Surveys
+  #
+  resources :questions, concerns: %i[draftable]
+  resources :survey_templates, except: %i[destroy], concerns: %i[draftable]
+
+  #
+  # "static" pages
+  #
   get '/:page', to: 'pages#page'
 
   match '*unmatched_route', to: 'application#render_not_found', via: :all

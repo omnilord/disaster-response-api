@@ -6,7 +6,7 @@ hurricane:
   disaster_type: "hurricane"
   content: "A major category 4 is looming off the coast of florida."
   activated: "2019-04-30"
-  current_draft: hurricane_one
+  current_draft: draft_hurricane_one
   administrator: admin
   created_by: admin
   updated_by: admin
@@ -17,7 +17,7 @@ earthquake:
   disaster_type: "earthquake"
   content: "A major 7.7 quake with an epicenter near Memphis, Tennessee"
   activated: "2019-04-30"
-  current_draft: earthquake_two
+  current_draft: draft_earthquake_two
   administrator: generic_one
   created_by: generic_one
   updated_by: generic_one

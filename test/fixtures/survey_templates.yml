@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+survey_template_one:
+  resource_type: 'shelter'
+  created_by: admin
+  updated_by: admin
+  current_draft: draft_survey_template_one
+  notes: 'note note note note'
+  

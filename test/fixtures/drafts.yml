@@ -1,4 +1,4 @@
-page_one:
+draft_page_one:
   draftable: lorem
   draftable_type: Page
   data:
@@ -9,7 +9,7 @@ page_one:
   approved_by: admin
   approved_at: <%= 1.day.ago %>
 
-page_two:
+draft_page_two:
   draftable: pirate
   draftable_type: Page
   data:
@@ -20,7 +20,7 @@ page_two:
   approved_by: admin
   approved_at: <%= 1.day.ago %>
 
-page_three:
+draft_page_three:
   draftable: lorem
   draftable_type: Page
   data:
@@ -29,7 +29,7 @@ page_three:
     content: "Testing, 123, testing."
   user: generic_one
 
-page_four:
+draft_page_four:
   draftable: lorem
   draftable_type: Page
   data:
@@ -38,7 +38,7 @@ page_four:
     content: "Testing, 123, testing."
   user: generic_one
 
-page_five:
+draft_page_five:
   draftable_type: Page
   data:
     page: new_page
@@ -46,7 +46,7 @@ page_five:
     content: "Schooner nipperkin parrel bring a spring upon her cable Corsair pirate hail-shot league belay chantey. Hang the jib Barbary Coast run a rig gunwalls transom rigging bucko belay cog Davy Jones' Locker. Mizzen lugsail quarterdeck spyglass scurvy mizzenmast nipper lanyard stern Yellow Jack."
   user: generic_two
 
-page_six:
+draft_page_six:
   draftable: lorem
   draftable_type: Page
   data:
@@ -57,7 +57,7 @@ page_six:
   denied_by: admin
   denied_at: <%= 3.hour.ago %>
 
-page_seven:
+draft_page_seven:
   draftable: lorem
   draftable_type: Page
   data:
@@ -68,7 +68,7 @@ page_seven:
   approved_by: admin
   approved_at: <%= 1.hour.ago %>
 
-hurricane_one:
+draft_hurricane_one:
   draftable: hurricane
   draftable_type: Event
   data:
@@ -81,7 +81,7 @@ hurricane_one:
   approved_by: admin
   approved_at: <%= 1.hour.ago %>
 
-earthquake_one:
+draft_earthquake_one:
   draftable: earthquake
   draftable_type: Event
   data:
@@ -94,7 +94,7 @@ earthquake_one:
   approved_by: admin
   approved_at: <%= 2.hour.ago %>
 
-earthquake_two:
+draft_earthquake_two:
   draftable: earthquake
   draftable_type: Event
   data:
@@ -107,7 +107,7 @@ earthquake_two:
   approved_by: admin
   approved_at: <%= 1.hour.ago %>
 
-shelter_one:
+draft_shelter_one:
   draftable: shelter
   draftable_type: Resource
   data:
@@ -117,7 +117,7 @@ shelter_one:
   approved_by: admin
   approved_at: <%= 1.day.ago %>
 
-shelter_two:
+draft_shelter_two:
   draftable: shelter
   draftable_type: Resource
   data:
@@ -127,7 +127,7 @@ shelter_two:
   approved_by: admin
   approved_at: <%= 1.day.ago %>
 
-shelter_three:
+draft_shelter_three:
   draftable: shelter
   draftable_type: Resource
   data:
@@ -137,7 +137,7 @@ shelter_three:
   approved_by: admin
   approved_at: <%= 1.day.ago %>
 
-shelter_four:
+draft_shelter_four:
   draftable: shelter
   draftable_type: Resource
   data:
@@ -147,7 +147,7 @@ shelter_four:
   approved_by: admin
   approved_at: <%= 1.day.ago %>
 
-shelter_five:
+draft_shelter_five:
   draftable: shelter
   draftable_type: Resource
   data:
@@ -158,7 +158,7 @@ shelter_five:
   approved_at: <%= 1.day.ago %>
 
 
-pod_one:
+draft_pod_one:
   draftable: pod
   draftable_type: Resource
   data:
@@ -168,17 +168,7 @@ pod_one:
   approved_by: generic_one
   approved_at: <%= 1.day.ago %>
 
-pod_one:
-  draftable: pod
-  draftable_type: Resource
-  data:
-    name: Soup Kitchen
-    resource_type: pod
-  user: generic_one
-  approved_by: generic_one
-  approved_at: <%= 1.day.ago %>
-
-pod_two:
+draft_pod_two:
   draftable: pod
   draftable_type: Resource
   data:
@@ -188,7 +178,7 @@ pod_two:
   approved_by: generic_one
   approved_at: <%= 1.day.ago %>
 
-pod_three:
+draft_pod_three:
   draftable: pod
   draftable_type: Resource
   data:
@@ -198,7 +188,7 @@ pod_three:
   approved_by: generic_one
   approved_at: <%= 1.day.ago %>
 
-pod_four:
+draft_pod_four:
   draftable: pod
   draftable_type: Resource
   data:
@@ -208,7 +198,7 @@ pod_four:
   approved_by: generic_one
   approved_at: <%= 1.day.ago %>
 
-pod_five:
+draft_pod_five:
   draftable: pod
   draftable_type: Resource
   data:
@@ -218,7 +208,7 @@ pod_five:
   approved_by: generic_one
   approved_at: <%= 1.day.ago %>
 
-medsite_one:
+draft_medsite_one:
   draftable: medsite
   draftable_type: Resource
   data:
@@ -228,7 +218,7 @@ medsite_one:
   approved_by: generic_one
   approved_at: <%= 1.day.ago %>
 
-medsite_two:
+draft_medsite_two:
   draftable: medsite
   draftable_type: Resource
   data:
@@ -237,3 +227,110 @@ medsite_two:
   user: generic_two
   approved_by: generic_one
   approved_at: <%= 1.day.ago %>
+
+draft_question_one:
+  draftable: question_one
+  draftable_type: Question
+  data:
+    content: Testing Questions?
+    active: true
+  user: admin
+  approved_by: admin
+  approved_at: <%= 1.day.ago %>
+
+draft_question_two:
+  draftable: question_two
+  draftable_type: Question
+  data:
+    content: Testing Questions?
+    active: true
+  user: admin
+  approved_by: admin
+  approved_at: <%= 1.day.ago %>
+
+draft_question_three_one:
+  draftable: question_three
+  draftable_type: Question
+  data:
+    content: This is not correct.
+    active: true
+  user: trusted
+  approved_by: trusted
+  approved_at: <%= 4.day.ago %>
+
+draft_question_three_two:
+  draftable: question_three
+  draftable_type: Question
+  data:
+    content: This is not correct?  Nope.
+    active: true
+  user: trusted
+  approved_by: trusted
+  approved_at: <%= 3.day.ago %>
+
+draft_question_three_three:
+  draftable: question_three
+  draftable_type: Question
+  data:
+    content: Is this a corrected test question?
+    active: true
+  user: admin
+  approved_by: admin
+  approved_at: <%= 2.day.ago %>
+
+draft_question_three_four:
+  draftable: question_three
+  draftable_type: Question
+  data:
+    content: Has this test question been corrected?
+    active: true
+  user: admin
+  approved_by: admin
+  approved_at: <%= 1.day.ago %>
+
+draft_question_three_five:
+  draftable: question_three
+  draftable_type: Question
+  data:
+    content: Testing Question 3?
+    active: true
+  user: admin
+  approved_by: admin
+
+draft_question_four:
+  draftable: question_four
+  draftable_type: Question
+  data:
+    content: Testing Question 4?
+    active: true
+  user: admin
+  approved_by: admin
+  approved_at: <%= 1.day.ago %>
+
+draft_question_six:
+  draftable: question_six
+  draftable_type: Question
+  data:
+    content: Testing Question 6?
+    active: true
+  user: admin
+  approved_by: admin
+  approved_at: <%= 1.day.ago %>
+
+draft_question_seven:
+  draftable: question_seven
+  draftable_type: Question
+  data:
+    content: Testing Question 7?
+    active: true
+  user: admin
+  approved_by: admin
+  approved_at: <%= 1.day.ago %>
+
+draft_survey_template_one:
+  draftable: survey_template_one
+  draftable_type: SurveyTemplate
+  data:
+    resource_type: shelter
+    notes: 'note note note note'
+    survey_template_questions_attributes: [] # don't need live data

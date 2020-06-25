@@ -1,0 +1,57 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+stq_one:
+  survey_template: survey_template_one
+  question: question_one
+  position: 1
+  active: true
+  required: false
+  private: false
+
+stq_two:
+  survey_template: survey_template_one
+  question: question_two
+  position: 2
+  active: true
+  required: false
+  private: false
+
+# Three and Four are omitted as they will be added as test cases
+# three:
+#   survey_template: one
+#   question: three
+#   position: 4
+#   active: true
+#   required: false
+#   private: false
+ 
+# four:
+#   survey_template: one
+#   question: four
+#   position: 5
+#   active: true
+#   required: false
+#   private: false
+
+stq_five:
+  survey_template: survey_template_one
+  question: question_five
+  position: 3
+  active: true
+  required: false
+  private: false
+
+stq_six:
+  survey_template: survey_template_one
+  question: question_six
+  position: 6
+  active: true
+  required: false
+  private: false
+
+stq_seven:
+  survey_template: survey_template_one
+  question: question_seven
+  position: 7
+  active: true
+  required: false
+  private: false

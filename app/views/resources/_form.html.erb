@@ -31,7 +31,7 @@
         <div class="form-group">
           <% Resource::TYPE_KEYS.each do |type_sym| %>
           <div class="form-check form-check-inline">
-            <%= f.radio_button :resource_type, type_sym,  class: 'form-check-input' %>
+            <%= f.radio_button :resource_type, type_sym, class: 'form-check-input' %>
             <%= f.label :resource_type, t(type_sym), class: 'form-check-label' %>
           </div>
           <% end %>
@@ -127,6 +127,14 @@
         <%= f.label :private_notes %>
         <%= f.text_area :private_notes, class: 'form-control' %>
       </div>
+    </fieldset>
+    <% end %>
+
+    <% unless survey.survey_template_questions.empty? %>
+    <fieldset class="form-group p-1">
+      <legend class="form-label"><%= t(:questions) %></legend>
+      <%= render 'survey_questions', questions: survey.survey_template_questions,
+                                     answers: resource.questions_and_answers %>
     </fieldset>
     <% end %>
 

@@ -15,4 +15,11 @@ module ApplicationHelper
   def event_disaster_type_options(selected = nil)
     options_for_select(Event.disaster_types.map { |k, v| [v.humanize.capitalize, k] }, selected: selected)
   end
+
+  def render_markdown(text)
+    #<% markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true) %>
+    #<td><%= sanitize(markdown.render(question.content), tags: ALLOWED_HTML_TAGS, attributes: ALLOWED_HTML_ATTRIBUTES).html_safe %></td>
+    @markdown ||= Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true)
+    sanitize(@markdown.render(text), tags: ALLOWED_HTML_TAGS, attributes: ALLOWED_HTML_ATTRIBUTES).html_safe
+  end
 end

@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '~> 2.6.0'
+ruby '~> 2.6.5'
 
 #
 #  Core
@@ -22,7 +22,7 @@ gem 'devise'
 #
 
 gem 'mini_racer', platforms: :ruby
-gem 'bootstrap', '~> 4.1.3'
+gem 'bootstrap', '~> 4.5.0'
 gem 'jquery-rails'
 gem 'font-awesome-rails'
 gem 'sass-rails', '~> 5.0'
@@ -42,6 +42,7 @@ gem 'jquery-tablesorter'
 group :development, :test do
   gem 'pry'
   gem 'pry-byebug'
+  gem 'minitest-reporters'
   gem 'capybara', '>= 2.15'
   gem 'rails_best_practices'
 end

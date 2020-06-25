@@ -1,9 +1,18 @@
+#
+# Draft Handler for draftable items
+#
+# Implementation details:
+# - resource variable in the controller for CRUD should be
+#   the same as `controller_name.classify.underscore` or
+#   this will have a false positive for drafts existing.
+#
+
 module DraftHandler
   extend ActiveSupport::Concern
 
   def save_or_draft(method)
     class_name = controller_name.classify
-    name = class_name.downcase
+    name = class_name.underscore
     class_params = self.send("#{name}_params")
 
     @draft, success, pending, error_render =
@@ -35,8 +44,16 @@ module DraftHandler
   end
 
   def set_draft_count_warning
-    obj = self.instance_variable_get("@#{controller_name.classify.downcase}")
+    obj = self.instance_variable_get("@#{controller_name.classify.underscore}")
     @draft_count = Draft.where(draftable: obj).actionable.count
-    flash[:warning] = I18n.t(:drafts_exist) if @draft_count > 0
+    if @draft_count > 0
+      drafts_label = ActionController::Base.helpers.pluralize(@draft_count, t(:draft))
+      flash[:warning] =
+        if admin?
+          I18n.t(:drafts_exist_url, url: url_for([obj, :drafts]), drafts: drafts_label)
+        else
+          I18n.t(:drafts_exist, drafts: drafts_label)
+        end
+    end
   end
 end

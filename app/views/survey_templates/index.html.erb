@@ -1,0 +1,36 @@
+<%= render 'pages/page' %>
+
+<% Resource.resource_types.each do |tk, tt| %>
+<h3><%= t(tk) %></h3>
+<div class="row">
+  <% survey_template = @survey_templates.find { |st| st.resource_type == tk } %>
+  <% if survey_template.nil? %>
+    <div class="col-12">
+      <%= link_to(t(:no_template_found_create?, type: t(tk)),
+                  new_survey_template_path(resource_type: tk),
+                  class: 'btn btn-sm btn-primary') %>
+    </div>
+  <% else %>
+    <div class="col-2">
+      <%= link_to(survey_template, class: 'btn btn-sm btn-outline-primary') do %>
+        <%= fa_icon(:eye, text: t(:show)) %>
+      <% end %>
+      <%= link_to(edit_survey_template_path(survey_template), class: 'btn btn-sm btn-outline-secondary') do %>
+        <%= fa_icon(:edit, text: t(:edit)) %>
+      <% end %>
+    </div>
+    <div class="col-3">
+      <%= t(:resource_type) %>:
+      <%= survey_template.resource_type %>
+    </div>
+    <div class="col-3">
+      <%= t(:questions) %>:
+      <%= survey_template.survey_template_questions.count %>
+    </div>
+    <div class="col-3">
+      <%= t(:notes) %>:
+      <%= survey_template.notes? ? t(:none) : survey_template.notes %>
+    </div>
+  <% end %>
+</div>
+<% end %>

@@ -13,6 +13,7 @@
 //= require jquery3
 //= require jquery_ujs
 //= require jquery-ui/datepicker
+//= require jquery-ui/sortable
 //= require turbolinks
 //= require bootstrap
 //= require jquery-tablesorter

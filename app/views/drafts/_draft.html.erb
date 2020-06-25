@@ -14,7 +14,7 @@
   <div class="card-header">
     <h2>
       <% if draft.draftable.nil? %>
-      <%= t(:new, type: t(draft.draftable_type.downcase.to_sym)) %>
+      <%= t(:new, type: t(draft.draftable_type.underscore.to_sym)) %>
       <% else %>
       <%= link_to draft.draftable.link_to_text, draft.draftable %>
       <small class="text-muted">

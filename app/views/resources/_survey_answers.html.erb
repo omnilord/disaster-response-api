@@ -1,0 +1,44 @@
+<ul class="list-group list-unstyled">
+  <% questions.each_with_index do |qa, i| %>
+  <li class="list-group-item<%= qa[:answer].nil? && ' list-group-item-light' %>">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title clear-fix">
+          <span class="float-left pr-2">#<%= (i + 1) %></span>
+          <label>
+            <%= render_markdown(qa[:question].content) %>
+          </label>
+        </h6>
+
+        <small class="text-muted">Answer</small>
+        <p class="card-text border border-dark p-2">
+          <%= qa[:answer]&.content || "<em>&lt;#{t(:unanswered)}&gt;</em>".html_safe %>
+        </p>
+
+        <% unless qa[:answer].nil? %>
+        <div class="text-muted">
+          <div class="row px-2">
+            <div class="col-6">
+                <small>
+                  <%= t(:answered_at, ts: qa[:answer].created_at.strftime(Rails.configuration.datetime_format)) %>
+                  <br/>
+                  <%= t(:answered_by, user: qa[:answer].created_by.link_to_text) %>
+                </small>
+            </div>
+            <div class="col-6">
+              <% if qa[:answer].edited? %>
+                <small>
+                  <%= t(:updated_last_at, ts: qa[:answer].updated_at.strftime(Rails.configuration.datetime_format)) %>
+                  <br/>
+                  <%= t(:updated_last_by, user: qa[:answer].updated_by.link_to_text) %>
+                </small>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <% end %>
+      </div>
+    </div>
+  </li>
+  <% end %>
+</ul>

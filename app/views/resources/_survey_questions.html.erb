@@ -1,0 +1,66 @@
+<ul class="list-group">
+<% questions.sort_by(&:position).each_with_index do |stq, i| %>
+  <% answer = answers.find { |qa| qa[:answer]&.survey_template_question_id == stq.id }&.fetch(:answer, nil) %>
+  <li class="list-group-item question_group_<%= i %>">
+    <input type="hidden"
+           name="resource[answers_attributes][][survey_template_question_id]"
+           value="<%= stq.id %>" />
+
+    <div class="form-group">
+      <%= render_markdown(stq.question.content) %>
+      <label for="resource_answer_<%= i %>"><%= t(:answer) %>: </label>
+      <div class="clickmask-container">
+        <input class="form-control"
+               type="text"
+               name="resource[answers_attributes][][content]"
+               id="resource_answer_<%= i %>"
+               value="<%= answer&.content %>"
+               data-toggle-content="question_group_<%= i %>"
+               <%= answer.nil? ? '' :  %q(disabled="disabled") %> />
+    <% unless answer.nil? %>
+        <div class="clickmask">&nbsp;</div>
+      </div>
+      <div class="input-check pl-4">
+        <input class="form-check-input"
+               type="checkbox"
+               name="resource[answers_attributes][][id]"
+               value="<%= answer&.id %>" checked="checked"
+               data-toggle-content-target="question_group_<%= i %>" />
+               <label class="form-check-label">
+                 <small class="text-muted">
+                 <%= t(:keep_previous, type: (:answer),
+                                       from: answer.created_by.link_to_text,
+                                       at: answer.created_at.strftime(Rails.configuration.datetime_format)) %>
+                 </small>
+               </label>
+        <input type="hidden"
+               name="resource[answers_attributes][][content]"
+               value="<%= answer&.content %>"
+               data-toggle-content="question_group_<%= i %>" />
+      </div>
+    <% else %>
+      </div>
+    <% end %>
+    </div>
+  </li>
+<% end %>
+</ul>
+<script charset="utf-8">
+$(function () {
+  // setup event to enable/disable content values
+  $('input[type="checkbox"][data-toggle-content-target]').on('change', function () {
+    var $this = $(this);
+    $this.closest('li')
+      .find('input[data-toggle-content]').each(function () { this.disabled = !this.disabled }).end()
+      .find('.clickmask').toggle()
+        .siblings().first().focus().select();
+  });
+
+  // setup disabled textbox to respond to being clicked on
+  $('input[type="text"][data-toggle-content]:disabled + div.clickmask').on('click', function () {
+    var $this = $(this);
+    $this.closest('li')
+      .find('div.input-check > input[type="checkbox"][data-toggle-content-target]').prop('checked', false).trigger('change');
+  });
+});
+</script>

@@ -1,0 +1,6 @@
+<%= render 'pages/page' %>
+
+<%= render 'form', question: @question,
+                   page_title: "#{t(:new, type: t(:question))}" %>
+
+<%= link_to 'Back', questions_path %>

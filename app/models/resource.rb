@@ -15,6 +15,11 @@ class Resource < ApplicationRecord
   has_many :resource_activations, dependent: :destroy
   has_many :events, through: :resource_activations
 
+  # SURVEYS
+  has_many :answers, dependent: :destroy
+
+  accepts_nested_attributes_for :answers, allow_destroy: true, reject_if: ->(attrs) { attrs[:content].blank? }
+
   validates :name, presence: true
   validates :resource_type, presence: true
 
@@ -39,10 +44,6 @@ class Resource < ApplicationRecord
     name
   end
 
-  def draft_approver?(user)
-    trusted?(user)
-  end
-
   def admin?(user)
     return false if user.nil?
     user.admin?
@@ -53,12 +54,36 @@ class Resource < ApplicationRecord
     user.admin? || user.trusted?
   end
 
+  def draft_approver?(user)
+    trusted?(user)
+  end
+
   def humanize_resource_type
     humanize_enum(:resource_type)
   end
 
   def resource_activation(event)
     ResourceActivation.where(event: event, resource: self).first
+  end
+
+  def survey_questions
+    @question_list ||= SurveyTemplate.ordered_questions(self.resource_type)
+  end
+
+  def questions_and_answers
+    @answer_list ||= answers.most_recent
+    @q_and_a ||= begin
+      (survey_questions || []).map do |q|
+        # Find an answer to these questions in order and move it to this list
+        i = @answer_list.find_index { |answer| q == answer.question }
+        a = @answer_list.delete_at(i) unless i.nil?
+
+        { question: q, answer: a }
+      end + (@answer_list || []).map do |a|
+        # append any remaining answers as ad-hoc (maybe the question was removed)
+        { question: Question.new(a.question_config), answer: a }
+      end
+    end
   end
 
 private

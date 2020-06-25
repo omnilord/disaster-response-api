@@ -26,6 +26,7 @@ class ResourcesController < ApplicationController
       else
         Resource.new
       end
+      @survey_template = SurveyTemplate.with_questions.find_or_initialize_by(resource_type: params[:resource_type])
   end
 
   def create
@@ -49,14 +50,14 @@ class ResourcesController < ApplicationController
 
 private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_resource
     @resource = Resource.find(params[:id])
+    @survey_template = SurveyTemplate.with_questions.by_resource_type(@resource.resource_type)
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def resource_params
-    params.require(:resource).permit(%i[
+    params.require(:resource).permit(*%i[
       name
       resource_type
       latitude
@@ -76,6 +77,11 @@ private
       latest_data_source
       notes
       active
+    ],
+    answers_attributes: %i[
+      id
+      survey_template_question_id
+      content
     ])
   end
 end

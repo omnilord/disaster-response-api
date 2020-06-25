@@ -1,36 +1,36 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
+resource_activation_one:
   event: earthquake
   resource: shelter_one
   active: true
 
-two:
+resource_activation_two:
   event: earthquake
   resource: shelter_two
   active: true
 
-three:
+resource_activation_three:
   event: earthquake
   resource: pod_one
   active: true
 
-four:
+resource_activation_four:
   event: earthquake
   resource: pod_two
   active: true
 
-five:
+resource_activation_five:
   event: earthquake
   resource: medsite_one
   active: true
 
-six:
+resource_activation_six:
   event: earthquake
   resource: shelter_three
   active: false
 
-seven:
+resource_activation_seven:
   event: earthquake
   resource: pod_three
   active: false

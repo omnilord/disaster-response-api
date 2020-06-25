@@ -33,28 +33,28 @@ class DraftsControllerTest < DevisedTest
   #
 
   test 'Anonymous users cannot access draft views' do
-    get draft_path(drafts(:page_one))
+    get draft_path(drafts(:draft_page_one))
     assert_response :redirect
     assert_redirected_to root_path
 
-    get draft_path(drafts(:page_three))
+    get draft_path(drafts(:draft_page_three))
     assert_response :redirect
     assert_redirected_to root_path
   end
 
   test 'Generic users can see their drafts' do
     sign_in users(:generic_one)
-    get draft_path(drafts(:page_three))
+    get draft_path(drafts(:draft_page_three))
     assert_response :success
   end
 
   test 'Generic users cannot see drafts from other users' do
     sign_in users(:generic_one)
-    get draft_path(drafts(:page_one))
+    get draft_path(drafts(:draft_page_one))
     assert_response :redirect
     assert_redirected_to root_path
 
-    get draft_path(drafts(:page_five))
+    get draft_path(drafts(:draft_page_five))
     assert_response :redirect
     assert_redirected_to root_path
   end
@@ -72,7 +72,7 @@ class DraftsControllerTest < DevisedTest
   #
 
   test 'Anonymous users cannot approve drafts' do
-    page_three = drafts(:page_three)
+    page_three = drafts(:draft_page_three)
     assert_no_changes('page_three.attributes') do
       assert_no_changes('page_three.draftable.attributes') do
         patch draft_path(page_three)
@@ -85,7 +85,7 @@ class DraftsControllerTest < DevisedTest
 
   test 'Generic users cannot approve their own drafts' do
     sign_in users(:generic_one)
-    page_three = drafts(:page_three)
+    page_three = drafts(:draft_page_three)
     assert_no_changes('page_three.attributes') do
       assert_no_changes('page_three.draftable.attributes') do
         patch draft_path(page_three)
@@ -98,7 +98,7 @@ class DraftsControllerTest < DevisedTest
 
   test 'Generic users cannot approve other drafts' do
     sign_in users(:generic_one)
-    page_five = drafts(:page_five)
+    page_five = drafts(:draft_page_five)
     assert_no_changes('page_five.attributes') do
       assert_difference('Page.count', 0) do
         patch draft_path(page_five)
@@ -111,12 +111,12 @@ class DraftsControllerTest < DevisedTest
 
   test 'Admin users can approve drafts' do
     sign_in users(:admin)
-    page_three = drafts(:page_three)
+    page_three = drafts(:draft_page_three)
     patch draft_path(page_three)
     assert_response :redirect
     assert_redirected_to drafts_path
 
-    page_five = drafts(:page_five)
+    page_five = drafts(:draft_page_five)
     patch draft_path(page_five)
     assert_response :redirect
     assert_redirected_to drafts_path
@@ -125,7 +125,7 @@ class DraftsControllerTest < DevisedTest
 
   test 'When admin users approve, existing resources get updated' do
     sign_in users(:admin)
-    page_three = drafts(:page_three)
+    page_three = drafts(:draft_page_three)
     assert_changes('page_three.attributes') do
       assert_changes('page_three.draftable.attributes') do
         patch draft_path(page_three)
@@ -140,7 +140,7 @@ class DraftsControllerTest < DevisedTest
 
   test 'When admin users approve, new resources get created' do
     sign_in users(:admin)
-    page_five = drafts(:page_five)
+    page_five = drafts(:draft_page_five)
     assert_changes('page_five.attributes') do
       assert_difference('Page.count', 1) do
         patch draft_path(page_five)
@@ -163,7 +163,7 @@ class DraftsControllerTest < DevisedTest
   #
   #
   test 'Anonymous users cannot deny drafts' do
-    page_three = drafts(:page_three)
+    page_three = drafts(:draft_page_three)
     assert_no_changes('page_three.attributes') do
       assert_no_changes('page_three.draftable.attributes') do
         delete draft_path(page_three)
@@ -176,7 +176,7 @@ class DraftsControllerTest < DevisedTest
 
   test 'Generic users can deny their own drafts to existing resources' do
     sign_in users(:generic_one)
-    page_three = drafts(:page_three)
+    page_three = drafts(:draft_page_three)
     assert_changes('page_three.attributes') do
       assert_no_changes('page_three.draftable.attributes') do
         delete draft_path(page_three)
@@ -191,7 +191,7 @@ class DraftsControllerTest < DevisedTest
 
   test 'Generic users can deny their own drafts to create new resources' do
     sign_in users(:generic_two)
-    page_five = drafts(:page_five)
+    page_five = drafts(:draft_page_five)
     assert_changes('page_five.attributes') do
       assert_difference('Page.count', 0) do
         delete draft_path(page_five)
@@ -206,7 +206,7 @@ class DraftsControllerTest < DevisedTest
 
   test 'Generic users cannot deny other drafts' do
     sign_in users(:generic_one)
-    page_five = drafts(:page_five)
+    page_five = drafts(:draft_page_five)
     assert_no_changes('page_five.attributes') do
       assert_difference('Page.count', 0) do
         delete draft_path(page_five)
@@ -219,7 +219,7 @@ class DraftsControllerTest < DevisedTest
 
   test 'Admin users can deny drafts to existing resources' do
     sign_in users(:admin)
-    page_three = drafts(:page_three)
+    page_three = drafts(:draft_page_three)
     assert_changes('page_three.attributes') do
       assert_no_changes('page_three.draftable.attributes') do
         delete draft_path(page_three)
@@ -234,7 +234,7 @@ class DraftsControllerTest < DevisedTest
 
   test 'Admin users can deny drafts to create new resources' do
     sign_in users(:admin)
-    page_five = drafts(:page_five)
+    page_five = drafts(:draft_page_five)
     assert_changes('page_five.attributes') do
       assert_difference('Page.count', 0) do
         delete draft_path(page_five)

@@ -1,0 +1,4 @@
+<%= render 'pages/page' %>
+
+<%= render 'form', question: @question,
+                   page_title: "#{t(:edit_type, type: t(:question))}: #{@question.content.truncate(30)}" %>

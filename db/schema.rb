@@ -10,10 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_05_000224) do
+ActiveRecord::Schema.define(version: 2019_07_31_191818) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "postgis"
+
+  create_table "answers", force: :cascade do |t|
+    t.bigint "question_id"
+    t.bigint "resource_id", null: false
+    t.bigint "survey_template_question_id"
+    t.text "content"
+    t.json "question_config"
+    t.bigint "created_by_id"
+    t.bigint "updated_by_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["created_by_id"], name: "index_answers_on_created_by_id"
+    t.index ["question_id", "resource_id", "created_at"], name: "latest_answer_by_resource_question_idx"
+    t.index ["question_id"], name: "index_answers_on_question_id"
+    t.index ["resource_id"], name: "index_answers_on_resource_id"
+    t.index ["survey_template_question_id"], name: "index_answers_on_survey_template_question_id"
+    t.index ["updated_by_id"], name: "index_answers_on_updated_by_id"
+  end
 
   create_table "drafts", force: :cascade do |t|
     t.string "draftable_type"
@@ -78,6 +97,19 @@ ActiveRecord::Schema.define(version: 2019_06_05_000224) do
     t.index ["updated_by_id"], name: "index_pages_on_updated_by_id"
   end
 
+  create_table "questions", force: :cascade do |t|
+    t.text "content", null: false
+    t.bigint "current_draft_id", null: false
+    t.boolean "active", default: true
+    t.bigint "created_by_id"
+    t.bigint "updated_by_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["created_by_id"], name: "index_questions_on_created_by_id"
+    t.index ["current_draft_id"], name: "index_questions_on_current_draft_id"
+    t.index ["updated_by_id"], name: "index_questions_on_updated_by_id"
+  end
+
   create_table "resource_activations", force: :cascade do |t|
     t.bigint "event_id", null: false
     t.bigint "resource_id", null: false
@@ -120,6 +152,32 @@ ActiveRecord::Schema.define(version: 2019_06_05_000224) do
     t.index ["updated_by_id"], name: "index_resources_on_updated_by_id"
   end
 
+  create_table "survey_template_questions", force: :cascade do |t|
+    t.bigint "survey_template_id", null: false
+    t.bigint "question_id", null: false
+    t.integer "position", default: 0, null: false
+    t.boolean "active", default: true
+    t.boolean "required", default: false
+    t.boolean "private", default: false
+    t.index ["question_id"], name: "index_survey_template_questions_on_question_id"
+    t.index ["survey_template_id", "question_id"], name: "survey_template_question_ids_unique_idx", unique: true
+    t.index ["survey_template_id"], name: "index_survey_template_questions_on_survey_template_id"
+  end
+
+  create_table "survey_templates", force: :cascade do |t|
+    t.text "resource_type", default: "shelter", null: false
+    t.bigint "current_draft_id", null: false
+    t.bigint "created_by_id"
+    t.bigint "updated_by_id"
+    t.text "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["created_by_id"], name: "index_survey_templates_on_created_by_id"
+    t.index ["current_draft_id"], name: "index_survey_templates_on_current_draft_id"
+    t.index ["resource_type"], name: "index_survey_templates_on_resource_type", unique: true
+    t.index ["updated_by_id"], name: "index_survey_templates_on_updated_by_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.text "email", default: "", null: false
     t.text "encrypted_password", default: "", null: false
@@ -147,6 +205,11 @@ ActiveRecord::Schema.define(version: 2019_06_05_000224) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "answers", "questions", on_delete: :nullify
+  add_foreign_key "answers", "resources", on_delete: :cascade
+  add_foreign_key "answers", "survey_template_questions", on_delete: :nullify
+  add_foreign_key "answers", "users", column: "created_by_id"
+  add_foreign_key "answers", "users", column: "updated_by_id"
   add_foreign_key "drafts", "users"
   add_foreign_key "drafts", "users", column: "approved_by_id"
   add_foreign_key "drafts", "users", column: "denied_by_id"
@@ -159,7 +222,15 @@ ActiveRecord::Schema.define(version: 2019_06_05_000224) do
   add_foreign_key "pages", "drafts", column: "current_draft_id"
   add_foreign_key "pages", "users", column: "created_by_id"
   add_foreign_key "pages", "users", column: "updated_by_id"
+  add_foreign_key "questions", "drafts", column: "current_draft_id"
+  add_foreign_key "questions", "users", column: "created_by_id"
+  add_foreign_key "questions", "users", column: "updated_by_id"
   add_foreign_key "resources", "drafts", column: "current_draft_id"
   add_foreign_key "resources", "users", column: "created_by_id"
   add_foreign_key "resources", "users", column: "updated_by_id"
+  add_foreign_key "survey_template_questions", "questions"
+  add_foreign_key "survey_template_questions", "survey_templates"
+  add_foreign_key "survey_templates", "drafts", column: "current_draft_id"
+  add_foreign_key "survey_templates", "users", column: "created_by_id"
+  add_foreign_key "survey_templates", "users", column: "updated_by_id"
 end

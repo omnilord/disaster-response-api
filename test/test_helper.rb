@@ -1,6 +1,9 @@
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
 require 'rails/test_help'
+require 'minitest/reporters'
+
+Minitest::Reporters.use!(Minitest::Reporters::SpecReporter.new)
 
 FIXTURE_ORDERED_LOAD = %w[
   users
@@ -10,13 +13,14 @@ FIXTURE_ORDERED_LOAD = %w[
   event_managers
   resources
   resource_activations
+  questions
+  survey_templates
+  survey_template_questions
+  answers
 ].freeze
 
 class ActiveSupport::TestCase
-  # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
   fixtures FIXTURE_ORDERED_LOAD
-
-  # Add more helper methods to be used by all tests here...
 end
 
 

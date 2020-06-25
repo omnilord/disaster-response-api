@@ -59,3 +59,31 @@ label.colon:after {
   margin-right: 2pt;
   font-weight: bold !important;
 }
+
+.marked-down-tight p {
+  margin: 0 !important;
+}
+
+input[type="number"].position-number-field {
+  width: 2.5em;
+}
+
+input[type="checkbox"].form-control {
+  /*
+    this is important because browsers now expand checkbox square size dynamically
+    when width is set to 100% as it is in bootstrap
+  */
+  width: auto !important;
+}
+
+div.clickmask-container {
+  position: relative;
+
+  div.clickmask {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
+}

@@ -2,15 +2,17 @@
 <div class="card bg-light">
   <div class="card-header">
     <div class="row clearfix">
-      <div class="col-11">
-        <h1><%= item.name %><%= trusted? ? " <small>(event id: #{item.id})</small>".html_safe : '' %></h1>
+      <div class="col-10">
+        <h1><%= item.name %><%= trusted? ? " <small>(#{t(:resource_id, id: item.id)})</small>".html_safe : '' %></h1>
       </div>
-      <div class="col-1">
-      <% if trusted? %>
-        <%= link_to edit_resource_path(item), class: 'btn btn-sm btn-outline-primary float-right' do %>
-          <%= fa_icon(:edit, text: t(:edit_type, type: t(:resource))) %>
+      <div class="col-2">
+        <div class="btn-group-vertical">
+        <% if trusted? %>
+          <%= link_to edit_resource_path(item), class: 'btn btn-sm btn-outline-primary float-right' do %>
+            <%= fa_icon(:edit, text: t(:edit_type, type: t(:resource))) %>
+          <% end %>
         <% end %>
-      <% end %>
+        </div>
       </div>
     </div>
   </div>
@@ -113,11 +115,20 @@
         </div>
       </div>
       <div class="form-group">
-          <h6><%= label(:resource, :private_notes) %></h6>
+        <h6><%= label(:resource, :private_notes) %></h6>
         <%= item.private_notes %>
       </div>
     </fieldset>
     <% end %>
+
+    <fieldset class="form-group p-1">
+      <legend class="form-label"><%= t(:questions) %></legend>
+      <% if item.questions_and_answers.length.positive? %>
+      <%= render 'survey_answers', questions: item.questions_and_answers %>
+      <% else %>
+      <%= t(:none) %>
+      <% end %>
+    </fieldset>
   </div>
 
   <div class="card-footer">

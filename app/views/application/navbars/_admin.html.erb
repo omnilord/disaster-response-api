@@ -45,11 +45,10 @@
            icon: 'gears',
            text: t(:admin).titleize,
            items: [
-             { icon: 'exclamation-triangle', text: t(:outdated) },
+             { icon: 'file-text-o', text: t(:survey_templates), url: survey_templates_path },
+             { icon: 'question', text: t(:questions), url: questions_path },
              { icon: 'edit', text: t(:drafts), url: drafts_path },
-             { separator?: true },
              { icon: 'user-o', text: t(:users), url: users_path },
-             { separator?: true },
              { icon: 'file-o', text: t(:pages), url: pages_path },
              { separator?: true },
              { icon: 'trash-o', text: t(:trash) },

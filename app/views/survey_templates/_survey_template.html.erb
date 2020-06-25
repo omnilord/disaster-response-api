@@ -1,0 +1,96 @@
+<%= content_for :site_title, "#{site_title} - #{t(:survey_template_for, type: t(item.resource_type.to_sym))}", flush: true %>
+<div class="card bg-light">
+  <div class="card-header">
+    <div class="row clearfix">
+      <div class="col-11">
+        <h1><%= t(:survey_template_for, type: t(item.resource_type.to_sym)) %></h1>
+      </div>
+      <div class="col-1">
+      <% if trusted? %>
+        <%= link_to edit_survey_template_path(item), class: 'btn btn-sm btn-outline-primary float-right' do %>
+          <%= fa_icon(:edit, text: t(:edit_type, type: t(:survey_template))) %>
+        <% end %>
+      <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <p>
+      <strong><%= t(:resource_type) %>:</strong>
+      <%= item.resource_type %>
+    </p>
+
+    <p>
+      <strong><%= t(:notes) %>:</strong>
+      <%= item.notes? ? item.notes : "<em>#{t(:none)}</em>".html_safe %>
+    </p>
+
+    <table class="table table-striped border">
+      <thead>
+        <tr>
+          <th>
+            <strong><%= pluralize(item.survey_template_questions.count, t(:questions)) %></strong>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+      <% item.survey_template_questions.includes(:question).order(position: 'ASC').each do |sqf| %>
+        <tr>
+          <td class="row mx-0 px-0">
+            <div class="col-2">
+              <%= label(:survey_template_questions, :id) %>:
+              <%= sqf.question_id %>
+            </div>
+            <div class="col-2">
+              <%= label(:survey_template_questions, :position) %>:
+              <%= sqf.position %>
+            </div>
+            <div class="col-2">
+              <%= label(:survey_template_questions, :active) %>:
+              <%= t(sqf.active) %>
+            </div>
+            <div class="col-2">
+              <%= label(:survey_template_questions, :required) %>:
+              <%= t(sqf.required) %>
+            </div>
+            <div class="col-2">
+              <%= label(:survey_template_questions, :private) %>:
+              <%= t(sqf.private) %>
+            </div>
+            <div class="col-2">
+            <% if trusted? %>
+              <%= link_to edit_question_path(sqf.question), class: 'btn btn-sm btn-outline-primary float-right' do %>
+                <%= fa_icon(:edit, text: t(:edit_type, type: t(:question))) %>
+              <% end %>
+            <% end %>
+            </div>
+            <div class="col-12">
+              <div class="border mt-1 p-1 marked-down-tight">
+              <%= render_markdown(sqf.question.content) %>
+              </div>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card-footer">
+    <div class="row">
+      <div class="col-3">
+        <h6><%= label(:survey_template, :created_at) %></h6>
+        <%=item.created_at.strftime(Rails.configuration.datetime_format) %><br/>
+        <small>by: <%= item.created_by.link_to_text %></small>
+      </div>
+      <div class="col-3">
+        <h6><%= label(:survey_template, :updated_at) %></h6>
+        <%=item.updated_at.strftime(Rails.configuration.datetime_format) %><br/>
+        <small>by: <%= item.updated_by.link_to_text %></small>
+      </div>
+      <div class="col-3">&nbsp;</div>
+      <div class="col-3">&nbsp;</div>
+    </div>
+  </div>
+</div>

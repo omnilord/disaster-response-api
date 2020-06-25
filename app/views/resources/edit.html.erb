@@ -1,4 +1,5 @@
 <%= render 'pages/page' %>
 
 <%= render 'form', resource: @resource,
+                   survey: @survey_template,
                    page_title: "#{t(:edit_type, type: t(@resource.resource_type.to_sym))}: #{@resource.name}" %>

@@ -32,7 +32,9 @@ RemoveUnusedMethodsInControllersCheck: {
     #these params methods are used in the Draftable controller as callbacks
     'ResourcesController#resource_params',
     'EventsController#event_params',
-    'PagesController#page_params'
+    'PagesController#page_params',
+    'QuestionsController#question_params',
+    'SurveyTemplatesController#survey_template_params'
   ]
 }
 RemoveUnusedMethodsInHelpersCheck: { except_methods: [] }

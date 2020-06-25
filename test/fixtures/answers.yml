@@ -1,0 +1,80 @@
+# QuestionId_AnswerId
+
+answer_one_final:
+  question: question_one
+  resource: shelter_one
+  survey_template_question: stq_one
+  content: This is a straight answer.
+  question_config:
+    current_draft_id: <%= ActiveRecord::FixtureSet.identify(:draft_question_one) %>
+    content: Testing Questions 1?
+  created_by: admin
+  updated_by: admin
+
+answer_two_one:
+  question: question_two
+  resource: shelter_one
+  survey_template_question: stq_two
+  content: This is a second straight answer.
+  question_config:
+    current_draft_id: <%= ActiveRecord::FixtureSet.identify(:draft_question_two) %>
+    content: Testing Questions 2?
+  created_by: admin
+  updated_by: admin
+
+answer_two_two:
+  question: question_two
+  resource: shelter_one
+  survey_template_question: stq_two
+  content: This is a second straight answer, but corrected.
+  question_config:
+    current_draft_id: <%= ActiveRecord::FixtureSet.identify(:draft_question_two) %>
+    content: Testing Questions 2?
+  created_by: admin
+  updated_by: admin
+
+answer_two_three:
+  question: question_two
+  resource: shelter_one
+  survey_template_question: stq_two
+  content: This is a second straight answer, but corrected.
+  question_config:
+    current_draft_id: <%= ActiveRecord::FixtureSet.identify(:draft_question_two) %>
+    content: Testing Questions 2?
+  created_by: admin
+  updated_by: admin
+
+answer_two_final:
+  question: question_two
+  resource: shelter_one
+  survey_template_question: stq_two
+  content: This is a second straight answer, but corrected, a second time.
+  question_config:
+    current_draft_id: <%= ActiveRecord::FixtureSet.identify(:draft_question_two) %>
+    content: Testing Questions 2?
+  created_by: admin
+  updated_by: admin
+
+# this one is not in the survey_template but was answered anyway
+answer_three_final:
+  question: question_six
+  resource: shelter_one
+  survey_template_question: stq_six
+  content: What a convoluted question, but here is my answer...
+  question_config:
+    current_draft_id: <%= ActiveRecord::FixtureSet.identify(:draft_question_six) %>
+    content: Testing Questions 6?
+  created_by: admin
+  updated_by: admin
+
+# this one is not in the survey_template but was answered anyway
+answer_four_final:
+  question: question_seven
+  resource: shelter_one
+  survey_template_question: stq_seven
+  content: Additional information asked...
+  question_config:
+    current_draft_id: <%= ActiveRecord::FixtureSet.identify(:draft_question_seven) %>
+    content: Testing Questions 7?
+  created_by: admin
+  updated_by: admin

@@ -1,0 +1,44 @@
+<%= content_for :site_title, "#{site_title} - #{page_title}", flush: true %>
+<%= form_with(model: question, local: true) do |f| %>
+  <div class="form">
+    <% if question.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= t(:errors_prohibited, type: t(:question), count: pluralize(question.errors.count, "error")) %></h2>
+
+        <ul>
+        <% question.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="form-group row">
+      <div class="col-12">
+        <%= f.label :content %>
+        <%= f.text_area :content, autofocus: true, class: 'form-control' %>
+      </div>
+      <div class="col-12">
+        <%= render 'application/markdown_editor', source: '#question_content' %>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-4">
+        <%= f.label :active %>
+        <%= f.check_box :active %>
+      </div>
+    </div>
+
+    <div class="btn-group d-flex justify-content-center mt-3">
+      <%= f.submit class: 'btn btn-sm btn-primary' %>
+      <%= link_to t(:questions_index), questions_path, class: 'btn btn-sm btn-outline-info' %>
+      <% unless question.new_record? %>
+        <%= link_to t(:delete_type, type: t(:resource)), question_path(question),
+                      method: :delete,
+                      data: { confirm: t(:generic_confirm) },
+                      class: 'btn btn-sm btn-outline-danger' %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
