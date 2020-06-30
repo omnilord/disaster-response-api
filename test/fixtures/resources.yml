@@ -6,6 +6,7 @@ shelter_one:
   current_draft: draft_shelter_one
   created_by: admin
   updated_by: admin
+  coords: "SRID=4326;POINT(-122.195701 46.192254)"
 
 shelter_two:
   name: Refuge Shelter, B
@@ -13,6 +14,7 @@ shelter_two:
   current_draft: draft_shelter_two
   created_by: admin
   updated_by: admin
+  coords: "SRID=4326;POINT(-122.195701 46.192254)"
 
 shelter_three:
   name: Refuge Shelter, C
@@ -20,6 +22,7 @@ shelter_three:
   current_draft: draft_shelter_three
   created_by: admin
   updated_by: admin
+  coords: "SRID=4326;POINT(-122.195701 46.192254)"
 
 shelter_four:
   name: Refuge Shelter, D
@@ -27,6 +30,7 @@ shelter_four:
   current_draft: draft_shelter_four
   created_by: admin
   updated_by: admin
+  coords: "SRID=4326;POINT(-122.195701 46.192254)"
 
 shelter_five:
   name: Refuge Shelter, E
@@ -34,6 +38,7 @@ shelter_five:
   current_draft: draft_shelter_five
   created_by: admin
   updated_by: admin
+  coords: "SRID=4326;POINT(-122.195701 46.192254)"
 
 pod_one:
   name: Soup Kitchen
@@ -41,6 +46,7 @@ pod_one:
   current_draft: draft_pod_one
   created_by: admin
   updated_by: admin
+  coords: "SRID=4326;POINT(-122.195701 46.192254)"
 
 pod_two:
   name: County Pantry
@@ -48,6 +54,7 @@ pod_two:
   current_draft: draft_pod_two
   created_by: admin
   updated_by: admin
+  coords: "SRID=4326;POINT(-122.195701 46.192254)"
 
 pod_three:
   name: City Food Bank
@@ -55,6 +62,7 @@ pod_three:
   current_draft: draft_pod_three
   created_by: admin
   updated_by: admin
+  coords: "SRID=4326;POINT(-122.195701 46.192254)"
 
 pod_four:
   name: Private Generous
@@ -62,6 +70,7 @@ pod_four:
   current_draft: draft_pod_four
   created_by: admin
   updated_by: admin
+  coords: "SRID=4326;POINT(-122.195701 46.192254)"
 
 pod_five:
   name: County Pantry
@@ -69,6 +78,7 @@ pod_five:
   current_draft: draft_pod_five
   created_by: admin
   updated_by: admin
+  coords: "SRID=4326;POINT(-122.195701 46.192254)"
 
 medsite_one:
   name: Bandaid Hut
@@ -76,6 +86,7 @@ medsite_one:
   current_draft: draft_medsite_one
   created_by: admin
   updated_by: admin
+  coords: "SRID=4326;POINT(-122.195701 46.192254)"
 
 medsite_two:
   name: RedCross Support Station
@@ -83,3 +94,4 @@ medsite_two:
   current_draft: draft_medsite_two
   created_by: admin
   updated_by: admin
+  coords: "SRID=4326;POINT(-122.195701 46.192254)"

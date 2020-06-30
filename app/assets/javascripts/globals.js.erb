@@ -1,5 +1,165 @@
 <% environment.context_class.instance_eval { include ApplicationHelper } %>
 
+mapboxgl.accessToken = '<%= ENV.fetch('MAPBOX_API_KEY', '') %>';
+<% if ENV['MAPBOX_API_KEY'].blank? %>
+console.log('To enable the Mapping, you will need to set a Mapbox API key in .env');
+<% end %>
+
+function resize_map([mapEl, map]) {
+  var $mapEl = $(mapEl);
+
+  $mapEl.height($mapEl.width() * 0.75);
+  map.resize();
+}
+
+function render_maps(selector) {
+  window.response_maps = [];
+
+  document.querySelectorAll(selector).forEach((mapEl) => {
+    var {
+          lat = 37.781767,
+          lng = -122.407873,
+          zoom = 1,
+          latSelector = '#latitude_edit',
+          lngSelector = '#longitude_edit',
+          zoomSelector = '#zoom_edit',
+          addressSelector = '#address_edit',
+          citySelector = '#city_edit',
+          countySelector = '#county_edit',
+          stateSelector = '#state_edit',
+          postalSelector = '#postal_edit',
+          countrySelector = '#country_edit',
+          searchSelector = '#search_map_btn',
+          updateSelector = '#update_map_btn',
+          resetSelector = '#reset_map_btn',
+          useEditor = false,
+          useMarker = false,
+          useGeosearch = false
+        } = mapEl.dataset,
+        latOriginal = lat,
+        lngOriginal = lng,
+        zoomOriginal = zoom,
+        center = [ parseFloat(lng), parseFloat(lat) ],
+        latInput = document.querySelector(latSelector),
+        lngInput = document.querySelector(lngSelector),
+        zoomInput = document.querySelector(zoomSelector),
+        addressInput = document.querySelector(addressSelector),
+        cityInput = document.querySelector(citySelector),
+        countyInput = document.querySelector(countySelector),
+        stateInput = document.querySelector(stateSelector),
+        postalInput = document.querySelector(postalSelector),
+        countryInput = document.querySelector(countrySelector),
+        searchBtn = document.querySelector(searchSelector),
+        updateBtn = document.querySelector(updateSelector),
+        resetBtn = document.querySelector(resetSelector),
+        updateMapCenterZoom = function ({ lat: set_lat = lat, lng: set_lng = lng, zoom: set_zoom = zoom } = {}) {
+          lat = isNaN(set_lat) ? lat : parseFloat(set_lat);
+          lng = isNaN(set_lng) ? lng : parseFloat(set_lng);
+          zoom = isNaN(set_zoom) ? zoom : parseFloat(set_zoom);
+          center = [lng, lat];
+
+          if (latInput) { latInput.value = lat; }
+          if (lngInput) { lngInput.value = lng; }
+          if (zoomInput) { zoomInput.value = zoom; }
+
+          map.jumpTo({ zoom: zoom, center: center });
+
+          if (!!useMarker) { marker.setLngLat(center); }
+        },
+        updateAddress = function (ev) {
+          if (addressInput) {
+            if (ev.id.startsWith('address')) {
+              addressInput.value = `${ev.address} ${ev.text}`;
+            } else {
+              addressInput.value = ev.properties.address;
+            }
+          }
+          ev.context.forEach((ctx) => {
+            if (ctx.id.startsWith('place') && cityInput) { cityInput.value = ctx.text; }
+            if (ctx.id.startsWith('county') && countyInput) { countyInput.value = ctx.text; }
+            if (ctx.id.startsWith('region') && stateInput) { stateInput.value = ctx.text; }
+            if (ctx.id.startsWith('postcode') && postalInput) { postalInput.value = ctx.text; }
+            if (ctx.id.startsWith('country') && countryInput) { countryInput.value = ctx.text; }
+          });
+        },
+        resetAddress = function () {
+          if (addressInput) { addressInput.value = addressInput.dataset.original; }
+          if (cityInput) { cityInput.value = cityInput.dataset.original; }
+          if (countyInput) { countyInput.value = countyInput.dataset.original; }
+          if (stateInput) { stateInput.value = stateInput.dataset.original; }
+          if (postalInput) { postalInput.value = postalInput.dataset.original; }
+          if (countryInput) { countryInput.value = countryInput.dataset.original; }
+        },
+        map = new mapboxgl.Map({
+          container: mapEl,
+          style: 'mapbox://styles/mapbox/streets-v11',
+          center: center,
+          zoom: parseFloat(zoom)
+        }),
+        marker;
+
+
+    map.on('load', function () {
+      if (!!useMarker) {
+        marker = new mapboxgl.Marker({ color: 'orange'})
+          .setLngLat(center)
+          .addTo(map);
+      }
+
+      if (!!useEditor) {
+        map.on('click', function (ev) {
+          updateMapCenterZoom({
+            lat: ev.lngLat.lat.toFixed(6),
+            lng: ev.lngLat.lng.toFixed(6)
+          });
+        });
+
+        map.on('zoomend', function (ev) {
+          updateMapCenterZoom({ zoom: map.getZoom().toFixed(1) });
+        });
+
+        $(latInput).on('blur', function () { updateMapCenterZoom({ lat: this.value }); });
+        $(lngInput).on('blur', function () { updateMapCenterZoom({ lng: this.value }); });
+        $(zoomInput).on('blur', function () { updateMapCenterZoom({ zoom: this.value }); });
+        $(updateBtn).on('click', function () { updateMapCenterZoom(); });
+        $(resetBtn).on('click', function () {
+          resetAddress();
+          updateMapCenterZoom({
+            lat: latInput ? latInput.dataset.original : latOriginal,
+            lng: lngInput ? lngInput.dataset.original : lngOriginal,
+            zoom: zoomInput ? zoomInput.dataset.original : zoomOriginal
+          });
+        });
+      }
+
+      if (!!useGeosearch) {
+        map.addControl(
+          new MapboxGeocoder({
+            accessToken: mapboxgl.accessToken,
+            language: 'en-US', // TODO: populate this from the application's i18n
+            mapboxgl: mapboxgl,
+            flyTo: false,
+          }).on('result', function (ev) {
+            updateAddress(ev.result);
+            updateMapCenterZoom({
+              lat: ev.result.center[1],
+              lng: ev.result.center[0],
+              zoom: 13
+            });
+          })
+        );
+      }
+    });
+
+    resize_map([mapEl, map, marker]);
+    window.response_maps.push([mapEl, map, marker]);
+  });
+
+  if (window.response_maps.length > 0) {
+    $(window).resize(function () { window.response_maps.forEach((map) => resize_map(map)); });
+  }
+}
+
 $(document).on('turbolinks:load', function () {
   $('input[type="text"].datepicker').each(function () {
     var $this = $(this);
@@ -11,4 +171,6 @@ $(document).on('turbolinks:load', function () {
       defaultDate: $this.data('defaultdate') || null,
     });
   });
+
+  render_maps('.resource-map');
 });

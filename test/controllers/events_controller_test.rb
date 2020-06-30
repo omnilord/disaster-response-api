@@ -10,7 +10,10 @@ class EventsControllerTest < DevisedTest
         name: 'A Fire. A wild wild fire.',
         disaster_type: 'wildfire',
         content: 'Another fire in California.',
-        administrator_id: users(:admin).id
+        administrator_id: users(:admin).id,
+        latitude: 46.192254,
+        longitude: -122.195701,
+        zoom: 9.0
       }
     }
   end
@@ -198,7 +201,10 @@ class EventsControllerTest < DevisedTest
       {
         name: event.name,
         disaster_type: event.disaster_type,
-        content: event.content
+        content: event.content,
+        latitude: event.latitude,
+        longitude: event.longitude,
+        zoom: event.zoom
       }
     end
     params = default_params.dup
@@ -226,7 +232,10 @@ class EventsControllerTest < DevisedTest
       {
         name: event.name,
         disaster_type: event.disaster_type,
-        content: event.content
+        content: event.content,
+        latitude: event.latitude,
+        longitude: event.longitude,
+        zoom: event.zoom
       }
     end
     params = default_params.dup
@@ -254,7 +263,10 @@ class EventsControllerTest < DevisedTest
       {
         name: event.name,
         disaster_type: event.disaster_type,
-        content: event.content
+        content: event.content,
+        latitude: event.latitude,
+        longitude: event.longitude,
+        zoom: event.zoom
       }
     end
     params = default_params.dup
@@ -282,7 +294,10 @@ class EventsControllerTest < DevisedTest
       {
         name: event.name,
         disaster_type: event.disaster_type,
-        content: event.content
+        content: event.content,
+        latitude: event.latitude,
+        longitude: event.longitude,
+        zoom: event.zoom
       }
     end
     params = default_params.dup
@@ -302,6 +317,10 @@ class EventsControllerTest < DevisedTest
         end
       end
     end
+  end
+
+  test 'updating map coordinates are saved' do
+    skip
   end
 
 =begin

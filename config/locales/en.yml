@@ -105,6 +105,8 @@ en:
   list_all: 'List All'
   location: 'Location'
   manage: 'Manage'
+  map_reset: 'Reset Map'
+  map_update: 'Update Map'
   medsite: 'Medical Site'
   medsites: 'Medical Sites'
   must_edit_to_save: 'You must edit the %{type} in order to save it.'
@@ -192,6 +194,8 @@ en:
     resource_type: 'Resource Type'
     updated_at: 'Last Updated At'
     updated_by: 'Last Updated By'
+    latitude: 'Latitude'
+    longitude: 'Longitude'
 
   activerecord:
     attributes:
@@ -229,17 +233,16 @@ en:
         administrator: 'Event Administrator'
         deactivated: 'Deactivated'
         disaster_type: 'Disaster Type'
+        zoom: 'Zoom'
       page:
         title: 'Title'
       resource:
-        latitude: 'Latitude'
-        longitude: 'Longitude'
-        google_place_id: 'Google Place ID'
         address: 'Address'
         city: 'City'
         county: 'County'
         state: 'State'
         postal_code: 'Zip Code'
+        country: 'Country'
         primary_phone: 'Primary Phone'
         secondary_phone: 'Secondary Phone'
         private_contact: 'Private Contact'

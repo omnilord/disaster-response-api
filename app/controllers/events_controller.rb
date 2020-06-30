@@ -51,7 +51,7 @@ private
     redirect_to root_path && return
   end
 
-  def event_params
+  def clean_activation_dates
     %i[activated deactivated].each do |field|
       unless params[:event][field].blank?
         a = params[:event][field]
@@ -60,7 +60,25 @@ private
     rescue ArgumentError
       params[:event][field] = ''
     end
+  end
 
-    params.require(:event).permit(:name, :disaster_type, :content, :activated, :deactivated, :administrator_id)
+  def event_params
+    clean_activation_dates
+
+    p = params.require(:event).permit(%i[
+      name
+      disaster_type
+      content
+      activated
+      deactivated
+      administrator_id
+      latitude
+      longitude
+      zoom
+    ])
+    p["longitude"] = p["longitude"].to_f
+    p["latitude"] = p["latitude"].to_f
+    p["coords"] = Coordinated.coords(lng: p["longitude"], lat: p["latitude"]);
+    p
   end
 end

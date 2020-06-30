@@ -37,44 +37,51 @@
 
     <fieldset class="form-group p-1">
       <legend><%= t(:location) %></legend>
-      <div class="form-group">
-        <h6><%= label(:resource, :address) %></h6>
-        <%= item.address %>
-      </div>
-      <div class="form-group">
-        <h6><%= label(:resource, :county) %></h6>
-        <%= item.county %>
-      </div>
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <h6><%= label(:resource, :city) %></h6>
-          <%= item.city %>
+      <div class="row">
+        <div class="col-12 col-lg-6">
+          <div class="form-group">
+            <h6><%= label(:resource, :address) %></h6>
+            <%= item.address %>
+          </div>
+          <div class="form-group">
+            <h6><%= label(:resource, :county) %></h6>
+            <%= item.county %>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <h6><%= label(:resource, :city) %></h6>
+              <%= item.city %>
+            </div>
+            <div class="form-group col-md-4">
+              <h6><%= label(:resource, :state) %></h6>
+              <%= item.state %>
+            </div>
+            <div class="form-group col-md-2">
+              <h6><%= label(:resource, :postal_code) %></h6>
+              <%= item.postal_code %>
+            </div>
+            <div class="form-group col-md-12">
+              <h6><%= label(:resource, :country) %></h6>
+              <%= item.country %>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <h6><%= label(:resource, :latitude) %></h6>
+              <%= item.latitude %>
+            </div>
+            <div class="form-group col-md-4">
+              <h6><%= label(:resource, :longitude) %></h6>
+              <%= item.longitude %>
+            </div>
+          </div>
         </div>
-        <div class="form-group col-md-4">
-          <h6><%= label(:resource, :state) %></h6>
-          <%= item.state %>
-        </div>
-        <div class="form-group col-md-2">
-          <h6><%= label(:resource, :postal_code) %></h6>
-          <%= item.postal_code %>
-        </div>
-      </div>
-    </fieldset>
-
-    <fieldset class="form-group p-1">
-      <legend class="form-label"><%= t(:geocoding) %></legend>
-      <div class="form-row">
-        <div class="form-group col-md-4">
-          <h6><%= label(:resource, :latitude) %></h6>
-          <%= item.latitude %>
-        </div>
-        <div class="form-group col-md-4">
-          <h6><%= label(:resource, :longitude) %></h6>
-          <%= item.longitude %>
-        </div>
-        <div class="form-group col-md-4">
-          <h6><%= label(:resource, :google_place_id) %></h6>
-          <%= item.google_place_id %>
+        <div class="col-12 col-lg-6">
+          <div class="border resource-map"
+               data-lat="<%= item.latitude %>"
+               data-lng="<%= item.longitude %>"
+               data-zoom="13.0"
+               data-use-marker="true" /></div>
         </div>
       </div>
     </fieldset>

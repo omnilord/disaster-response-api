@@ -1,6 +1,7 @@
 class Event < ApplicationRecord
   include ActionView::Helpers::SanitizeHelper
   include Draftable
+  include Coordinated
 
   enum disaster_type: {
     earthquake: 'earthquake',

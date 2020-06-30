@@ -44,49 +44,87 @@
       </div>
     </div>
 
-    <fieldset class="form-group p-1">
-      <legend><%= t(:location) %></legend>
-      <div class="form-group">
-        <%= f.label :address %>
-        <%= f.text_field :address, class: 'form-control', placeholder: t(:address_placeholder) %>
-      </div>
-      <div class="form-group">
-        <%= f.label :county %>
-        <%= f.text_field :county, class: 'form-control' %>
-      </div>
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <%= f.label :city %>
-          <%= f.text_field :city, class: 'form-control' %>
-        </div>
-        <div class="form-group col-md-4">
-          <%= f.label :state %>
-          <%= f.text_field :state, class: 'form-control' %>
-        </div>
-        <div class="form-group col-md-2">
-          <%= f.label :postal_code %>
-          <%= f.text_field :postal_code, class: 'form-control' %>
-        </div>
-      </div>
-    </fieldset>
+    <div class="row">
+      <div class="col-12 col-lg-6">
+        <fieldset class="form-group p-1">
+          <legend><%= t(:location) %></legend>
+          <div class="form-group">
+            <%= f.label :address %>
+            <%= f.text_field :address, class: 'form-control address-editor',
+                                       placeholder: t(:address_placeholder),
+                                       data: { original: resource.address || '' } %>
+          </div>
+          <div class="form-group">
+            <%= f.label :county %>
+            <%= f.text_field :county, class: 'form-control county-editor', data: { original: resource.county || '' } %>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <%= f.label :city %>
+              <%= f.text_field :city, class: 'form-control city-editor', data: { original: resource.city || '' } %>
+            </div>
+            <div class="form-group col-md-4">
+              <%= f.label :state %>
+              <%= f.text_field :state, class: 'form-control state-editor', data: { original: resource.state || '' } %>
+            </div>
+            <div class="form-group col-md-2">
+              <%= f.label :postal_code %>
+              <%= f.text_field :postal_code, class: 'form-control postal-editor', data: { original: resource.postal_code || '' } %>
+            </div>
+            <div class="form-group col-md-12">
+              <%= f.label :country %>
+              <%= f.text_field :country, class: 'form-control country-editor', data: { original: resource.country || '' } %>
+            </div>
+          </div>
+        </fieldset>
 
-    <fieldset class="form-group p-1">
-      <legend class="form-label"><%= t(:geocoding) %></legend>
-      <div class="form-row">
-        <div class="form-group col-md-4">
-          <%= f.label :latitude %>
-          <%= f.text_field :latitude, class: 'form-control', disabled: true %>
-        </div>
-        <div class="form-group col-md-4">
-          <%= f.label :longitude %>
-          <%= f.text_field :longitude, class: 'form-control', disabled: true %>
-        </div>
-        <div class="form-group col-md-4">
-          <%= f.label :google_place_id %>
-          <%= f.text_field :google_place_id, class: 'form-control', disabled: true %>
-        </div>
+        <fieldset class="form-group p-1">
+          <legend class="form-label"><%= t(:geocoding) %></legend>
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <%= f.label :latitude %>
+              <%= f.text_field :latitude, class: 'form-control lat-editor', data: { original: resource.latitude || '' } %>
+            </div>
+            <div class="form-group col-md-4">
+              <%= f.label :longitude %>
+              <%= f.text_field :longitude, class: 'form-control lng-editor', data: { original: resource.longitude || '' } %>
+            </div>
+            <div class="form-group col-md-12">
+              <div class="btn-group mt-3" role="group">
+                <button type="button" class="btn btn-secondary map-search-btn"><%= fa_icon('search', text: t(:search)).html_safe %></button>
+                <button type="button" class="btn btn-secondary map-reset-btn"><%= t(:map_reset) %></button>
+              </div>
+            </div>
+          </div>
+        </fieldset>
       </div>
-    </fieldset>
+      <div class="col-12 col-lg-6">
+        <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
+        <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css" type="text/css" />
+        <!-- Promise polyfill script required to use Mapbox GL Geocoder in IE 11 -->
+        <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
+        <div class="border resource-map"
+             data-lat-selector="input.lat-editor"
+             data-lng-selector="input.lng-editor"
+             data-address-selector="input.address-editor"
+             data-city-selector="input.city-editor"
+             data-county-selector="input.county-editor"
+             data-state-selector="input.state-editor"
+             data-postal-selector="input.postal-editor"
+             data-country-selector="input.country-editor"
+             data-search-selector="button.map-search-btn"
+             data-reset-selector="button.map-reset-btn"
+             <% unless resource.new_record? %>
+             data-lat="<%= resource.latitude %>"
+             data-lng="<%= resource.longitude %>"
+             data-zoom="13.0"
+             <% end %>
+             data-use-geosearch="true"
+             data-use-editor="true"
+             data-use-marker="true" /></div>
+      </div>
+    </div>
 
     <fieldset class="form-group p-1">
       <legend class="form-label"><%= t(:contact_notes) %></legend>

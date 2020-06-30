@@ -11,9 +11,12 @@ class ResourcesControllerTest < DevisedTest
         resource_type: 'pod',
         address: '123 Test Street',
         city: 'Test',
-        state: 'DE',
+        state: 'Delaware',
         postal_code: '19713',
-        county: 'New Castle County'
+        county: 'New Castle County',
+        country: 'United States of America',
+        latitude: 46.192254,
+        longitude: -122.195701
       }
     }
   end
@@ -204,7 +207,10 @@ class ResourcesControllerTest < DevisedTest
         city: resource.city,
         state: resource.state,
         postal_code: resource.postal_code,
-        county: resource.county
+        county: resource.county,
+        country: resource.country,
+        latitude: resource.latitude,
+        longitude: resource.longitude
       }
     end
 
@@ -235,7 +241,10 @@ class ResourcesControllerTest < DevisedTest
         city: resource.city,
         state: resource.state,
         postal_code: resource.postal_code,
-        county: resource.county
+        county: resource.county,
+        country: resource.country,
+        latitude: resource.latitude,
+        longitude: resource.longitude
       }
     end
 
@@ -295,6 +304,9 @@ class ResourcesControllerTest < DevisedTest
           state: resource.state,
           postal_code: resource.postal_code,
           county: resource.county,
+          country: resource.country,
+          latitude: resource.latitude,
+          longitude: resource.longitude,
           answers_attributes: answers.flatten
         }
       }

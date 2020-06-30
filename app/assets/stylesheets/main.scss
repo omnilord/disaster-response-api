@@ -87,3 +87,12 @@ div.clickmask-container {
     bottom: 0;
   }
 }
+
+.resource-center-marker {
+  background-image: asset-data-url('mapbox-icon.png');
+  background-size: cover;
+  width: 35px;
+  height:35px;
+  border-radius: 50%;
+  cursor: pointer;
+}

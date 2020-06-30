@@ -9,10 +9,10 @@ render 'events/resources/show', event: item, type: :medsites, path: event_medsit
 <div class="card bg-light">
   <div class="card-header">
     <div class="row clearfix">
-      <div class="col-11">
-        <h1><%= item.name %><%= admin? ? " <small>(event id: #{item.id})</small>".html_safe : '' %></h1>
+      <div class="col-10">
+        <h1><%= item.name %><%= admin? ? " <small>(#{t(:event_id, id: item.id)})</small>".html_safe : '' %></h1>
       </div>
-      <div class="col-1">
+      <div class="col-2">
       <% if user_signed_in? && item.manager?(Current.user) %>
         <%= link_to edit_event_path(item), class: 'btn btn-sm btn-outline-primary float-right' do %>
           <%= fa_icon(:edit, text: t(:edit_type, type: t(:event))) %>
@@ -41,6 +41,26 @@ render 'events/resources/show', event: item, type: :medsites, path: event_medsit
   </div>
   <div class="card-body">
     <%= render_markdown(item.content) %>
+    <hr/>
+    <div class="row">
+      <div class="col-2">
+        <dl>
+          <dt><%= label(:event, :latitude) %></dt>
+          <dd><%= event.latitude %></dd>
+          <dt><%= label(:event, :longitude) %></dt>
+          <dd><%= event.longitude %></dd>
+          <dt><%= label(:event, :zoom) %></dt>
+          <dd><%= event.zoom %></dd>
+        </dl>
+      </div>
+      <div class="col-10">
+        <div class="border resource-map"
+             data-lat="<%= event.latitude %>"
+             data-lng="<%= event.longitude %>"
+             data-zoom="<%= event.zoom %>"
+             data-use-marker="true" /></div>
+      </div>
+    </div>
   </div>
   <div class="card-footer">
     <div class="row">

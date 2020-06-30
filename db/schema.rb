@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_31_191818) do
+ActiveRecord::Schema.define(version: 2020_06_30_023145) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,6 +74,8 @@ ActiveRecord::Schema.define(version: 2019_07_31_191818) do
     t.bigint "current_draft_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.geography "coords", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}, null: false
+    t.decimal "zoom", precision: 3, scale: 1, default: "9.0", null: false
     t.index ["administrator_id"], name: "index_events_on_administrator_id"
     t.index ["created_by_id"], name: "index_events_on_created_by_id"
     t.index ["current_draft_id"], name: "index_events_on_current_draft_id"
@@ -123,9 +125,6 @@ ActiveRecord::Schema.define(version: 2019_07_31_191818) do
   create_table "resources", force: :cascade do |t|
     t.text "name", null: false
     t.text "resource_type", null: false
-    t.text "latitude"
-    t.text "longitude"
-    t.text "google_place_id"
     t.text "address"
     t.text "city"
     t.text "county"
@@ -145,6 +144,8 @@ ActiveRecord::Schema.define(version: 2019_07_31_191818) do
     t.bigint "updated_by_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.geography "coords", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}
+    t.text "country"
     t.index ["created_by_id"], name: "index_resources_on_created_by_id"
     t.index ["current_draft_id"], name: "index_resources_on_current_draft_id"
     t.index ["name"], name: "index_resources_on_name"

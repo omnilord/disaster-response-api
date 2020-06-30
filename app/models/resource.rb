@@ -1,6 +1,7 @@
 class Resource < ApplicationRecord
   include ActionView::Helpers::SanitizeHelper
   include Draftable
+  include Coordinated
 
   TYPE_KEYS = %i[shelter pod medsite].freeze
   TYPE_ROUTES = TYPE_KEYS.map { |t| t.to_s.pluralize }.freeze
@@ -89,11 +90,11 @@ class Resource < ApplicationRecord
 private
 
   def sanitize!
-    internal_cols = %w[id resource_type latitude longitude current_draft_id active created_by_id updated_by_id created_at updated_at]
+    internal_cols = %w[id resource_type latitude longitude coords current_draft_id active created_by_id updated_by_id created_at updated_at]
     Array(Resource.column_names - internal_cols).each do |col|
       self.send("#{col}=", sanitize(self.send(col)))
     end
-    self.latitude = self.latitude.to_f.to_s
-    self.longitude = self.longitude.to_f.to_s
+    self.latitude = self.latitude.to_f
+    self.longitude = self.longitude.to_f
   end
 end

@@ -57,17 +57,17 @@ private
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def resource_params
-    params.require(:resource).permit(*%i[
+    p = params.require(:resource).permit(*%i[
       name
       resource_type
       latitude
       longitude
-      google_place_id
       address
       city
       county
       state
       postal_code
+      country
       primary_phone
       secondary_phone
       private_contact
@@ -83,5 +83,9 @@ private
       survey_template_question_id
       content
     ])
+    p["longitude"] = p["longitude"].to_f
+    p["latitude"] = p["latitude"].to_f
+    p["coords"] = Coordinated.coords(lng: p["longitude"], lat: p["latitude"]);
+    p
   end
 end
