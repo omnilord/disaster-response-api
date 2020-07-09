@@ -13,18 +13,19 @@ This is repo is in a very early stage of development.  While there is decent tes
 ## Prerequisites
 The following need to be running per a standard setup with local connection sockets:
 1. PostgreSQL ~> 11
-  1a. PL/PgSQL extension installed
-  1b. PostGIS ~> 3.0 extension
+  - PL/PgSQL extension installed
+  - PostGIS ~> 3.0 extension
 2. Ruby ~> 2.6.5, < 2.7 (as of Rails 5.2.4.3 there are problems with Ruby 2.7)
 3. Redis ~> 5.0
+4. A Mapbox API key stored as an environment variable: `MAPBOX_API_KEY`
 
 If you have an unusual setup (such as using TCP/IP for PostgreSQL connections in lieu of a Unix Socket, you will need to modify the configuration files accordingly).
 
 ## Instructions
 1. Clone this repository, or if you are ready to contribute, fork then clone your fork repo.
-2. Change directories to your new repository directory
+2. Change directories to your new repository directory 
 3. `rails db:setup`
-4. `rails a`
+4. `rails s`
 5. visit `http://localhost:3000` to verify everything is setup.
 6. Create an account by logging in. You will probably need to run `UPDATE users SET admin=true WHERE id=1;'` to make sure you have an administrator account locally.
 7. Have fun exploring the product.
@@ -42,7 +43,7 @@ If you have an unusual setup (such as using TCP/IP for PostgreSQL connections in
 9. When in doubt, communicate with the team.
 10. This project was built as a Ruby on Rails monolith--this means it takes advantage of Rails conventions where possible/known, and strives to implement best practices of Rails.  Future improvements will use ActionCables, Stimulus, and refine the use of partials to hone the code's hidden beauty.
 
-Contibutions are always well, but please read _CODE_OF_CONDUCT here_ and ...
+Contibutions are always well, but please read _CODE_OF_CONDUCT here_ and ... <TODO>
 
 # API Specification
 
