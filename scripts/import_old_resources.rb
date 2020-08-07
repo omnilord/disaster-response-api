@@ -55,8 +55,9 @@ TMP_DATA_FILE = File.join(Rails.root, 'scripts', "#{TARGET}.data.json")
 # Utility functions
 
 def ensure_system_user
-  @system_user ||= User.first_or_create(email: 'system@localhost.localdomain') do |user|
+  @system_user ||= User.where(email: 'system@localhost.localdomain').first_or_create do |user|
     user.email = 'system@localhost.localdomain'
+    user.password = 256.times.map { ('1'..'z').to_a.sample }.join
     user.admin = true
     user.real_name = 'System'
     user.location = 'localhost.localdomain'
