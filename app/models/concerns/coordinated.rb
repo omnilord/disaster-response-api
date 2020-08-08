@@ -1,6 +1,12 @@
 module Coordinated
   extend ActiveSupport::Concern
 
+  included do
+    def self.within_radius(lat, lon, r)
+      where(Arel.sql("ST_dwithin(#{self.table_name}.coords, ST_POINT(#{lon.to_f}, #{lat.to_f}), #{r.to_f})"))
+    end
+  end
+
   def self.coords(lng:, lat:, srid: 4326)
     "SRID=#{srid};POINT(#{lng} #{lat})"
   end

@@ -49,6 +49,16 @@ Rails.application.routes.draw do
   resources :survey_templates, except: %i[destroy], concerns: %i[draftable]
 
   #
+  # Backwards Compatibility Demo Endpoints
+  #
+
+  namespace :api do
+    namespace :v1 do
+      get '/shelters/geo' => 'shelters#geo'
+    end
+  end
+
+  #
   # "static" pages
   #
   get '/:page', to: 'pages#page'
