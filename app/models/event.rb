@@ -107,15 +107,15 @@ class Event < ApplicationRecord
   end
 
   def shelters
-    resources.select { |r| r.shelter? && r.active? }
+    resources.active.shelters #.select { |r| r.shelter? && r.active? }
   end
 
   def pods
-    resources.select { |r| r.pod? && r.active? }
+    resources.active.pods #.select { |r| r.pod? && r.active? }
   end
 
-  def medsites
-    resources.select { |r| r.medsite? && r.active? }
+  def med_sites
+    resources.active.med_sites #.select { |r| r.med_site? && r.active? }
   end
 
   def resource_activation(resource)

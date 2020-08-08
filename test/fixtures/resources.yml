@@ -82,7 +82,7 @@ pod_five:
 
 medsite_one:
   name: Bandaid Hut
-  resource_type: medsite
+  resource_type: med_site
   current_draft: draft_medsite_one
   created_by: admin
   updated_by: admin
@@ -90,7 +90,7 @@ medsite_one:
 
 medsite_two:
   name: RedCross Support Station
-  resource_type: medsite
+  resource_type: med_site
   current_draft: draft_medsite_two
   created_by: admin
   updated_by: admin

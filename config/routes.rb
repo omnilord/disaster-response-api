@@ -30,7 +30,7 @@ Rails.application.routes.draw do
     dynamic_resource_routes.call('/resources', 'events/resources', create: true)
     dynamic_resource_routes.call('/shelters', 'events/shelters')
     dynamic_resource_routes.call('/pods', 'events/pods')
-    dynamic_resource_routes.call('/medsites', 'events/med_sites')
+    dynamic_resource_routes.call('/med_sites', 'events/med_sites')
 
     # TODO: Eventually come back to this when dynamic enums for types are a thing
     # constraints(lambda { |request| request.parameters[:resource_type] == 'resources' \

@@ -146,7 +146,7 @@ class SurveyTemplatesControllerTest < DevisedTest
     # specified users
     types = {
       admin: 'pod',
-      trusted: 'medsite'
+      trusted: 'med_site'
     }
     TRUSTED_USERS.each do |u|
       user = users(u)

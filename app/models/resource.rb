@@ -3,7 +3,7 @@ class Resource < ApplicationRecord
   include Draftable
   include Coordinated
 
-  TYPE_KEYS = %i[shelter pod medsite].freeze
+  TYPE_KEYS = %i[shelter pod med_site].freeze
   TYPE_ROUTES = TYPE_KEYS.map { |t| t.to_s.pluralize }.freeze
   TYPE_TEXTS = ['shelter', 'distribution point', 'medical site'].freeze
 
@@ -30,7 +30,7 @@ class Resource < ApplicationRecord
   scope :active, -> { where(active: true) }
   scope :shelters, -> { where(resource_type: :shelter) }
   scope :pods, -> { where(resource_type: :pod) }
-  scope :medsites, -> { where(resource_type: :medsite) }
+  scope :med_sites, -> { where(resource_type: :med_site) }
 
   def self.title_for(type_route)
     i = TYPE_ROUTES.find_index(type_route.to_s.downcase)

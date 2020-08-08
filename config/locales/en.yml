@@ -107,8 +107,8 @@ en:
   manage: 'Manage'
   map_reset: 'Reset Map'
   map_update: 'Update Map'
-  medsite: 'Medical Site'
-  medsites: 'Medical Sites'
+  med_site: 'Medical Site'
+  med_sites: 'Medical Sites'
   must_edit_to_save: 'You must edit the %{type} in order to save it.'
   my_settings: 'My Settings'
   navbar_welcome: 'Welcome, %{username}!'
@@ -217,12 +217,12 @@ en:
         resource_types:
           shelter: 'Shelter'
           pod: 'Distribution Point'
-          medsite: 'Medical Site'
+          med_site: 'Medical Site'
       survey_template:
         resource_types:
           shelter: 'Shelter'
           pod: 'Distribution Point'
-          medsite: 'Medical Site'
+          med_site: 'Medical Site'
 
   helpers:
     label:

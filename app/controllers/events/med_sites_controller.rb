@@ -1,3 +1,3 @@
 class Events::MedSitesController < Events::ResourcesController
-  RESOURCE_SCOPE = :medsites
+  RESOURCE_SCOPE = :med_sites
 end

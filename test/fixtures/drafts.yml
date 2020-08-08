@@ -209,21 +209,21 @@ draft_pod_five:
   approved_at: <%= 1.day.ago %>
 
 draft_medsite_one:
-  draftable: medsite
+  draftable: med_site
   draftable_type: Resource
   data:
     name: Bandaid Hut
-    resource_type: medsite
+    resource_type: med_site
   user: generic_two
   approved_by: generic_one
   approved_at: <%= 1.day.ago %>
 
 draft_medsite_two:
-  draftable: medsite
+  draftable: med_site
   draftable_type: Resource
   data:
     name: RedCross Support Station
-    resource_type: medsite
+    resource_type: med_site
   user: generic_two
   approved_by: generic_one
   approved_at: <%= 1.day.ago %>
