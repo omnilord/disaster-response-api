@@ -13,7 +13,7 @@ gem 'pg', '>= 0.18', '< 2.0'
 gem 'activerecord-postgis-adapter', '~>5'
 gem 'rgeo-geojson'
 gem 'geocoder'
-gem 'puma', '~> 3.11'
+gem 'puma', '~> 4.3'
 gem 'redis', '~> 4.0'
 gem 'devise'
 
